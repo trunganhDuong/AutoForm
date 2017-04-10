@@ -1,0 +1,34 @@
+.main {
+    overflow: auto;
+    background-color: #f8f8f8;
+    min-height: 500px;
+}
+.new-field{
+    float:left;
+    width: 27.5%;
+    border:2px solid #e8e8e8;
+    border-radius: 5px;
+    margin: 1.5em 0 0 1em;
+    background-color: white;
+}
+.add-form{
+    padding: 1em 1em 1em 1em;
+    
+}
+.field-list{
+    margin:1.5em 1em 0 1em;
+    float:right;
+    width: 67%;
+    border:2px solid #e8e8e8;
+    border-radius: 5px;
+    background-color: white;
+}
+.field-list legend{
+    padding: 1em 0 1em 1em;
+    font-weight: bold;
+    font-size: 18px;
+}
+.field-list table{
+    display: inline-block;
+    margin: 0 1em 1em 1em;
+}

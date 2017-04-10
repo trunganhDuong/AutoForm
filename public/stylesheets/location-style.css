@@ -1,0 +1,23 @@
+.main{
+    overflow: auto;
+    background-color: #f8f8f8;
+    min-height: 500px;
+}
+.city{
+    float: left;
+    width: 43%;
+    border:2px solid #e8e8e8;
+    border-radius:5px;
+    padding: 1em;
+    margin: 1.5em 0 0 1em;
+    background-color: white;
+}
+.district{
+    float: right;
+    width: 47%;
+    border:2px solid #e8e8e8;
+    border-radius:5px;
+    padding: 1em 0 1em 1em;
+    margin: 1.5em 1em 0 1em;
+    background-color: white;
+}

@@ -1,0 +1,15 @@
+.main{
+    overflow: auto;
+    min-height: 500px;
+    background-color: #f8f8f8;
+}
+
+.new-org{
+    float:left;
+    padding: 1em;
+    margin: 1.5em 0 0 1em;
+    border: 2px solid #e8e8e8;
+    width: 25%;
+    border-radius: 5px;
+    background-color: white;
+}

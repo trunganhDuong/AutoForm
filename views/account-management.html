@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quản lý tài khoản</title>
+    <meta name="application-name" content="AutoForm">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/stylesheets/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/global-style.css">
+    <link rel="stylesheet" href="/stylesheets/style/pure-min.css">
+    <link rel="stylesheet" href="/stylesheets/account-management.css">
+
+    <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.add-button').click(function(){
+                email=$('#email').val();
+                name=$('#name').val();
+                pass=$('#password');
+                type=$('#type').val();
+                if(email==='')
+                    {
+                        alert('Email không được trống');
+                        return;
+                    }
+                if(name==='')
+                    {
+                        alert('Username không được trống');
+                        return;
+                    }
+                if(pass==='')
+                    {
+                        alert('Password không được trống');
+                        return;
+                    }
+                colNum=$('table tr:last').index() + 1;
+                colNum++;
+                apdStr='<td>'+colNum+'</td>\
+                        <td>'+name+'</td>\
+                        <td>'+email+'</td>\
+                        <td>15/02/2017</td>\
+                        <td>'+type+'</td>\
+                        <td>\
+                            <button class=" button-error pure-button">Đình chỉ</button>\
+                        </td>';
+                var newRow=$(apdStr);
+                $('table tr:last').after(apdStr);
+                alert('Đã thêm tài khoản mới');
+                
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <ul class="pure-menu-list menu">
+                <li class="pure-menu-item menu-item">
+
+                    <a href="/admin" class="pure-menu-link">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>Dashboard
+                    </a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/account" class="pure-menu-link">
+                        <i class="fa fa-users" aria-hidden="true"></i>Quản lý tài khoản</a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/field" class="pure-menu-link">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>Trường thông tin</a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/form" class="pure-menu-link">
+                        <i class="fa fa-book" aria-hidden="true"></i>Quản lý biểu mẫu</a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/location" class="pure-menu-link">
+                        <i class="fa fa-globe" aria-hidden="true"></i>Quản lý vùng</a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/organization" class="pure-menu-link">
+                        <i class="fa fa-building" aria-hidden="true"></i>Quản lý tổ chức</a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="right">
+            <div class="header">
+                <div class="page-name">
+                    <h2>Auto form</h2>
+                </div>
+                <div class="user">
+                    <ul class="nav">
+                        <li class="nav-user">
+                            <a href="#">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                            </a>
+                            <ul class="drop-down">
+                                <li>
+                                    <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                    <a href="#">Tài khoản</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                    <a href="#">Cài đặt</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                    <a href="#">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="new-acc">
+                    <form class="pure-form pure-form-stacked add-form">
+                        <fieldset>
+                            <legend>Thêm tài khoản</legend>
+
+                            <label for="email">Email</label>
+                            <input id="email" type="email" placeholder="Email">
+
+                            <label for="name">Username</label>
+                            <input id="name" type="text" placeholder="Username">
+
+
+                            <label for="password">Password</label>
+                            <input id="password" type="password" placeholder="Password">
+
+                            <label for="type">Kiểu</label>
+                            <select id="type">
+                                <option>Admin</option>
+                                <option>User</option>
+                            </select>
+
+
+                            <a class="pure-button pure-button-primary add-button" href="#">Thêm</a>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div class="acc-list">
+                    <style scoped>
+                        .button-success,
+                        .button-error,
+                        .button-warning,
+                        .button-secondary {
+                            color: white;
+                            border-radius: 4px;
+                            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                        }
+                        
+                        .button-error {
+                            background: rgb(202, 60, 60);
+                            /* this is a maroon */
+                        }
+                        
+                        .button-warning {
+                            background: rgb(223, 117, 20);
+                            /* this is an orange */
+                        }
+                    </style>
+                    <Legend>Danh sách tài khoản</Legend>
+                    <table class="pure-table pure-table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Thời gian</th>
+                                <th>Kiểu</th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>user1234</td>
+                                <td>user1234@gmail.com</td>
+                                <td>15/02/2017</td>
+                                <td>Admin</td>
+
+                                <td>
+                                    <button class=" button-error pure-button">Đình chỉ</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>user12345</td>
+                                <td>user12345@gmail.com</td>
+                                <td>15/02/2017</td>
+                                <td>Admin</td>
+
+                                <td>
+                                    <button class=" button-error pure-button">Đình chỉ</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td>user232017</td>
+                                <td>user232017@gmail.com</td>
+                                <td>20/02/2017</td>
+                                <td>User</td>
+
+                                <td>
+                                    <button class=" button-error pure-button">Đình chỉ</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>4</td>
+                                <td>user532017</td>
+                                <td>user532017@gmail.com</td>
+                                <td>25/02/2017</td>
+                                <td>User</td>
+                                <td>
+                                    <button class=" button-error pure-button">Đình chỉ</button>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>5</td>
+                                <td>user732017</td>
+                                <td>user732017@gmail.com</td>
+                                <td>27/02/2017</td>
+                                <td>User</td>
+                                <td>
+                                    <button class=" button-error pure-button">Đình chỉ</button>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>6</td>
+                                <td>user832017</td>
+                                <td>user832017@gmail.com</td>
+                                <td>28/02/2017</td>
+                                <td>User</td>
+                                <td>
+                                    <button class=" button-error pure-button">Đình chỉ</button>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>7</td>
+                                <td>user732017</td>
+                                <td>user732017@gmail.com</td>
+                                <td>27/02/2017</td>
+                                <td>User</td>
+                                <td>
+                                    <button class=" button-error pure-button">Đình chỉ</button>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>8</td>
+                                <td>user832017</td>
+                                <td>user832017@gmail.com</td>
+                                <td>28/02/2017</td>
+                                <td>User</td>
+                                <td>
+                                    <button class=" button-error pure-button">Đình chỉ</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>

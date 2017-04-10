@@ -1,0 +1,116 @@
+.main {
+    padding: 0.3em 1em;
+    background-color: #f8f8f8;
+}
+
+
+/*==content==*/
+
+
+/*==search==*/
+
+.search {
+    margin-top: 1em;
+    margin-right: 1em;
+    background-color: white;
+}
+
+.search-header {
+    height: 35px;
+    line-height: 35px;
+    background-color: #23527c;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: white;
+}
+
+.search-header a {
+    text-decoration: none;
+    padding-left: 1em;
+    display: inline;
+    color: white;
+}
+
+.search-content {
+    display: none;
+    border: 2px solid #23527c;
+    height: auto;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+.pure-g {
+    padding-bottom: 1em;
+}
+
+.search-bar {
+    width: 280px;
+}
+
+
+/*==forms==*/
+
+.forms {
+    overflow: auto;
+}
+
+.form-list {
+    width: 25%;
+    border: 2px solid #e8e8e8;
+    margin: 1em;
+    margin-left: 0;
+    border-radius: 5px;
+    background-color: white;
+}
+.form-list-detail{
+    overflow: hidden;
+}
+
+.sub-menu {
+    display: none;
+}
+.sub-menu li{
+    margin-left: 1em;
+}
+
+.pure-menu-heading {
+    padding-top: 1em;
+}
+
+.form-content {
+    width: 72%;
+    border: 2px solid #e8e8e8;
+    border-radius: 5px;
+    float: right;
+    margin: 1em;
+    background-color: white;
+}
+
+.form-info {
+    border-bottom: 2px solid #e8e8e8;
+    overflow: auto;
+}
+
+.info {
+    float: left;
+    width: 50%;
+    height: 40px;
+    line-height: 40px;
+    margin: 1em 0 1em 1em;
+}
+
+.form-name {
+    margin: auto;
+}
+
+.features {
+    float: right;
+    width: 40%;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 1em;
+}
+
+.form-detail {
+    height: 500px;
+}
