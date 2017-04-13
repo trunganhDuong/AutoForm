@@ -150,10 +150,10 @@
 
                         <tbody>
                             <% var i=0 %>
-                            <% books.forEach(function(item){ %>
+                            <% accounts.forEach(function(item){ %>
                                 <tr>
                                     <td><%= ++i %></td>
-                                    <td><a href="#"><%= item.username %></a></td>
+                                    <td><a href="/admin/account/<%=item._id %>"><%= item.username %></a></td>
                                     <td><%= item.email %></td>
                                     <td><%= item.creTime.toUTCString() %></td>
                                     <td><%= item.type %></td>

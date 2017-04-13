@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET form management page. */
 router.get('/', function(req, res, next) {
-  res.sendFile('/views/form-management.html',{root: './'})
+  res.sendFile('/views/form.html',{root: './'})
 });
 
 module.exports = router;

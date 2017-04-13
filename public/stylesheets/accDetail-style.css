@@ -1,0 +1,25 @@
+.main {
+    background-color: #f8f8f8;
+    min-height: 500px;
+}
+.back{
+    padding: 1em;
+} 
+.back a:visited{
+    color: #23527c;
+}
+.acc-detail{
+    border: 2px solid #e8e8e8;
+    border-radius: 5px;
+    background-color: white;
+    padding:1em;
+    margin:1em auto;
+    width:45%;
+    
+}
+
+.acc-detail form{
+    width: 500px;
+    display: block;
+    margin: 1em auto;
+}

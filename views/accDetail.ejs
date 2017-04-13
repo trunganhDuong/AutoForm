@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/stylesheets/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/global-style.css">
     <link rel="stylesheet" href="/stylesheets/style/pure-min.css">
-    <link rel="stylesheet" href="/stylesheets/account-management.css">
+    <link rel="stylesheet" href="/stylesheets/accDetail-style.css">
 
     <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
     <script src="/javascripts/jquery.js" type="text/javascript"></script>
@@ -17,6 +17,18 @@
     <script>
         $(document).ready(function () {
 
+            $('.delete-button').click(function () {
+                var cf = confirm('Bạn có chắc muốn xóa tài khoản này?');
+                if (cf == true) {
+                    $.ajax({
+                        method: 'DELETE',
+                        success: function(){
+                            window.location.replace('http://localhost:3000/admin/account');
+                        }
+                    });
+                }
+
+            });
         });
     </script>
 </head>
@@ -87,7 +99,81 @@
             </div>
 
             <div class="main">
-                
+                <div class="back">
+                    <a href="/admin/account">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Danh sách tài khoản
+                    </a>
+                </div>
+
+                <div class="acc-detail">
+                    <style scoped>
+                        .button-success,
+                        .button-error,
+                        .button-warning,
+                        .button-secondary {
+                            color: white;
+                            border-radius: 4px;
+                            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                        }
+                        
+                        .button-success {
+                            background: rgb(28, 184, 65);
+                            /* this is a green */
+                        }
+                        
+                        .button-error {
+                            background: rgb(202, 60, 60);
+                            /* this is a maroon */
+                        }
+                        
+                        .button-warning {
+                            background: rgb(223, 117, 20);
+                            /* this is an orange */
+                        }
+                        
+                        .button-secondary {
+                            background: rgb(66, 184, 221);
+                            /* this is a light blue */
+                        }
+                    </style>
+                    <form class="pure-form pure-form-aligned">
+                        <fieldset>
+                            <div class="pure-control-group">
+                                <label for="id">ID</label>
+                                <input id="id" type="text" placeholder="ID" disabled value="<%= account._id %>">
+                            </div>
+
+                            <div class="pure-control-group">
+                                <label for="email">Email Address</label>
+                                <input id="email" type="email" name="email" placeholder="Email Address" value="<%= account.email %>">
+                            </div>
+
+                            <div class="pure-control-group">
+                                <label for="name">Username</label>
+                                <input name="username" id="username" type="text" placeholder="Username" value="<%= account.username %>">
+                            </div>
+
+                            <div class="pure-control-group">
+                                <label for="password">Password</label>
+                                <input name="password" id="password" type="password" placeholder="Password" value="<%= account.password %>">
+                            </div>
+
+                            <div class="pure-control-group">
+                                <label for="type">Kiểu</label>
+                                <select id="type" name="type" class="pure-input-1-5">
+                                    <option>Admin</option>
+                                    <option>User</option>
+                                </select>
+                            </div>
+
+
+                            <div class="pure-controls">
+                                <button type="button" class="pure-button pure-button-primary update-button">Cập nhật</button>
+                                <button type="button" class="pure-button pure-button-primary button-error delete-button">Xóa</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
 
             </div>
         </div>

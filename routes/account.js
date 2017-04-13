@@ -4,20 +4,28 @@ var mongoose = require('mongoose');
 var Account = require('../models/account.model')
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
-var flash=require('connect-flash');
+var flash = require('connect-flash');
 /* GET account management page. */
 router.get('/', function (req, res, next) {
-  Account.find(function (err, books) {
+  Account.find(function (err, accounts) {
     if (err) res.send(err);
-    res.render('account', { books: books });
+    else {
+      res.render('account', { accounts: accounts });
+      console.log('******************************************');
+    }
+
   })
 });
 
-router.get('/:id',function(req,res){
-  Account.find({_id:req.params.id}).exec(function(err,account){
-    if(err) res.send(err);
-    else
-      res.render('accDetail',{account:account});
+router.get('/:id', function (req, res) {
+  Account.findOne({ _id: req.params.id }, function (err, account) {
+    if (err) res.send(err);
+    else {
+      
+      res.render('accDetail', { account: account });
+      console.log('******************************************');
+      res.end();
+    }
   })
 })
 
@@ -25,21 +33,40 @@ router.post('/', urlencodedParser, function (req, res) {
   /*req.flash('emailExisted','This email is already registed. Please try another email');
   req.flash('userExisted','This username is already registed. Please try another email');*/
 
-  Account.findOne({$or:[{email:req.body.email},{username:req.body.username}]}).exec(function (err, acc) {
+  Account.findOne({ $or: [{ email: req.body.email }, { username: req.body.username }] }, function (err, account) {
     if (err) res.send(err);
-    if (acc) {
-      console.log('account existed');
-      res.redirect('back');
-    }
     else {
-      Account.create(req.body, function (err, account) {
-        if (err) res.send(err);
-        console.log(account);
+      if (account) {
+        console.log('account existed');
         res.redirect('back');
-      })
+        res.end();
+      }
+      else {
+        Account.create(req.body, function (err, account) {
+          if (err) res.send(err);
+          else {
+            res.redirect('back');
+            console.log('******************************************');
+            res.end();
+          }
+        })
+      }
+    }
+
+  })
+})
+
+
+router.delete('/:id', function (req, res) {
+  Account.findOneAndRemove({ _id: req.params.id }, function (err, account) {
+    if (err) res.send(err);
+    else {
+      res.status(204);
+      console.log('******************************************');
+      res.end();
     }
   })
-
 })
+
 
 module.exports = router;
