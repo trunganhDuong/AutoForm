@@ -24,10 +24,31 @@
                         method: 'DELETE',
                         success: function(){
                             window.location.replace('http://localhost:3000/admin/account');
+                            alert('Bạn vừa xóa tài khoản có mã: '+$('#id').val());
                         }
                     });
                 }
 
+            });
+
+            $('.update-button').click(function(){
+                var url='/admin/account'+$('#id').val();
+                var cf = confirm('Bạn muốn cập nhật thông tin tài khoản này?');
+                if (cf == true) {
+                    $.ajax({
+                        method: 'PUT',
+                        data:{
+                            email: $('#email').val(),
+                            username: $('#username').val(),
+                            password: $('#password').val(),
+                            type: $('#type').val()
+                        },
+                        success: function(){
+                            alert('Cập nhật thành công');
+                            window.location.reload();
+                        }
+                    });
+                }
             });
         });
     </script>
@@ -166,9 +187,14 @@
                                 </select>
                             </div>
 
+                            <div class="pure-control-group">
+                                <label for="creTime">Thời gian tạo</label>
+                                <input name="creTime" id="creTime" type="text" disabled placeholder="Creation time" value="<%= account.creTime %>">
+                            </div>
+
 
                             <div class="pure-controls">
-                                <button type="button" class="pure-button pure-button-primary update-button">Cập nhật</button>
+                                <button type="submit" class="pure-button pure-button-primary update-button">Cập nhật</button>
                                 <button type="button" class="pure-button pure-button-primary button-error delete-button">Xóa</button>
                             </div>
                         </fieldset>
