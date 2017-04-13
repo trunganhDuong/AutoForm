@@ -22,28 +22,28 @@
                 if (cf == true) {
                     $.ajax({
                         method: 'DELETE',
-                        success: function(){
+                        success: function () {
                             window.location.replace('http://localhost:3000/admin/account');
-                            alert('Bạn vừa xóa tài khoản có mã: '+$('#id').val());
+                            alert('Bạn vừa xóa tài khoản có mã: ' + $('#id').val());
                         }
                     });
                 }
 
             });
 
-            $('.update-button').click(function(){
-                var url='/admin/account'+$('#id').val();
+            $('.update-button').click(function () {
+                var url = '/admin/account' + $('#id').val();
                 var cf = confirm('Bạn muốn cập nhật thông tin tài khoản này?');
                 if (cf == true) {
                     $.ajax({
                         method: 'PUT',
-                        data:{
+                        data: {
                             email: $('#email').val(),
                             username: $('#username').val(),
                             password: $('#password').val(),
                             type: $('#type').val()
                         },
-                        success: function(){
+                        success: function () {
                             alert('Cập nhật thành công');
                             window.location.reload();
                         }
@@ -181,10 +181,20 @@
 
                             <div class="pure-control-group">
                                 <label for="type">Kiểu</label>
-                                <select id="type" name="type" class="pure-input-1-5">
-                                    <option>Admin</option>
-                                    <option>User</option>
-                                </select>
+
+                                <% if (account.type==='Admin') { %>
+                                    <select id="type" name="type" class="pure-input-1-5">
+                                        <option selected>Admin</option>
+                                        <option >User</option>
+                                    </select>
+                                <% } %>
+
+                                <% if (account.type==='User') { %>
+                                    <select id="type" name="type" class="pure-input-1-5">
+                                        <option>Admin</option>
+                                        <option selected>User</option>
+                                    </select>
+                                <% } %>
                             </div>
 
                             <div class="pure-control-group">
