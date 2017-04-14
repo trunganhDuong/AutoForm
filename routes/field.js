@@ -29,24 +29,36 @@ router.get('/:id', function (req, res) {
   })
 })
 
-router.put('/:id',urlencodedParser,function(req,res){
-  Field.findByIdAndUpdate(
-    {_id:req.params.id},
-    {
-      $set:{
-        name:req.body.name
-      }
-    },
-    {
-      upsert:true
-    },
-    function(err,field){
-      if(err) res.send(err);
-      else{
-        res.status(204);
+router.put('/:id', urlencodedParser, function (req, res) {
+  Field.findOne({ name: req.body.name }, function (err, field) {
+    if (err) res.send(err);
+    else {
+      if (field) {
+        res.send(400);
         res.end();
       }
-    });
+      else {
+        Field.findOneAndUpdate(
+          { _id: req.params.id },
+          {
+            $set: {
+              name: req.body.name
+            }
+          },
+          {
+            upsert: true
+          },
+          function (err, field) {
+            if (err) res.send(err);
+            else {
+              res.status(204);
+              res.end();
+            }
+          });
+      }
+    }
+  });
+
 });
 router.post('/', urlencodedParser, function (req, res) {
   Field.findOne({ name: req.body.name }, function (err, field) {

@@ -18,13 +18,13 @@
         $(document).ready(function () {
 
             $('.delete-button').click(function () {
-                var cf = confirm('Bạn có chắc muốn xóa tài khoản này?');
+                var cf = confirm('Bạn có chắc muốn xóa trường này?');
                 if (cf == true) {
                     $.ajax({
                         method: 'DELETE',
                         success: function () {
                             window.location.replace('http://localhost:3000/admin/field');
-                            alert('Bạn vừa xóa tài khoản có mã: ' + $('#id').val());
+                            alert('Bạn vừa xóa trường có mã: ' + $('#id').val());
                         }
                     });
                 }
@@ -32,21 +32,26 @@
             });
 
             $('.update-button').click(function () {
-                var url = '/admin/account' + $('#id').val();
-                var cf = confirm('Bạn muốn cập nhật thông tin tài khoản này?');
+                if($('#name').val()==="")
+                {
+                    alert('Tên trường không được để trống');
+                    return;
+                }
+                var cf = confirm('Bạn muốn cập nhật thông tin trường này?');
                 if (cf == true) {
                     $.ajax({
                         method: 'PUT',
                         data: {
-                            email: $('#email').val(),
-                            username: $('#username').val(),
-                            password: $('#password').val(),
-                            type: $('#type').val()
+                            name:$('#name').val()
                         },
                         success: function () {
                             alert('Cập nhật thành công');
                             window.location.reload();
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert('Thông tin đã tồn tại');
                         }
+                        
                     });
                 }
             });

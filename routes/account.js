@@ -34,9 +34,9 @@ router.get('/:id', function (req, res) {
 
 router.post('/', urlencodedParser, function (req, res) {
   Account.findOne(
-    { 
-      $or: [{ email: req.body.email }, { username: req.body.username }] 
-    }, 
+    {
+      $or: [{ email: req.body.email }, { username: req.body.username }]
+    },
     function (err, account) {
       if (err) res.send(err);
       else {
@@ -54,9 +54,9 @@ router.post('/', urlencodedParser, function (req, res) {
             }
           })
         }
-    }
+      }
 
-  })
+    })
 })
 
 
@@ -72,29 +72,37 @@ router.delete('/:id', function (req, res) {
 })
 
 router.put('/:id', urlencodedParser, function (req, res) {
-  Account.findOneAndUpdate(
-    {
-      _id: req.params.id
-    },
-    {
-      $set:
-      {
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-        type: req.body.type
-      }
-    },
-    {
-      upsert: true
-    },
-    function (err, account) {
-      if (err) res.send(err);
-      else {
-        res.status(204);
-        res.end();
-      }
-    })
+  Account.findOne({
+    $or: [{ email: req.body.email }, { username: req.body.username }]
+  }, function (err, account) {
+    if (err) res.send(err);
+    else {
+      Account.findOneAndUpdate(
+        {
+          _id: req.params.id
+        },
+        {
+          $set:
+          {
+            email: req.body.email,
+            username: req.body.username,
+            password: req.body.password,
+            type: req.body.type
+          }
+        },
+        {
+          upsert: true
+        },
+        function (err, account) {
+          if (err) res.send(err);
+          else {
+            res.status(204);
+            res.end();
+          }
+        })
+    }
+  });
+
 })
 
 module.exports = router;

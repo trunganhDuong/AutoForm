@@ -32,6 +32,26 @@
             });
 
             $('.update-button').click(function () {
+                if($('#username').val()==="")
+                {
+                    alert('Không được để thiếu username');
+                    return;
+                }
+                if($('#email').val()==="")
+                {
+                    alert('Không được để thiếu email');
+                    return;
+                }
+                if($('#password').val()==="")
+                {
+                    alert('Không được để thiếu password');
+                    return;
+                }
+                if($('#password').val()==="")
+                {
+                    alert('Chọn kiểu tài khoản');
+                    return;
+                }
                 var cf = confirm('Bạn muốn cập nhật thông tin tài khoản này?');
                 if (cf == true) {
                     $.ajax({
