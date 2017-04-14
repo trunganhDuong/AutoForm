@@ -32,7 +32,6 @@
             });
 
             $('.update-button').click(function () {
-                var url = '/admin/account' + $('#id').val();
                 var cf = confirm('Bạn muốn cập nhật thông tin tài khoản này?');
                 if (cf == true) {
                     $.ajax({
@@ -46,6 +45,9 @@
                         success: function () {
                             alert('Cập nhật thành công');
                             window.location.reload();
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert('Thông tin đã tồn tại');
                         }
                     });
                 }
@@ -187,14 +189,14 @@
                                         <option selected>Admin</option>
                                         <option >User</option>
                                     </select>
-                                <% } %>
+                                    <% } %>
 
-                                <% if (account.type==='User') { %>
-                                    <select id="type" name="type" class="pure-input-1-5">
+                                        <% if (account.type==='User') { %>
+                                            <select id="type" name="type" class="pure-input-1-5">
                                         <option>Admin</option>
                                         <option selected>User</option>
                                     </select>
-                                <% } %>
+                                            <% } %>
                             </div>
 
                             <div class="pure-control-group">

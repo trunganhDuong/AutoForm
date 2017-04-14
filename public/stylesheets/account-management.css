@@ -23,6 +23,7 @@
     border-radius: 5px;
     background-color: white;
     overflow: scroll;
+    max-height: 500px;
 }
 .acc-list legend{
     padding: 1em 0 1em 1em;

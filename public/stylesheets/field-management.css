@@ -22,6 +22,8 @@
     border:2px solid #e8e8e8;
     border-radius: 5px;
     background-color: white;
+    overflow: scroll;
+    max-height: 500px;
 }
 .field-list legend{
     padding: 1em 0 1em 1em;
@@ -31,4 +33,10 @@
 .field-list table{
     display: inline-block;
     margin: 0 1em 1em 1em;
+}
+.field-list table a{
+    color: #23527c;
+}
+.field-list a:visited{
+    color:#23527c;
 }

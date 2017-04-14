@@ -4,8 +4,10 @@ var mongoose = require('mongoose');
 var Account = require('../models/account.model')
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
-var jsonParser=bodyParser.json();
+var jsonParser = bodyParser.json();
 var flash = require('connect-flash');
+
+
 /* GET account management page. */
 router.get('/', function (req, res, next) {
   Account.find(function (err, accounts) {
@@ -22,7 +24,7 @@ router.get('/:id', function (req, res) {
   Account.findOne({ _id: req.params.id }, function (err, account) {
     if (err) res.send(err);
     else {
-      
+
       res.render('accDetail', { account: account });
       console.log('******************************************');
       res.end();
@@ -31,27 +33,27 @@ router.get('/:id', function (req, res) {
 })
 
 router.post('/', urlencodedParser, function (req, res) {
-  /*req.flash('emailExisted','This email is already registed. Please try another email');
-  req.flash('userExisted','This username is already registed. Please try another email');*/
-
-  Account.findOne({ $or: [{ email: req.body.email }, { username: req.body.username }] }, function (err, account) {
-    if (err) res.send(err);
-    else {
-      if (account) {
-        console.log('account existed');
-        res.redirect('back');
-        res.end();
-      }
+  Account.findOne(
+    { 
+      $or: [{ email: req.body.email }, { username: req.body.username }] 
+    }, 
+    function (err, account) {
+      if (err) res.send(err);
       else {
-        Account.create(req.body, function (err, account) {
-          if (err) res.send(err);
-          else {
-            res.redirect('back');
-            console.log('******************************************');
-            res.end();
-          }
-        })
-      }
+        if (account) {
+          res.status(400);
+          res.end();
+        }
+        else {
+          Account.create(req.body, function (err, account) {
+            if (err) res.send(err);
+            else {
+              res.redirect('back');
+              console.log('******************************************');
+              res.end();
+            }
+          })
+        }
     }
 
   })
@@ -69,26 +71,26 @@ router.delete('/:id', function (req, res) {
   })
 })
 
-router.put('/:id',jsonParser,function(req,res){
+router.put('/:id', urlencodedParser, function (req, res) {
   Account.findOneAndUpdate(
     {
-      _id:req.params.id
+      _id: req.params.id
     },
     {
       $set:
       {
-        email:req.body.email,
-        username:req.body.username,
-        password:req.body.password,
-        type:req.body.type
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+        type: req.body.type
       }
     },
     {
-      upsert:true
+      upsert: true
     },
-    function(err,account){
-      if(err) res.send(err);
-      else{
+    function (err, account) {
+      if (err) res.send(err);
+      else {
         res.status(204);
         res.end();
       }

@@ -16,9 +16,27 @@
 
     <script>
         $(document).ready(function () {
-            $('.add-button').click(function(){
-               
-                
+            $('.add-button').click(function () {
+                if ($('#name').val()==="") {
+                    alert("Tên trường không được để trống");
+                }
+                else {
+                    $.ajax({
+                        method: "POST",
+                        data: {
+                            name: $('#name').val()
+                        },
+                        success: function () {
+                            alert('Thêm thành công ');
+                            window.location.reload();
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert('Thông tin đã tồn tại');
+                        }
+                    });
+                }
+
+
             });
         });
     </script>
@@ -54,7 +72,7 @@
                     <a href="/admin/organization" class="pure-menu-link">
                         <i class="fa fa-building" aria-hidden="true"></i>Quản lý tổ chức</a>
                 </li>
-                
+
             </ul>
         </div>
         <div class="right">
@@ -95,10 +113,9 @@
                             <legend>Thêm trường</legend>
 
                             <label for="name">Tên trường</label>
-                            <input id="name" type="text" placeholder="Field name">
+                            <input name="name" id="name" type="text" placeholder="Field name">
 
-
-                            <a class="pure-button pure-button-primary add-button" href="#">Thêm</a>
+                            <input type="button" class="pure-button pure-button-primary add-button" value="Thêm">
                         </fieldset>
                     </form>
                 </div>
@@ -131,124 +148,26 @@
                                 <th>ID</th>
                                 <th>Tên trường</th>
                                 <th>Thời gian</th>
-                                <th>Người tạo</th>
-                                <th>
-
-                                </th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Họ</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>2</td>
-                                <td>Tên đệm</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>3</td>
-                                <td>Tên</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <td>Biệt danh</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>5</td>
-                                <td>Ngày sinh</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>6</td>
-                                <td>Tháng sinh</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>7</td>
-                                <td>Năm sinh</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>8</td>
-                                <td>Hộ khẩu</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>9</td>
-                                <td>Địa chỉ thường trú</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>10</td>
-                                <td>Nơi sinh</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>11</td>
-                                <td>Giới tính</td>
-                                <td>07/02/2017</td>
-                                <td>user1234</td>
-                                <td>
-                                    <button class=" button-error pure-button">Đình chỉ</button>
-                                </td>
-                            </tr>
+                            <% var i=0 %>
+                                <% fields.forEach(function(item){ %>
+                                    <tr>
+                                        <td>
+                                            <%= ++i %>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/field/<%=item._id %>">
+                                                <%= item.name %>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <%= item.creTime.toUTCString() %>
+                                        </td>
+                                    </tr>
+                                    <% });%>
                         </tbody>
                     </table>
                 </div>

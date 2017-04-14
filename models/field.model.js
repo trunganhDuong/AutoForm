@@ -1,15 +1,16 @@
-var mongoose=require('mongoose'),
+'use strict';
+
+var mongoose=require('mongoose');
 var Schema=mongoose.Schema;
 
 var FieldSchema=new Schema({
-    name:String,
+    name:{
+        type:String,
+        unique:true
+    },
     creTime:{
         type: Date,
-        default:Date.now
-    },
-    accId:{
-        type:Schema.ObjectId,
-        ref: 'Account'
+        default: Date.now
     }
 });
-module.exports=new mongoose.model('Field',FieldSchema);
+module.exports= mongoose.model('Field',FieldSchema);
