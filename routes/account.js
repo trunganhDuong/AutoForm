@@ -50,6 +50,7 @@ router.post('/', urlencodedParser, function (req, res) {
             else {
               res.redirect('back');
               console.log('******************************************');
+              res.status(204);
               res.end();
             }
           })
@@ -72,12 +73,17 @@ router.delete('/:id', function (req, res) {
 })
 
 router.put('/:id', urlencodedParser, function (req, res) {
-  Account.findOne({
+  Account.find({
     $or: [{ email: req.body.email }, { username: req.body.username }]
   }, function (err, account) {
     if (err) res.send(err);
     else {
-      Account.findOneAndUpdate(
+      if(account.length>=2){
+        res.status(400);
+        res.end();
+      }
+      else{
+         Account.findOneAndUpdate(
         {
           _id: req.params.id
         },
@@ -100,6 +106,8 @@ router.put('/:id', urlencodedParser, function (req, res) {
             res.end();
           }
         })
+      }
+     
     }
   });
 

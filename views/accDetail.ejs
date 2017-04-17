@@ -32,23 +32,19 @@
             });
 
             $('.update-button').click(function () {
-                if($('#username').val()==="")
-                {
+                if ($('#username').val() === "") {
                     alert('Không được để thiếu username');
                     return;
                 }
-                if($('#email').val()==="")
-                {
+                if ($('#email').val() === "") {
                     alert('Không được để thiếu email');
                     return;
                 }
-                if($('#password').val()==="")
-                {
+                if ($('#password').val() === "") {
                     alert('Không được để thiếu password');
                     return;
                 }
-                if($('#password').val()==="")
-                {
+                if ($('#password').val() === "") {
                     alert('Chọn kiểu tài khoản');
                     return;
                 }
@@ -62,12 +58,14 @@
                             password: $('#password').val(),
                             type: $('#type').val()
                         },
-                        success: function () {
-                            alert('Cập nhật thành công');
-                            window.location.reload();
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert('Thông tin đã tồn tại');
+                        statusCode: {
+                            204: function () {
+                                alert('Thêm thành công ');
+                                window.location.reload();
+                            },
+                            400: function () {
+                                alert('Thông tin đã tồn tại');
+                            }
                         }
                     });
                 }

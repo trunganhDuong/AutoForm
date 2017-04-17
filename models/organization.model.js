@@ -5,13 +5,13 @@ var Schema=mongoose.Schema;
 
 var OrganizationSchema=new Schema({
     name: String,
-    regTime: {
+    creTime: {
         type: Date,
         default: Date.now
     },
     phone: Array,
-    districtID: {
-        type: Schema.ObjectID,
+    districtId: {
+        type: Schema.Types.ObjectId,
         ref: 'District'
     }
 });

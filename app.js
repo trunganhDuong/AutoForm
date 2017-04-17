@@ -18,6 +18,7 @@ var location=require('./routes/location');
 var organization=require('./routes/organization');
 var app = express();
 var db='mongodb://localhost/AutoForm';
+mongoose.Promise = global.Promise;
 mongoose.connect(db);
 
 // view engine setup

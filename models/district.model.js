@@ -6,8 +6,12 @@ var Schema=mongoose.Schema;
 var DistrictSchema=new Schema({
     name:String,
     cityId: {
-        type:Schema.ObjectID,
+        type:Schema.Types.ObjectId,
         ref: 'City'
+    },
+    creTime:{
+        type:Date,
+        default:Date.now
     }
 });
 

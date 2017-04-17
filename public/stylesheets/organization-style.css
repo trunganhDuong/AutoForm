@@ -9,7 +9,24 @@
     padding: 1em;
     margin: 1.5em 0 0 1em;
     border: 2px solid #e8e8e8;
-    width: 25%;
+    width: 20%;
     border-radius: 5px;
     background-color: white;
+}
+.org-list{
+    float:right;
+    padding: 1em;
+    margin: 1.5em 1em 0 1em;
+    border: 2px solid #e8e8e8;
+    width: 68%;
+    border-radius: 5px;
+    background-color: white;
+}
+.org-list a{
+    color: #23527c;
+}
+.org-list legend{
+    padding:  0 1em 1em 0;
+    font-weight: bold;
+    font-size: 18px;
 }

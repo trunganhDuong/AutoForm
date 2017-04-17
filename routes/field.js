@@ -7,7 +7,6 @@ var jsonParser = bodyParser.json();
 var flash = require('connect-flash');
 var Field = require('../models/field.model')
 
-
 /* GET field management  page. */
 router.get('/', function (req, res, next) {
   Field.find({}, function (err, fields) {
@@ -73,8 +72,8 @@ router.post('/', urlencodedParser, function (req, res) {
           if (err) res.send(err);
           else {
             res.status(204);
-            res.redirect('back');
             console.log('******************************************');
+            res.end();
           }
         })
       }

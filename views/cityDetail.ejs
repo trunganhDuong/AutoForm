@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tỉnh/thành phố</title>
+    <meta name="application-name" content="AutoForm">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/stylesheets/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/global-style.css">
+    <link rel="stylesheet" href="/stylesheets/style/pure-min.css">
+    <link rel="stylesheet" href="/stylesheets/accDetail-style.css">
+
+    <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('.delete-button').click(function () {
+                var cf = confirm('Bạn có chắc muốn xóa?');
+                if (cf == true) {
+                    $.ajax({
+                        method: 'DELETE',
+                        success: function () {
+                            window.location.replace('http://localhost:3000/admin/loacation');
+                            alert('Bạn vừa xóa thông tin có mã: ' + $('#id').val());
+                        }
+                    });
+                }
+
+            });
+
+            $('.update-button').click(function () {
+                if ($('#name').val() === "") {
+                    alert('Tên trường không được để trống');
+                    return;
+                }
+                var cf = confirm('Bạn muốn cập nhật thông tin này?');
+                if (cf == true) {
+                    $.ajax({
+                        method: 'PUT',
+                        data: {
+                            name: $('#name').val()
+                        },
+                        statusCode: {
+                            204: function () {
+                                alert('Thay đổi thành công ');
+                                window.location.reload();
+                            },
+                            400: function () {
+                                alert('Thông tin đã tồn tại');
+                            }
+                        }
+
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <ul class="pure-menu-list menu">
+                <li class="pure-menu-item menu-item">
+
+                    <a href="/admin" class="pure-menu-link">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>Dashboard
+                    </a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/account" class="pure-menu-link">
+                        <i class="fa fa-users" aria-hidden="true"></i>Quản lý tài khoản</a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/field" class="pure-menu-link">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>Trường thông tin</a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/form" class="pure-menu-link">
+                        <i class="fa fa-book" aria-hidden="true"></i>Quản lý biểu mẫu</a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/location" class="pure-menu-link">
+                        <i class="fa fa-globe" aria-hidden="true"></i>Quản lý vùng</a>
+                </li>
+                <li class="pure-menu-item menu-item">
+                    <a href="/admin/organization" class="pure-menu-link">
+                        <i class="fa fa-building" aria-hidden="true"></i>Quản lý tổ chức</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="right">
+            <div class="header">
+                <div class="page-name">
+                    <h2>Auto form</h2>
+                </div>
+                <div class="user">
+                    <ul class="nav">
+                        <li class="nav-user">
+                            <a href="#">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                            </a>
+                            <ul class="drop-down">
+                                <li>
+                                    <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                    <a href="#">Tài khoản</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                    <a href="#">Cài đặt</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                    <a href="#">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="back">
+                    <a href="/admin/location">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i> Danh sách vùng
+                    </a>
+                </div>
+
+                <div class="acc-detail">
+                    <style scoped>
+                        .button-success,
+                        .button-error,
+                        .button-warning,
+                        .button-secondary {
+                            color: white;
+                            border-radius: 4px;
+                            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                        }
+                        
+                        .button-success {
+                            background: rgb(28, 184, 65);
+                            /* this is a green */
+                        }
+                        
+                        .button-error {
+                            background: rgb(202, 60, 60);
+                            /* this is a maroon */
+                        }
+                        
+                        .button-warning {
+                            background: rgb(223, 117, 20);
+                            /* this is an orange */
+                        }
+                        
+                        .button-secondary {
+                            background: rgb(66, 184, 221);
+                            /* this is a light blue */
+                        }
+                    </style>
+                    <form class="pure-form pure-form-aligned">
+                        <fieldset>
+                            <div class="pure-control-group">
+                                <label for="id">ID</label>
+                                <input id="id" type="text" placeholder="ID" disabled value="<%= city._id %>">
+                            </div>
+
+
+                            <div class="pure-control-group">
+                                <label for="name">Tên tỉnh/thành phố</label>
+                                <input name="name" id="name" type="text" placeholder="Name" value="<%= city.name %>">
+                            </div>
+
+                            <div class="pure-control-group">
+                                <label for="creTime">Thời gian tạo</label>
+                                <input name="creTime" id="creTime" type="text" disabled placeholder="Creation time" value="<%= city.creTime %>">
+                            </div>
+
+
+                            <div class="pure-controls">
+                                <button type="button" class="pure-button pure-button-primary update-button">Cập nhật</button>
+                                <button type="button" class="pure-button pure-button-primary button-error delete-button">Xóa</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

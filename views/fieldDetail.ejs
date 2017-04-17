@@ -32,8 +32,7 @@
             });
 
             $('.update-button').click(function () {
-                if($('#name').val()==="")
-                {
+                if ($('#name').val() === "") {
                     alert('Tên trường không được để trống');
                     return;
                 }
@@ -42,16 +41,18 @@
                     $.ajax({
                         method: 'PUT',
                         data: {
-                            name:$('#name').val()
+                            name: $('#name').val()
                         },
-                        success: function () {
-                            alert('Cập nhật thành công');
-                            window.location.reload();
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert('Thông tin đã tồn tại');
+                        statusCode: {
+                            204: function () {
+                                alert('Thay đổi thành công ');
+                                window.location.reload();
+                            },
+                            400: function () {
+                                alert('Thông tin đã tồn tại');
+                            }
                         }
-                        
+
                     });
                 }
             });
