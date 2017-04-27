@@ -1,0 +1,28 @@
+.main{
+    height: 500px;
+    background-color: #f8f8f8;
+    position: relative;
+    left: 0;
+    top: 0
+}
+.log-in{
+    position: absolute;
+    width:35%;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    padding: 2em;
+    border: 2px solid #e8e8e8;
+    border-radius: 5px;
+    background-color: white;
+    transform: translate(-50%, -50%);
+}
+.other-login{
+    margin-left :7em;
+}
+.alert-danger{
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color: red;
+}

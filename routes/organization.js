@@ -71,7 +71,7 @@ router.get('/:id', function (req, res) {
               res.render('orgDetail', {
                 org: org,
                 dist: dist,
-                dists:dists
+                dists: dists
               });
             }
           });
@@ -82,11 +82,46 @@ router.get('/:id', function (req, res) {
   })
 })
 
+// GET ORG BY DISTRICT NAME
+router.get('/district/name/:name', function (req, res) {
+  District.findOne({ name: req.params.name }, function (err, dist) {
+    if (err) res.send(err);
+    else {
+      if (dist) {
+        Organization.find({ districtId: dist._id }, function (err, orgs) {
+          if (err) res.send(err);
+          else {
+            res.json(orgs);
+            res.end();
+          }
+        });
+      }
+      else {
+        res.status(404);
+        res.end();
+      }
+    }
+  });
+});
+
+// GET ORG BY NAME
+router.get('/name/:name', function (req, res) {
+  Organization.findOne({ name: req.params.name }, function (err, org) {
+    if (err) res.send(err);
+    else {
+      if (org) {
+        res.json(org);
+        res.end();
+      }
+    }
+  });
+});
+
 //delete org
-router.delete('/:id',function(req,res){
-  Organization.findByIdAndRemove({_id:req.params.id},function(err){
-    if(err) res.send(err);
-    else{
+router.delete('/:id', function (req, res) {
+  Organization.findByIdAndRemove({ _id: req.params.id }, function (err) {
+    if (err) res.send(err);
+    else {
       res.status(204);
       res.end();
     }
@@ -94,30 +129,30 @@ router.delete('/:id',function(req,res){
 });
 
 //update org
-router.put('/:id',urlencodedParser,function(req,res){
-  Organization.findOne({name:req.body.name},function(err,org){
-    if(err) res.send(err);
-    else{
-      District.findOne({name:req.body.district},function(err,dist){
-        if(err) res.send(err);
-        else{
+router.put('/:id', urlencodedParser, function (req, res) {
+  Organization.findOne({ name: req.body.name }, function (err, org) {
+    if (err) res.send(err);
+    else {
+      District.findOne({ name: req.body.district }, function (err, dist) {
+        if (err) res.send(err);
+        else {
           Organization.findOneAndUpdate(
             {
-              _id:req.params.id
+              _id: req.params.id
             },
             {
-              $set:{
-                name:req.body.name,
-                phone:req.body.phone,
-                districtId:dist._id
+              $set: {
+                name: req.body.name,
+                phone: req.body.phone,
+                districtId: dist._id
               }
             },
             {
-              upsert:true
+              upsert: true
             },
-            function(err){
-              if(err) res.send(err);
-              else{
+            function (err) {
+              if (err) res.send(err);
+              else {
                 res.status(204);
                 res.end();
               }

@@ -6,12 +6,12 @@ var Schema=mongoose.Schema;
 var FormSchema=new Schema({
     name: String,
     creTime:{
-        tyep: Date,
-        def: Date.now
+        type: Date,
+        default: Date.now
     },
     content: Buffer,
     orgId:{
-        type: Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Organization'
     }
 });

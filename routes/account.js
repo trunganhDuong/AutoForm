@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Account = require('../models/account.model')
+var User = require('../models/user.model')
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
 var jsonParser = bodyParser.json();
@@ -10,10 +10,10 @@ var flash = require('connect-flash');
 
 /* GET account management page. */
 router.get('/', function (req, res, next) {
-  Account.find(function (err, accounts) {
+  User.find(function (err, users) {
     if (err) res.send(err);
     else {
-      res.render('account', { accounts: accounts });
+      res.render('account', { users: users });
       console.log('******************************************');
     }
 
@@ -21,11 +21,11 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/:id', function (req, res) {
-  Account.findOne({ _id: req.params.id }, function (err, account) {
+  User.findOne({ _id: req.params.id }, function (err, user) {
     if (err) res.send(err);
     else {
 
-      res.render('accDetail', { account: account });
+      res.render('accDetail', { user: user });
       console.log('******************************************');
       res.end();
     }
@@ -33,19 +33,19 @@ router.get('/:id', function (req, res) {
 })
 
 router.post('/', urlencodedParser, function (req, res) {
-  Account.findOne(
+  User.findOne(
     {
       $or: [{ email: req.body.email }, { username: req.body.username }]
     },
-    function (err, account) {
+    function (err, user) {
       if (err) res.send(err);
       else {
-        if (account) {
+        if (user) {
           res.status(400);
           res.end();
         }
         else {
-          Account.create(req.body, function (err, account) {
+          User.create(req.body, function (err, user) {
             if (err) res.send(err);
             else {
               res.redirect('back');
@@ -62,7 +62,7 @@ router.post('/', urlencodedParser, function (req, res) {
 
 
 router.delete('/:id', function (req, res) {
-  Account.findOneAndRemove({ _id: req.params.id }, function (err, account) {
+  User.findOneAndRemove({ _id: req.params.id }, function (err, user) {
     if (err) res.send(err);
     else {
       res.status(204);
@@ -73,17 +73,17 @@ router.delete('/:id', function (req, res) {
 })
 
 router.put('/:id', urlencodedParser, function (req, res) {
-  Account.find({
+  User.find({
     $or: [{ email: req.body.email }, { username: req.body.username }]
-  }, function (err, account) {
+  }, function (err, user) {
     if (err) res.send(err);
     else {
-      if(account.length>=2){
+      if(user.length>=2){
         res.status(400);
         res.end();
       }
       else{
-         Account.findOneAndUpdate(
+         User.findOneAndUpdate(
         {
           _id: req.params.id
         },
@@ -99,7 +99,7 @@ router.put('/:id', urlencodedParser, function (req, res) {
         {
           upsert: true
         },
-        function (err, account) {
+        function (err, user) {
           if (err) res.send(err);
           else {
             res.status(204);
