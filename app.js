@@ -55,7 +55,7 @@ app.use(passport.session()); // persistent login sessions
 require('./config/passport')(passport);
 
 // CATCH THE ROUTES
-app.use('/index', index);
+app.use('/', index);
 app.use('/signup', signup);
 app.use('/home', home)
 app.use('/profile', profile);
