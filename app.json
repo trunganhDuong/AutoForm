@@ -1,0 +1,11 @@
+{
+    "name": "Auto form",
+    "description": "Store personal information and automatically fill them to existing forms",
+    "keywords": [
+        "auto form",
+        "personal information store"
+    ],
+    "repository": "https://github.com/trunganhDuong/AutoForm",
+    "success_url": "/index"
+    
+}
