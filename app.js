@@ -26,7 +26,7 @@ var app = express();
 
 //  connect to mongodb
 mongoose.Promise = global.Promise;
-mongoose.connect(database.dbURL);
+mongoose.connect(process.env.MONGODB_URI||database.hostURL);
 
 
 
