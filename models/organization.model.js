@@ -3,6 +3,7 @@
 var mongoose = require('mongoose')
 var Schema=mongoose.Schema;
 
+
 var OrganizationSchema=new Schema({
     name: String,
     creTime: {
@@ -10,10 +11,7 @@ var OrganizationSchema=new Schema({
         default: Date.now
     },
     phone: Array,
-    districtId: {
-        type: Schema.Types.ObjectId,
-        ref: 'District'
-    }
+    districtId:Schema.Types.ObjectId
 });
 
 

@@ -16,12 +16,14 @@
 
     <script>
         $(document).ready(function () {
+            //  LOADER
+            $body = $("body");
 
+            $(document).on({
+                ajaxStart: function () { $body.addClass("loading"); },
+                ajaxStop: function () { $body.removeClass("loading"); }
+            });
             $('.add-button').click(function () {
-                if ($('#username').val() === "") {
-                    alert('Không được để thiếu username');
-                    return;
-                }
                 if ($('#email').val() === "") {
                     alert('Không được để thiếu email');
                     return;
@@ -37,17 +39,15 @@
                 $.ajax({
                     method: "POST",
                     data: {
-                        username: $('#username').val(),
                         email: $('#email').val(),
                         password: $('#password').val(),
-                        type: $('#type').val()
                     },
                     statusCode: {
                         204: function () {
                             alert('Thêm thành công ');
                             window.location.reload();
                         },
-                        400: function(){
+                        400: function () {
                             alert('Thông tin đã tồn tại');
                         }
                     }
@@ -131,18 +131,10 @@
                             <label for="email">Email</label>
                             <input id="email" type="email" name="email" placeholder="Email">
 
-                            <label for="name">Username</label>
-                            <input name="username" id="username" type="text" placeholder="Username">
 
 
                             <label for="password">Password</label>
                             <input name="password" id="password" type="password" placeholder="Password">
-
-                            <label for="type">Kiểu</label>
-                            <select id="type" name="type">
-                                <option>Admin</option>
-                                <option>User</option>
-                            </select>
 
                             <input type="button" class="pure-button pure-button-primary add-button" value="Thêm">
                         </fieldset>
@@ -176,7 +168,6 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Username</th>
                                 <th>Email</th>
                                 <th>Thời gian</th>
                                 <th>Kiểu</th>
@@ -192,17 +183,31 @@
                                         </td>
                                         <td>
                                             <a href="/admin/account/<%=item._id %>">
-                                                <%= item.username %>
+                                                <%if(item.local.email){%>
+                                                    <%= item.local.email %>
+                                                        <%} %>
+                                                            <%if(item.facebook.email){ %>
+                                                                <%= item.facebook.email %>
+                                                                    <%} %>
+                                                                        <%if(item.google.email){%>
+                                                                            <%= item.google.email %>
+                                                                                <%} %>
                                             </a>
+
                                         </td>
                                         <td>
-                                            <%= item.email %>
+                                            <%= item.local.creTime.toUTCString() %>
                                         </td>
                                         <td>
-                                            <%= item.creTime.toUTCString() %>
-                                        </td>
-                                        <td>
-                                            <%= item.type %>
+                                            <%if(item.local.email){%>
+                                                <%= "Local"%>
+                                                    <%} %>
+                                                        <%if(item.facebook.email){ %>
+                                                            <%= "Facebook" %>
+                                                                <%} %>
+                                                                    <%if(item.google.email){%>
+                                                                        <%= "Google" %>
+                                                                            <%} %>
                                         </td>
                                     </tr>
                                     <% });%>
@@ -220,6 +225,9 @@
 
 
 
+    </div>
+    <div class="modal">
+        <!-- Place at bottom of page -->
     </div>
 </body>
 

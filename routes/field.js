@@ -18,6 +18,7 @@ router.get('/', function (req, res, next) {
   })
 });
 
+//  GET FIELD BY ID
 router.get('/:id', function (req, res) {
   Field.findOne({ _id: req.params.id }, function (err, field) {
     if (err) res.send(err);
@@ -28,11 +29,25 @@ router.get('/:id', function (req, res) {
   })
 })
 
+//  GET FIELD BY ID RETURN JSON
+router.get('/json/:id',function(req,res){
+  Field.findOne({_id:req.params.id},function(err,field){
+    if(err) res.send(err);
+    else{
+      if(field){
+        res.json(field);
+        res.end();
+      }
+    }
+  });
+})
+
+//  UPDATE FIELD
 router.put('/:id', urlencodedParser, function (req, res) {
-  Field.findOne({ name: req.body.name }, function (err, field) {
+  Field.find({ name: req.body.name }, function (err, field) {
     if (err) res.send(err);
     else {
-      if (field) {
+      if (field.length >= 2) {
         res.send(400);
         res.end();
       }
@@ -41,7 +56,8 @@ router.put('/:id', urlencodedParser, function (req, res) {
           { _id: req.params.id },
           {
             $set: {
-              name: req.body.name
+              name: req.body.name,
+              sName: req.body.sname
             }
           },
           {
@@ -59,8 +75,12 @@ router.put('/:id', urlencodedParser, function (req, res) {
   });
 
 });
+
+//  ADD NEW FIELD
 router.post('/', urlencodedParser, function (req, res) {
-  Field.findOne({ name: req.body.name }, function (err, field) {
+  Field.findOne({
+    $or: [{ name: req.body.name }, { sName: req.body.sname }]
+  }, function (err, field) {
     if (err) res.send(err);
     else {
       if (field) {
@@ -68,20 +88,22 @@ router.post('/', urlencodedParser, function (req, res) {
         res.end();
       }
       else {
-        Field.create(req.body, function (err, field) {
+        var newField = new Field();
+        newField.name = req.body.name;
+        newField.sName = req.body.sname;
+        newField.save(function (err) {
           if (err) res.send(err);
           else {
             res.status(204);
-            console.log('******************************************');
             res.end();
           }
         })
       }
     }
-  })
-
+  });
 })
 
+// DELETE FIELD
 router.delete('/:id', function (req, res) {
   Field.findOneAndRemove({ _id: req.params.id }, function (err, field) {
     if (err) res.send(err);
@@ -89,6 +111,19 @@ router.delete('/:id', function (req, res) {
       console.log('******************************************');
       res.status(204);
       res.end();
+    }
+  });
+});
+
+// GET FIELD BY SNAME
+router.get('/sname/:sname',function(req,res){
+  Field.findOne({sName:req.params.sname},function(err,field){
+    if(err) res.send(err);
+    else{
+      if(field){
+        res.json(field);
+        res.end();
+      }
     }
   });
 });

@@ -12,89 +12,17 @@
 
     <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
     <script src="/javascripts/jquery.js" type="text/javascript"></script>
-    <script src="/javascripts/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+    <script src="/javascripts/profile.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 
     <script>
-        $(document).ready(function () {
-            //Drag and drop
-            $('.property-list').find('.pure-menu-item').draggable({
-                containment: $('.right'),
-                cursor: 'move',
-                revert: true,
-                start: function () {
-                    propName = $(this).find('a').text();
-                    selected = $(this);
-                }
-
-            });
-
-            $('.content').droppable({
-                accept: ".properties .pure-menu-item",
-                drop: function () {
-                    //Add new content 
-                    apdStr = '<div class="pure-control-group"><label for="' + propName + '">' + propName + '</label><br> <input class="new-input" type="text" placeholder="' + propName + '"><a id="' + propName + '" class="revert-button pure-button"><i class="fa fa-times-circle" aria-hidden="true"></i></a></div><br>'
-                    var temp = $(apdStr);
-                    //Asign data to the button
-                    temp.find('.revert-button').data('belonged', selected);
-                    temp.find('.revert-button').data('parent', temp);
-
-                    temp.appendTo($('.content').find('fieldset'));
-                    temp.children('.revert-button').click(function () {
-                        var sec = $(this).data('belonged');
-                        sec.animate({
-                            backgroundColor: 'white'
-                        });
-                        sec.draggable().draggable('enable');
-                        var parnt = $(this).data('parent');
-                        parnt.fadeOut(500);
-
-
-                    });
-                    //Disable the dragged one
-                    selected.draggable().draggable('disable');
-                    selected.animate({
-                        backgroundColor: '#e7e7e7'
-                    });
-
-                }
-            });
-
-
-
-
-            //Add new profile
-            $('.add-button').click(function () {
-                var name = $('#profile-name').val();
-                var str = '<li class="pure-menu-item"><a href="#" class="pure-menu-link">' + name + '</a></li>';
-                $('.profile-list').find('.pure-menu-list').append(str);
-            });
-
-            //Click on profile
-            $('.profile-list').find('.pure-menu-item').click(function () {
-                var pName = $(this).text();
-                $('.info').find('.pro-name').text(pName);
-            });
-
-            //Delete profile
-            $('.property-value').find('.button-warning').click(function () {
-                if (confirm('Bạn có chắc muốn xóa profile này không?')) {
-
-
-                }
-            });
-            //Cancel all the options
-            $('.property-value').find('.button-error').click(function () {
-                if (confirm('Bạn có chắc muốn hủy toàn bộ')) {
-                    $('.content').remove();
-
-                }
-            });
-        });
+        
     </script>
 </head>
 
 <body>
     <div class="container">
+        <!-- MENU -->
         <div class="left">
 
             <ul class="pure-menu-list menu">
@@ -122,7 +50,11 @@
             </ul>
 
         </div>
+
+        <!-- MAIN CONTENT -->
         <div class="right">
+
+            <!-- HEADER -->
             <div class="header">
                 <div class="page-name">
                     <h2>Auto form</h2>
@@ -153,58 +85,61 @@
                 </div>
             </div>
 
+            <!-- MAIN -->
             <div class="main">
                 <div class="profiles">
+
+                    <!-- NEW PROFILE -->
                     <div class="new-profile">
                         <form class="pure-form">
                             <fieldset>
                                 <input id="profile-name" type="text" placeholder="Tên profile">
-                                <button type="submit" class="pure-button pure-button-primary add-button">Thêm</button>
+                                <button type="button" class="pure-button pure-button-primary add-button">Thêm</button>
                             </fieldset>
                         </form>
                     </div>
+
+                    <!-- LIST OF PROFILES -->
                     <div class="profile-list">
                         <div class="pure-menu custom-restricted-width">
                             <span class="pure-menu-heading">Danh sách profile</span>
 
                             <ul class="pure-menu-list">
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Profile 1</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Profile 2</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Profile 3</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Profile 4</a></li>
-
+                                <%if(profs){%>
+                                    <%profs.forEach(function(prof){%>
+                                        <li class="pure-menu-item prof-item"><a data-id="<%=prof._id%>" class="pure-menu-link"><%=prof.name%></a></li>
+                                    <%})%>
+                                <%} %>
                             </ul>
                         </div>
                     </div>
                 </div>
 
+                <!-- PROFILE CONTENT -->
                 <div class="profile-content">
+
+                    <!-- PROPERTIES LIST -->
                     <div class="properties">
                         <div class="pure-menu custom-restricted-width">
                             <span class="pure-menu-heading">Danh sách thuộc tính</span>
 
                             <ul class="pure-menu-list property-list">
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Họ</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Tên đệm</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Tên</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Biệt danh</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Ngày sinh</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Tháng sinh</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Năm sinh</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Giới tính</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Số CMND</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Dân tộc</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Tôn giáo</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Nơi đăng ký khai sinh</a></li>
-                                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Địa chỉ thường chú</a></li>
+                               <% if(fields){%>
+                                   <%fields.forEach(function(field){%>
+                                        <li id="<%=field.sName%>" class="pure-menu-item prop-item" data-id="<%=field._id%>" data-sname="<%=field.sName%>"><a class="pure-menu-link"><%=field.name%></a></li>
+                                   <%});%>
+                               <%} %>
                             </ul>
                         </div>
                     </div>
 
+                    <!-- PROPERTIES VALUE -->
                     <div class="property-value">
+
+                        <!-- FEATURES -->
                         <div class="info-and-features">
                             <div class="info">
-                                <p class="pro-name">Profile 1</p>
+                                <p class="pro-name"></p>
                             </div>
 
                             <div class="features">
@@ -228,12 +163,13 @@
                                         /* this is an orange */
                                     }
                                 </style>
-                                <button class="pure-button pure-button-primary">Lưu</button>
-                                <button class="button-error pure-button">Hủy</button>
-                                <button class="button-warning pure-button">Xóa</button>
+                                <a class="pure-button pure-button-primary save-button">Lưu</a>
+                                <a class="button-error pure-button cancel-button">Hủy</a>
+                                <a class="button-warning pure-button delete-button">Xóa</a>
                             </div>
                         </div>
 
+                        <!-- DETAIL OF PROFILE --> <!-- IN WHICH PROPERTIES DRAGGED -->
                         <div class="content">
                             <form class="pure-form ">
                                 <fieldset>
@@ -249,6 +185,7 @@
 
 
     </div>
+    <div class="modal"><!-- Place at bottom of page --></div>
 </body>
 
 </html>

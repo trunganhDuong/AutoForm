@@ -33,8 +33,9 @@
 .profile-list {
     padding-bottom: 1em;
 }
-
-
+.prof-item:hover{
+    cursor: pointer;
+}
 /*==properties==*/
 
 .profile-content {
@@ -58,6 +59,9 @@
 
 
 /*==property-value==*/
+.property-list li:hover{
+    cursor: pointer;
+}
 
 .property-value {
     width: 69.9%;
@@ -87,18 +91,55 @@
 .content{
     width: 100%;
     min-height: 400px;
+    position: relative;
 }
 
-.content .pure-control-group{
-    padding: 1em 0 0 1em;
+.content 
+.pure-form 
+fieldset 
+.pure-control-group{
+    height:40px;
+    line-height: 40px;
+    margin: 1em;
 }
-.new-input{
-    display: inline-table;
-    margin-top: 0.5em;
+
+.content 
+.pure-form 
+fieldset 
+.pure-control-group
+label{
+    /*margin: 1em;*/
 }
+
+.content 
+.pure-form 
+fieldset 
+.pure-control-group
+input{
+    position: absolute;
+    left: 200px;
+}
+
+
+
+
 .revert-button{
-    margin-left: 0.5em;
-    margin-top: 0.5em;
     display: inline-table;
     color: red;
+    position: absolute;
+    left: 450px;
+}
+
+/* disable the element */
+.disable{
+    background-color: #e8e8e8;
+    /*pointer-events:none;*/ /*This makes it not clickable*/
+    opacity:0.6;         /*This grays it out to look disabled*/
+}
+
+/*  Disable all buttons */
+.save-button,
+.delete-button,
+.cancel-button{
+    visibility: hidden;
 }

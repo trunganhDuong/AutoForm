@@ -13,27 +13,13 @@
 
     <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
     <script src="/javascripts/jquery.js" type="text/javascript"></script>
+    <script src="/javascripts/home.js" type="text/javascript"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('.search-header').click(function () {
-                $('.search-content').slideToggle();
-            });
-
-            $('.org-item').click(function () {
-                $(this).find('.sub-menu').slideToggle();
-            });
-            $('.sub-menu').find('.pure-menu-item').click(function () {
-                var formName = $(this).find('a').text();
-                $('.form-name').text(formName);
-                $('.display-frame').attr('data', 'Forms/form.html');
-            });
-        });
-    </script>
 </head>
 
 <body>
     <div class="container">
+        <!-- MENU -->
         <div class="left">
             <ul class="pure-menu-list menu">
                 <li class="pure-menu-item menu-item">
@@ -60,7 +46,10 @@
             </ul>
 
         </div>
+
+        <!-- MAIN -->
         <div class="right">
+            <!-- HEADER -->
             <div class="header">
                 <div class="page-name">
                     <h2>Auto form</h2>
@@ -91,8 +80,10 @@
                 </div>
             </div>
 
+            <!-- CONTENT -->
             <div class="main">
 
+                <!-- SEARCH -->
                 <div class="search">
                     <div class="search-header">
                         <a href="#">Tìm kiếm
@@ -105,69 +96,79 @@
                         <form class="pure-form pure-form-aligned search-form">
                             <fieldset>
                                 <div class="pure-g">
-                                    <div class="pure-u-1-5">
+                                    <div class="pure-u-1-3">
                                         <label for="city">Tỉnh/Thành phố</label>
                                         <select id="city">
-                                            <option>Hà Nội</option>
-                                            <option>Đà Nẵng</option>
-                                            <option>TP Hồ Chí Minh</option>
+                                            <% cities.forEach(function(item){
+                                                var selected=(item.name=="Hà Nội")?"selected":""%>
+                                                <option <%=selected%>><%=item.name %></option>
+                                            <%}) %>
                                         </select>
                                     </div>
-                                    <div class="pure-u-1-5">
+                                    <div class="pure-u-1-3">
                                         <label for="district">Quận/Huyện</label>
                                         <select id="district">
-                                            <option>Quận Long Biên</option>
-                                            <option>Quận Hoàn Kiếm</option>
-                                            <option>Quận Hai Bà Trưng</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="pure-g">
-                                    <div class="pure-u-3-5">
-                                        <input class="search-bar" type="text" placeholder="Tên biểu mẫu, tên tổ chức">
-                                        <button type="submit" class="pure-button pure-button-primary">Tìm kiếm</button>
+
+                                    <div class="pure-u-1-3">
+                                        <label for="organization">Tổ chức</label>
+                                        <select id="organization">
+                                        </select>
+                                        <button type="button" class="pure-button pure-button-primary search-button">Tìm kiếm</button>
                                     </div>
                                 </div>
+                                <!--<div class="pure-g">
+                                    <div class="pure-u-3-5">
+                                        <label for="organization">Tổ chức</label>
+                                        <select id="organization">
+                                        </select>
+                                        <button type="button" class="pure-button pure-button-primary search-button">Tìm kiếm</button>
+                                    </div>
+                                </div>-->
                             </fieldset>
                         </form>
                     </div>
                 </div>
 
                 <div class="forms">
+
+                    <!-- FORM CONTENT -->
                     <div class="form-content">
+
+                        <!-- INFO -->
                         <div class="form-info">
                             <div class="info">
-                                <p class="form-name">Đơn đăng ký cấp Căn cước công dân</p>
+                                <p class="form-name"></p>
                             </div>
+                            <!-- BUTTONS -->
                             <div class="features">
-                                <button class="pure-button pure-button-primary">Điền biểu mẫu</button>
-                                <button class="pure-button">In biểu mẫu</button>
+                                <button class="pure-button pure-button-primary fill-button">Điền biểu mẫu</button>
+                                <button class="pure-button print-button">In biểu mẫu</button>
+
                             </div>
                         </div>
-                        <div class="form-detail">
-                            <object class="display-frame" type="text/html" width="100%" height="100%"></object>
+
+                        <!-- DISPLAY FORM -->
+                        <div class="form-detail" contenteditable="true">
+
                         </div>
                     </div>
 
+                    <!-- LIST OF FORMS -->
                     <div class="form-list">
                         <div class="pure-menu custom-restricted-width form-list-detail">
                             <span class="pure-menu-heading">Danh sách biểu mẫu</span>
                             <ul class="pure-menu-list">
-                                <li class="pure-menu-item org-item"><a href="#" class="pure-menu-link">Công ty A</a>
-                                    <ul class="pure-menu-list sub-menu">
-                                        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Đăng ký cấp Căn cước công dân</a></li>
-                                        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Đơn xin xác nhận</a></li>
-                                        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Đơn xin li hôn</a></li>
-                                        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Đơn xin cấp lại đăng ký xe máy</a></li>
-                                    </ul>
-                                </li>
-                                <li class="pure-menu-item org-item"><a href="#" class="pure-menu-link">Công ty B</a></li>
-                                <li class="pure-menu-item org-item"><a href="#" class="pure-menu-link">Công ty C</a></li>
-                                <li class="pure-menu-item org-item"><a href="#" class="pure-menu-link">Công ty D</a></li>
-                                <li class="pure-menu-item org-item"><a href="#" class="pure-menu-link">Ngân hàng A</a></li>
-                                <li class="pure-menu-item org-item"><a href="#" class="pure-menu-link">Ngân hàng B</a></li>
-                                <li class="pure-menu-item org-item"><a href="#" class="pure-menu-link">Ngân hàng C</a></li>
-                                <li class="pure-menu-item org-item"><a href="#" class="pure-menu-link">Ngân hàng D</a></li>
+                                <%if(forms){%>
+                                    <% forms.forEach(function(form){%>
+                                        <li class="pure-menu-item form-item">
+                                            <a class="pure-menu-link" data-id="<%=form._id%>">
+                                                <%=form.name %>
+                                            </a>
+                                        </li>
+                                        <%}) %>
+                                            <%}%>
 
                             </ul>
                         </div>
@@ -183,6 +184,7 @@
 
 
     </div>
+    <div class="modal"><!-- Place at bottom of page --></div>
 </body>
 
 </html>

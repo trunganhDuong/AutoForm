@@ -7,312 +7,156 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
 var jsonParser = bodyParser.json();
 
-
+var allCities;
 /* GET location page. */
 router.get('/', function (req, res, next) {
   City.find({}, function (err, cities) {
     if (err) res.send(err);
     else {
-      allCites = cities;
-      District.find({}, function (err, districts) {
-        if (err) res.send(err);
-        else {
-          allDistricts = districts;
-          res.render('location', { cities: cities, districts: districts });
-        }
-      })
+      allCities = cities;
+      res.render('location', {
+        cities: cities,
+        city: null,
+        districts: null
+      });
     }
   });
 });
 
-//CITY
-//get city by id
+//  GET CITY BY ID
 router.get('/city/:id', function (req, res) {
   City.findOne({ _id: req.params.id }, function (err, city) {
     if (err) res.send(err);
     else {
-      res.render('cityDetail', { city: city });
-      res.end();
+      if (city) {
+        res.json(city);
+        res.end();
+      }
+      else {
+        res.status(400);
+        res.end();
+      }
     }
-  })
+  });
 })
-//delete city
-router.delete('/city/:id', function (req, res) {
-  City.findOneAndRemove({ _id: req.params.id }, function (err, city) {
+
+// GET CITY BY NAME
+router.get('/city/name/:name',function(req,res){
+  City.findOne({name:req.params.name},function(err,city){
+    if(err) res.send(err);
+    else{
+      if(city){
+        res.json(city);
+        res.end();
+      }
+      else{
+        res.status(404);
+        res.end();
+      }
+    }
+  });
+});
+
+
+
+
+
+//  ADD CITY/DISTRICT
+router.post('/', function (req, res) {
+  var body = req.body;
+
+  if (body.for === 'district') {
+    var city = body.city;
+    City.findOneAndUpdate(
+      {
+        name: body.city
+      },
+      {
+        $push: {
+          districts: {
+            name: body.name
+          }
+        }
+      },
+      {
+        upsert: true
+      },
+      function (err) {
+        if (err) res.send(err);
+        else {
+          res.status(204);
+          res.end();
+        }
+      }
+    );
+  }
+  else {
+    var newCity = new City();
+    newCity.name = req.body.name;
+    newCity.save(function (err) {
+      if (err) res.send(err);
+      else {
+        res.status(204);
+        res.end();
+      }
+    });
+  }
+});
+
+//  DELETE A CITY
+router.delete('/:id', function (req, res) {
+  City.findOneAndRemove({ _id: req.params.id }, function (err) {
     if (err) res.send(err);
     else {
       res.status(204);
       res.end();
     }
-  })
-})
-//update city
-router.put('/city/:id', urlencodedParser, function (req, res) {
-  City.findOne({ name: req.body.name }, function (err, cit) {
-    if (err) res.send(err);
-    else {
-      if (cit) {
+  });
+});
+
+//   UPDATE DISTRICT
+router.put('/district', function (req, res) {
+  City.findOne({"districts.name":req.body.distName},function(err,dist){
+    if(err) res.send(err);
+    else{
+      if(dist){
         res.status(400);
         res.end();
       }
-      else {
+      else{
         City.findOneAndUpdate(
-          {
-            _id: req.params.id
-          },
-          {
-            $set: { name: req.body.name }
-          },
-          {
-            upsert: true
-          },
-          function (err, city) {
-            if (err) res.send(err);
-            else {
+          {"districts._id":req.body.distId},
+          {$set:{"districts.$.name":req.body.distName}},
+          {upsert:true},
+          function(err,dist){
+            if(err) res.send(err);
+            else{
+              console.log(dist);
               res.status(204);
               res.end();
             }
-          });
-      }
-    }
-  });
-
-});
-
-
-//DISTRICT
-//get district by id
-router.get('/district/:id', function (req, res) {
-  //Find district
-  District.findOne({ _id: req.params.id }, function (err, dist) {
-    if (err) res.send(err);
-    else {
-      if (dist) {
-        //Find city
-        City.findOne({ _id: dist.cityId }, function (err, cit) {
-          if (err) res.send(err);
-          else {
-            if (cit) {
-              //Find all cities
-              City.find({}, function (err, cits) {
-                if (err) res.send(err);
-                else {
-                  res.render('districtDetail', {
-                    city: cit,
-                    cities: cits,
-                    district: dist
-                  });
-                }
-              });
-            }
-            else {
-              res.send(404);
-              res.end();
-            }
           }
-        })
+          );
       }
-      else {
-        res.send(404);
-        res.end();
-      }
-    }
-  });
-})
-
-//update district
-router.put('/district/:id', function (req, res) {
-  District.find({ name: req.body.name }, function (err, dist) {
-    if (err) res.send(err);
-    else {
-      if (dist.length >= 2) {
-        res.status(400);
-        res.end();
-      }
-      else {
-        City.findOne({ name: req.body.city }, function (err, cit) {
-          if (err) res.send(err);
-          else {
-            if (!cit) {
-              res.send(404);
-              res.send();
-            }
-            else {
-              District.findOneAndUpdate(
-                {
-                  _id: req.params.id
-                },
-                {
-                  $set: {
-                    name: req.body.name,
-                    cityId: cit._id
-                  }
-                },
-                {
-                  upsert: true
-                },
-                function (err, newDist) {
-                  if (err) res.send(err);
-                  else {
-                    res.status(204);
-                    res.end();
-                  }
-                });
-            }
-          }
-        });
-      }
-    }
-  });
-})
-
-//delete district
-router.delete('/district/:id', function (req, res) {
-  District.findOneAndRemove({ _id: req.params.id }, function (err) {
-    if (err) res.send(err);
-    else {
-      res.status(204);
-      res.end();
     }
   });
 });
 
-//get all district of a city by cityId
-router.get('/district/city/id/:id', function (req, res) {
-  District.find({ cityId: req.params.id }, function (err, dists) {
-    if (err) res.send(err);
-    else {
-      if (dists) {
-        res.json(JSON.stringify(dists));
-        res.end();
-      }
-      else {
-        res.status(404);
-        res.end();
-      }
-    }
-  });
-})
-
-//get all district of a city by cityName
-router.get('/district/city/name/:name', function (req, res) {
-  City.findOne({ name: req.params.name }, function (err, city) {
-    if (err) res.send(err);
-    else {
-      if (city) {
-        District.find({ cityId: city._id }, function (err, dists) {
-          if (err) res.send(err);
-          else {
-            if (dists) {
-              res.json(dists);
-              res.end();
-            }
-            else {
-              res.status(404);
-              res.end();
-            }
-          }
-        });
-      }
+//  DELETE DIST
+router.delete('/district/:cityId/:distId',function(req,res){
+  City.findOneAndUpdate(
+    {_id: req.params.cityId},
+    {
+      $pull:{districts:{_id:req.params.distId}}
+    },
+    function(err){
+      if(err) res.send(err);
       else{
-        res.status(404);
+        res.status(204);
         res.end();
       }
     }
-  });
-
-})
-
-//  GET DISTRICT BY NAME
-router.get('/district/name/:name',function(req,res){
-  District.findOne({name:req.params.name},function(err,dists){
-    if(err) res.send(err);
-    else{
-      if(dists){
-        res.json(dists);
-        res.end();
-      }
-      else{
-        res.status(404);
-        res.end();
-      }
-    }
-  });
-})
-
-
-
-//Functions handling post request
-var newCity = function (req, res) {
-  City.findOne({ name: req.body.name }, function (err, city) {
-    if (err) res.send(err);
-    else {
-      if (city) {
-        res.status(400);
-        res.end();
-      }
-      else {
-        var newCity = new City();
-        newCity.name = req.body.name;
-        newCity.save(function (err, city) {
-          if (err) res.send(err);
-          else {
-            res.status(204);
-            res.end();
-          }
-        });
-      }
-    }
-  })
-}
-
-var newDistrict = function (req, res) {
-  //check existence
-  District.findOne({ name: req.body.name }, function (err, dist) {
-    if (err) res.send(err);
-    else {
-      if (dist) {
-        res.status(400);
-        res.end();
-      }
-      else {
-        //Get city id
-        City.findOne({ name: req.body.city }, function (err, city) {
-          if (err) res.send(err);
-          else if (city) {
-            console.log(city);
-            //post new district
-            var newDist = new District();
-            newDist.name = req.body.name;
-            newDist.cityId = city._id;
-            newDist.save(function (err) {
-              if (err) res.send(err);
-              else {
-                res.send(204);
-                res.end();
-              }
-            })
-          }
-          else {
-            res.status(404);
-            res.end();
-          }
-        });
-      }
-    }
-  });
-}
-//post new city or district
-router.post('/', urlencodedParser, function (req, res) {
-  //post new city
-  if (req.body.for === "city") {
-    newCity(req, res);
-  }
-  //post new district
-  else {
-    newDistrict(req, res);
-  }
-
+  );
 });
 
 module.exports = router;

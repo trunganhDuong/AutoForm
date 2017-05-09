@@ -29,21 +29,15 @@ var displayHTML = function (data) {
 //GET ALL DISTRICTS OF A CITY 
 var getDistrict = function () {
     $('#district').find('option').remove();
+    $('#district').append("<option selected disabled>-- Chọn quận/huyện --</option>");
     var city = $('#city').val();
     $.ajax({
         method: "GET",
-        url: '/admin/location/district/city/name/' + city,
-        success: function (data) {
-            if (!data) {
-                $('#district').append("<option>Chọn quận/huyện</option>");
-            }
-            else {
-                $('#district').append("<option disabled selected value>" + "-- Chọn quận/huyện --" + "</option>");
-                data.forEach(function (item) {
-                    $('#district').append("<option>" + item.name + "</option>");
-                });
-            }
-
+        url: '/admin/location/city/name/' + city,
+        success: function (city) {
+            city.districts.forEach(function (item) {
+                $('#district').append("<option>" + item.name + "</option>");
+            });
         }
 
     });
@@ -75,6 +69,14 @@ var getOrganization = function () {
 //DOCUMENT READY
 $(document).ready(function () {
 
+    //  LOADER
+    $body = $("body");
+
+    $(document).on({
+        ajaxStart: function () { $body.addClass("loading"); },
+        ajaxStop: function () { $body.removeClass("loading"); }
+    });
+    
     //  CLICK ON SEARCH HEADER
     $('.search-header').click(function () {
         $('.search-content').slideToggle();

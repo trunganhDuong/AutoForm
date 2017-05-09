@@ -46,7 +46,11 @@ app.use(flash());
 app.use(session({
   secret: 'ilovescotchscotchyscotchscotch',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie:{
+    maxAge: 1000*60*60*30,
+    expires: new Date(Date.now()+1000*60*60*3)
+  }
 })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions

@@ -12,64 +12,8 @@
 
     <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
     <script src="/javascripts/jquery.js" type="text/javascript"></script>
+    <script src="/javascripts/location.js" type="text/javascript"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('.city-add-button').click(function () {
-                if ($('#city-name').val() === "") {
-                    alert('Tên thành phố không được trống');
-                    return;
-                }
-                $.ajax({
-                    method: "POST",
-                    data: {
-                        for: "city",
-                        name: $('#city-name').val()
-                    },
-                    statusCode: {
-                        204: function () {
-                            alert('Thêm thành công ');
-                            window.location.reload();
-                        },
-                        400: function () {
-                            alert('Thông tin đã tồn tại');
-                        }
-                    }
-
-                });
-            });
-
-            $('.district-add-button').click(function () {
-                if ($('#district-name').val() === "") {
-                    alert('Tên quận/huyện không được trống');
-                    return;
-                }
-                if ($('#of-city').val() === "") {
-                    alert('Chọn thành phố');
-                    return;
-                }
-                $.ajax({
-                    method:"POST",
-                    data:{
-                        for:'district',
-                        name:$('#district-name').val(),
-                        city:$('#of-city').val()
-                    },
-                    statusCode:{
-                        204: function () {
-                            alert('Thêm thành công ');
-                            window.location.reload();
-                        },
-                        400: function () {
-                            alert('Thông tin đã tồn tại');
-                        }
-                    }
-                });
-                
-
-            });
-        });
-    </script>
 </head>
 
 <body>
@@ -156,7 +100,6 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Tỉnh/thành phố</th>
-                                    <th>Ngày tạo</th>
                                 </tr>
                             </thead>
 
@@ -168,12 +111,9 @@
                                                 <%= ++i %>
                                             </td>
                                             <td>
-                                                <a href="/admin/location/city/<%=item._id %>">
+                                                <a class="city-item" data-id="<%=item._id%>">
                                                     <%= item.name %>
                                                 </a>
-                                            </td>
-                                            <td>
-                                                <%= item.creTime.toUTCString() %>
                                             </td>
                                         </tr>
                                         <% });%>
@@ -181,54 +121,87 @@
                         </table>
                     </div>
                 </div>
-                <div class="district">
-                    <div class="new-district">
-                        <form class="pure-form">
-                            <fieldset>
-                                <legend>Thêm quận/huyện</legend>
 
-                                <input id="district-name" name="name" type="text" placeholder="Tên quận/huyện">
-                                <select id="of-city" name="cityId">
-                                    <% cities.forEach(function(item){ %>
-                                        <option><%=item.name %> </option>
-                                    <% });%>
-                                </select>
-                                <button type="button" class="pure-button pure-button-primary district-add-button">Thêm</button>
+                <div class="city-detail">
+                    <div class="city-info">
+                        <style scoped>
+                            .button-success,
+                            .button-error,
+                            .button-warning,
+                            .button-secondary {
+                                color: white;
+                                border-radius: 4px;
+                                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                            }
+                            
+                            .button-success {
+                                background: rgb(28, 184, 65);
+                                /* this is a green */
+                            }
+                            
+                            .button-error {
+                                background: rgb(202, 60, 60);
+                                /* this is a maroon */
+                            }
+                            
+                            .button-warning {
+                                background: rgb(223, 117, 20);
+                                /* this is an orange */
+                            }
+                            
+                            .button-secondary {
+                                background: rgb(66, 184, 221);
+                                /* this is a light blue */
+                            }
+                        </style>
+                        <form class="pure-form info-form">
+                            <fieldset>
+                                <legend>Thông tin</legend>
+                                <input id="id" name="id" type="text" disabled placeholder="ID">
+                                <input id="city-name-info" name="name" type="text" placeholder="Tỉnh/thành phố">
+                                <button type="button" class="pure-button pure-button-primary update-button">Cập nhật</button>
+                                <button type="button" class="pure-button pure-button-primary button-error delete-button">Xóa</button>
                             </fieldset>
                         </form>
                     </div>
 
-                    <div class="district-list">
-                        <table class="pure-table pure-table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Quận/huyện</th>
-                                    <th>Ngày tạo</th>
-                                </tr>
-                            </thead>
+                    <div class="district">
 
-                            <tbody>
-                                <% var i=0 %>
-                                    <% districts.forEach(function(item){ %>
-                                        <tr>
-                                            <td>
-                                                <%= ++i %>
-                                            </td>
-                                            <td>
-                                                <a href="/admin/location/district/<%=item._id %>">
-                                                    <%= item.name %>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <%= item.creTime.toUTCString() %>
-                                            </td>
-                                        </tr>
-                                        <% });%>
-                            </tbody>
-                        </table>
+                        <div class="new-district">
+                            <form class="pure-form">
+                                <fieldset>
+                                    <legend>Thêm quận/huyện</legend>
+
+                                    <input id="district-name" name="name" type="text" placeholder="Tên quận/huyện">
+                                    <select id="of-city" name="cityId">
+                                    <% cities.forEach(function(item){ %>
+                                        <option data-id="<%=item._id%>"><%=item.name %> </option>
+                                    <% });%>
+                                    </select>
+                                    <button type="button" class="pure-button pure-button-primary district-add-button">Thêm</button>
+                                </fieldset>
+                            </form>
+                        </div>
+
+                        <div class="district-list">
+                            <table class="pure-table pure-table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:5%">ID</th>
+                                        <th style="width:30%">Quận/huyện</th>
+                                        <th style="width:30%">Ngày tạo</th>
+                                        <th style="width:35%"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
 
 
             </div>
@@ -237,6 +210,7 @@
 
 
     </div>
+    <div class="modal"><!-- Place at bottom of page --></div>
 </body>
 
 </html>

@@ -35,7 +35,7 @@ router.get('/:id', function (req, res) {
 router.post('/', urlencodedParser, function (req, res) {
   User.findOne(
     {
-      $or: [{ email: req.body.email }, { username: req.body.username }]
+      "local.email": req.body.email
     },
     function (err, user) {
       if (err) res.send(err);
@@ -45,15 +45,17 @@ router.post('/', urlencodedParser, function (req, res) {
           res.end();
         }
         else {
-          User.create(req.body, function (err, user) {
-            if (err) res.send(err);
-            else {
-              res.redirect('back');
-              console.log('******************************************');
+          var newUser = new User();
+          newUser.local.email = req.body.email;
+          newUser.local.password = newUser.generateHash(req.body.password);
+          newUser.save(function (err) {
+            if (err)
+              res.send(err);
+            else{
               res.status(204);
               res.end();
             }
-          })
+          });
         }
       }
 
@@ -78,36 +80,36 @@ router.put('/:id', urlencodedParser, function (req, res) {
   }, function (err, user) {
     if (err) res.send(err);
     else {
-      if(user.length>=2){
+      if (user.length >= 2) {
         res.status(400);
         res.end();
       }
-      else{
-         User.findOneAndUpdate(
-        {
-          _id: req.params.id
-        },
-        {
-          $set:
+      else {
+        User.findOneAndUpdate(
           {
-            email: req.body.email,
-            username: req.body.username,
-            password: req.body.password,
-            type: req.body.type
-          }
-        },
-        {
-          upsert: true
-        },
-        function (err, user) {
-          if (err) res.send(err);
-          else {
-            res.status(204);
-            res.end();
-          }
-        })
+            _id: req.params.id
+          },
+          {
+            $set:
+            {
+              email: req.body.email,
+              username: req.body.username,
+              password: req.body.password,
+              type: req.body.type
+            }
+          },
+          {
+            upsert: true
+          },
+          function (err, user) {
+            if (err) res.send(err);
+            else {
+              res.status(204);
+              res.end();
+            }
+          })
       }
-     
+
     }
   });
 

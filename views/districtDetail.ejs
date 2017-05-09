@@ -16,7 +16,13 @@
 
     <script>
         $(document).ready(function () {
+            //  LOADER
+            $body = $("body");
 
+            $(document).on({
+                ajaxStart: function () { $body.addClass("loading"); },
+                ajaxStop: function () { $body.removeClass("loading"); }
+            });
             $('.delete-button').click(function () {
                 var cf = confirm('Bạn có chắc muốn xóa?');
                 if (cf == true) {
@@ -164,7 +170,7 @@
                             /* this is a light blue */
                         }
                     </style>
-                    
+
                     <form class="pure-form pure-form-aligned">
                         <fieldset>
                             <div class="pure-control-group">
@@ -180,7 +186,7 @@
 
                             <div class="pure-control-group">
                                 <label for="city">Tỉnh/thành phố</label>
-                                <select id="city" name="city" >
+                                <select id="city" name="city">
                                     <% cities.forEach(function(item){ 
                                     var selected = (item.name==city.name)?"selected":""; %>
                                          <option <%=selected%> >  <%=item.name %> </option>
@@ -190,10 +196,10 @@
 
                             <div class="pure-control-group">
                                 <label for="creTime">Thời gian tạo</label>
-                                <input name="creTime" id="creTime" type="text" disabled placeholder="Creation time" value="<%= district.creTime %>" >
+                                <input name="creTime" id="creTime" type="text" disabled placeholder="Creation time" value="<%= district.creTime %>">
                             </div>
 
-                            
+
 
 
                             <div class="pure-controls">
@@ -206,6 +212,9 @@
 
             </div>
         </div>
+    </div>
+    <div class="modal">
+        <!-- Place at bottom of page -->
     </div>
 </body>
 

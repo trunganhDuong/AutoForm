@@ -3,12 +3,21 @@
 var mongoose = require('mongoose')
 var Schema=mongoose.Schema;
 
-var ProfileSchema=new Schema({
-    accountId: {
-        type: Schema.ObjectID,
-        ref: 'Account'
+var PropValue=new Schema({
+    fieldId:{
+        type:Schema.Types.ObjectId,
+        ref: 'Field'
     },
-    profileName: String,
+    value:String
+});
+
+var ProfileSchema=new Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    name: String,
+    detail:[PropValue],
     creTime: {//Time when create this profile
         type: Date,
         default:Date.now

@@ -190,7 +190,7 @@ router.get('/org/:id', function (req, res) {
 })
 
 // GET ALL FORMS OF SELECTED ORGS
-router.post('/orgs', function (req, res) {
+router.post('/orgs', function (req, res) { 
   console.log(req.body.orgs);
   /*Form.find(
     {

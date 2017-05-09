@@ -5,7 +5,7 @@
 }
 .city{
     float: left;
-    width: 45%;
+    width: 27.5%;
     border:2px solid #e8e8e8;
     border-radius:5px;
     padding: 1em;
@@ -19,28 +19,42 @@
     max-height:500px;
 }
 .city-list table td:last-child{
-    width: 40%;
+    width: 90%;
 }
 .city-list a{
     color:#23537c;
 }
-.district{
+.city-item:hover{
+    cursor: pointer;
+}
+
+.city-detail{
     float: right;
-    width: 45%;
+    width: 64.5%;
+    margin: 1.5em 1em 0 1em;
+    background-color: #f8f8f8;
+}
+.district{
     border:2px solid #e8e8e8;
     border-radius:5px;
-    padding: 1em 0 1em 1em;
-    margin: 1.5em 1em 0 1em;
     background-color: white;
-    
+    margin-top:0.5em;
+    padding: 0.5em 1em 0.5em 1em;
 }
 .district-list{
     overflow: scroll;
-    max-height:500px;
+    max-height:400px;
 }
 .district-list table td:last-child{
     width: 40%;
 }
 .district-list a{
     color: #23527c;
+}
+
+.city-info{
+    border:2px solid #e8e8e8;
+    border-radius:5px;
+    background-color: white;
+    padding: 0.5em 1em 0.5em 1em;
 }

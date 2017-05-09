@@ -16,15 +16,25 @@
 
     <script>
         $(document).ready(function () {
+            //  LOADER
+            $body = $("body");
+
+            $(document).on({
+                ajaxStart: function () { $body.addClass("loading"); },
+                ajaxStop: function () { $body.removeClass("loading"); }
+            });
             $('.add-button').click(function () {
                 if ($('#name').val() === "") {
                     alert("Tên trường không được để trống");
+                } if ($('#sname').val() === "") {
+                    alert("Mã trường không được để trống");
                 }
                 else {
                     $.ajax({
                         method: "POST",
                         data: {
-                            name: $('#name').val()
+                            name: $('#name').val(),
+                            sname: $('#sname').val()
                         },
                         statusCode: {
                             204: function () {
@@ -117,6 +127,9 @@
                             <label for="name">Tên trường</label>
                             <input name="name" id="name" type="text" placeholder="Field name">
 
+                            <label for="name">Tên</label>
+                            <input name="sname" id="sname" type="text" placeholder="Field ID">
+
                             <input type="button" class="pure-button pure-button-primary add-button" autofocus value="Thêm">
                         </fieldset>
                     </form>
@@ -147,8 +160,9 @@
                     <table class="pure-table pure-table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Tên trường</th>
+                                <th>#</th>
+                                <th>Tên hiển thị</th>
+                                <th>Tên</th>
                                 <th>Thời gian</th>
                             </tr>
                         </thead>
@@ -160,10 +174,14 @@
                                         <td>
                                             <%= ++i %>
                                         </td>
+
                                         <td>
                                             <a href="/admin/field/<%=item._id %>">
                                                 <%= item.name %>
                                             </a>
+                                        </td>
+                                        <td>
+                                            <%= item.sName %>
                                         </td>
                                         <td>
                                             <%= item.creTime.toUTCString() %>

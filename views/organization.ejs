@@ -11,37 +11,10 @@
     <link rel="stylesheet" href="/stylesheets/organization-style.css">
 
     <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
-    <script src="/javascripts//jquery.js" type="text/javascript"></script>
-
+    <script src="/javascripts/jquery.js" type="text/javascript"></script>
+    <script src="/javascripts/organization.js" type="text/javascript"></script>
     <script>
-        $(document).ready(function () {
-            $('.add-button').click(function () {
-                if ($('#name').val() === "") {
-                    alert("Tên trường không được để trống");
-                }
-                else {
-                    $.ajax({
-                        method: "POST",
-                        data: {
-                            name: $('#name').val(),
-                            phone: $('#phone').val(),
-                            district: $('#district').val()
-                        },
-                        statusCode: {
-                            204: function () {
-                                alert('Thêm thành công ');
-                                window.location.reload();
-                            },
-                            400: function () {
-                                alert('Thông tin đã tồn tại');
-                            }
-                        }
-                    });
-                }
-
-
-            });
-        });
+        
     </script>
 </head>
 
@@ -121,12 +94,15 @@
                             <label for="tel">Điện thoại</label>
                             <input id="phone" type="text" placeholder="Phone">
 
-                            <label for="district">Quận/Huyện</label>
-                            <select id="district">
-                                <% dists.forEach(function(item){ %>
-                                    <option><%=item.name%><option>
-                                    <% });%>
+                            <label for="city">Tỉnh/thành phố</label>
+                            <select id="city">
+                                <% cities.forEach(function(item){ %>
+                                    <option><%=item.name%></option>
+                                <% });%>
                             </select>
+
+                            <label for="district">Quận/Huyện</label>
+                            <select id="district"></select>
 
                             <button type="button" class="pure-button pure-button-primary add-button">Thêm</button>
                         </fieldset>
@@ -135,7 +111,7 @@
                 <div class="org-list">
 
                     <Legend>Danh sách tổ chức</Legend>
-                    
+
                     <table class="pure-table pure-table-striped">
                         <thead>
                             <tr>
@@ -176,6 +152,7 @@
 
 
     </div>
+    <div class="modal"><!-- Place at bottom of page --></div>
 </body>
 
 </html>
