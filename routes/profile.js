@@ -97,6 +97,7 @@ router.put('/', function (req, res) {
             _id: req.body.profId
           },
           {
+            $set:{name: req.body.profName},
             $pushAll: { detail: detail }
           },
           {
@@ -113,6 +114,7 @@ router.put('/', function (req, res) {
       }
     }
   );
+  
 
 });
 

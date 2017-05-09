@@ -34,7 +34,6 @@ var displayProperties = function (props) {
     });
 }
 
-//  GET FIELD BY ID
 
 
 //  APPEND PROPERTIES TO CONTENT
@@ -75,6 +74,7 @@ var sendDetail = function () {
         method: 'PUT',
         data: {
             profId: currentProfId,
+            profName: $('.info').text(),
             detail: JSON.stringify(detail)
         },
         statusCode: {
@@ -89,6 +89,13 @@ var sendDetail = function () {
 
     });
 }
+
+//  DISPLAY BUTTONS
+var displayButtons=function(){
+    $('.save-button').css('visibility',"visible");
+    $('.cancel-button').css('visibility',"visible");
+}
+
 
 $(document).ready(function () {
 
@@ -150,8 +157,7 @@ $(document).ready(function () {
             $(this).addClass("disable");
         }
 
-        $('.save-button').css('visibility', 'visible');
-        $('.cancel-button').css('visibility', 'visible');
+        displayButtons();
     });
 
     //  SELECT A PROFILE
@@ -209,5 +215,10 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    //  CHANGE PROFILE NAME
+    $('.info').on('keypress',function(){
+        displayButtons();
     });
 });
