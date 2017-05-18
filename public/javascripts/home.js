@@ -49,7 +49,10 @@ var fillOrg=function(){
 var fill = function () {
     detail.forEach(function (item) {
         var old = "<!--" + item['sname'] + "-->";
-        currentFormContent = currentFormContent.replace(old, item['value']);
+        var last=item['value'];
+        if(item.sname==='firstname' || item.sname==='lastname'|| item.sname==='surname')
+            last+=" ";
+        currentFormContent = currentFormContent.replace(old, last);
     });
 }
 

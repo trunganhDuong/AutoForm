@@ -12,7 +12,6 @@ var clearContent = function () {
 }
 
 
-
 //  DISPLAY THE PROPERTIES FROM SERVER
 var displayProperties = function (props) {
     props.forEach(function (prop) {
@@ -39,12 +38,18 @@ var displayProperties = function (props) {
 //  APPEND PROPERTIES TO CONTENT
 var genAppended = function (id, sname, text) {
     // STRING REPRESETING THE APPENDED ELEMENT
+    var reg="";
+    if(sname.includes('phone'))
+    {
+        reg='pattern="[0-9]{10,11}" title="Nhập đúng định dạng số điện thoại"';
+    }
+        
     var str = '';
     str += '<div id="div-' + sname + '" class="pure-control-group">';
     str += '<label>';
     str += text;
     str += '</label>';
-    str += '<input data-id="' + id + '" id="' + sname + '">';
+    str += '<input onkeypress="displayButtons()" required '+reg+' data-id="' + id + '" id="' + sname + '">';
     str += '</input>';
     str += '</div>';
 
@@ -60,7 +65,7 @@ var gatherProps = function () {
         var input = $(this).find('input');
         var temp = {
             fieldId: input.data('id'),
-            value: input.val()
+            value: $.trim(input.val())
         }
         detail.push(temp);
     });
@@ -221,4 +226,6 @@ $(document).ready(function () {
     $('.info').on('keypress',function(){
         displayButtons();
     });
+
+
 });
