@@ -14,7 +14,7 @@
     <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
     <script src="/javascripts/jquery.js" type="text/javascript"></script>
     <script src="/javascripts/home.js" type="text/javascript"></script>
-
+    <script src="/javascripts/ejs_production.js" type="text/javascript" ></script>
 </head>
 
 <body>
@@ -138,13 +138,23 @@
 
                         <!-- INFO -->
                         <div class="form-info">
-                            <div class="info">
-                                <p class="form-name"></p>
+                            <div class="profile pure-form">
+                                <select id="profile">
+                                    <option disabled selected>-- Chọn profile --</option>
+                                    <%if(profs){%>
+                                        <%profs.forEach(function(prof){%>
+                                            <option data-id="<%=prof._id%>">
+                                                <%=prof.name%>
+                                            </option>
+                                        <%})%>
+                                    <%}%>
+
+                                </select>
                             </div>
                             <!-- BUTTONS -->
                             <div class="features">
                                 <button class="pure-button pure-button-primary fill-button">Điền biểu mẫu</button>
-                                <button class="pure-button print-button">In biểu mẫu</button>
+                                <!--<button class="pure-button print-button">In biểu mẫu</button>-->
 
                             </div>
                         </div>
@@ -184,7 +194,10 @@
 
 
     </div>
-    <div class="modal"><!-- Place at bottom of page --></div>
+    <div class="loader-modal">
+        <!-- Place at bottom of page -->
+    </div>
+
 </body>
 
 </html>

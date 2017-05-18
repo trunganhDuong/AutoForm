@@ -96,6 +96,17 @@ router.get('/:id', function (req, res) {
   })
 })
 
+//  GET ORG JSON
+router.get('/json/:id',function(req,res){
+  Organization.findOne({_id:req.params.id},function(err,org){
+    if(err) res.send(err);
+    else{
+      res.json(org);
+      res.end();
+    }
+  });
+})
+
 // GET ORG BY DISTRICT NAME
 router.get('/district/:id', function (req, res) {
   City.findOne({"districts._id":req.params.id},function(err,city){

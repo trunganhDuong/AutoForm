@@ -91,7 +91,7 @@
     overflow: auto;
 }
 
-.info {
+.profile {
     float: left;
     width: 50%;
     height: 40px;
@@ -99,13 +99,11 @@
     margin: 1em 0 1em 1em;
 }
 
-.form-name {
-    margin: auto;
-}
+
 
 .features {
     float: right;
-    width: 40%;
+    width: 20%;
     height: 40px;
     line-height: 40px;
     margin-top: 1em;
@@ -119,4 +117,10 @@
 /*  BUTTONS: ; */
 .fill-button{
     visibility: hidden;
+}
+
+.property-list,
+.content{
+    max-height: 400px;
+    overflow: scroll;
 }

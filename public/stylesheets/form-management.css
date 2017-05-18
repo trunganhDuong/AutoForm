@@ -113,7 +113,9 @@
 .form-list-detail .pure-menu-list{
     padding: 1em 0 1em 0;
 }
-
+.form-list-detail .pure-menu-list:hover{
+    cursor: pointer;
+}
 
 .pure-menu-heading {
     padding-top: 1em;

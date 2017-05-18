@@ -36,4 +36,18 @@ router.get('/auth/google/callback', passport.authenticate('google', {
   failureRedirect: '/',
 }));
 
+//  CHECK AUTHENTICATION
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log(req.user);
+    res.redirect('/home');
+    return next();
+  }
+
+  else {
+    req.flash('loginMessage', 'Bạn chưa đăng nhập');
+    res.redirect('/');
+  }
+}
+
 module.exports = router;

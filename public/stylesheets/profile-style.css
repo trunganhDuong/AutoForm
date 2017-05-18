@@ -46,6 +46,7 @@
     margin: 1em;
     overflow: auto;
     background-color: white;
+    max-height:500px;
 }
 
 .properties {
@@ -57,6 +58,10 @@
     
 }
 
+.property-list{
+    overflow: scroll;
+    max-height:500px;
+}
 
 /*==property-value==*/
 .property-list li:hover{
@@ -90,8 +95,10 @@
 }
 .content{
     width: 100%;
-    min-height: 400px;
     position: relative;
+    overflow: scroll;
+    max-height:500px;
+    min-height:500px;
 }
 
 .content 

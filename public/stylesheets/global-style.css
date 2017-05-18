@@ -696,7 +696,7 @@ a {
 }
 
 /*==LOADER==*/
-.modal {
+.loader-modal {
     display:    none;
     position:   fixed;
     z-index:    1000;
@@ -718,6 +718,6 @@ body.loading {
 
 /* Anytime the body has the loading class, our
    modal element will be visible */
-body.loading .modal {
+body.loading .loader-modal {
     display: block;
 }

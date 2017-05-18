@@ -36,7 +36,8 @@ var getDistrict = function () {
         url: '/admin/location/city/name/' + city,
         success: function (city) {
             city.districts.forEach(function (item) {
-                $('#district').append("<option>" + item.name + "</option>");
+                var appended = $('<option data-id="' + item._id + '">' + item.name + '</option>');
+                appended.appendTo($('#district'));
             });
         }
 
@@ -44,8 +45,8 @@ var getDistrict = function () {
 };
 
 // GET ALL ORGANIZATION OF A DISTRICT
-var getOrganization = function () {
-    $('#organization').find('option').remove();
+var getOrganization = function (distId) {
+    /*$('#organization').find('option').remove();
     var district = $('#district').val();
     $.ajax({
         method: "GET",
@@ -61,6 +62,19 @@ var getOrganization = function () {
                 });
             }
 
+        }
+
+    });*/
+    $('#organization').find('option').remove();
+    $('#organization').append("<option disabled selected> --Chọn tổ chức-- </option>");
+    $.ajax({
+        method: "GET",
+        url: '/admin/organization/district/' + distId,
+        success: function (data) {
+            data.forEach(function (item) {
+                var appended = $('<option data-id="' + item._id + '">' + item.name + '</option>');
+                appended.appendTo($('#organization'));
+            });
         }
 
     });
@@ -137,7 +151,8 @@ $(document).ready(function () {
 
     //  GET ORGANIZATION WHEN SELECT DISTRICT
     $('#district').on('change', function () {
-        getOrganization();
+        var distId = $(this).find(':selected').data('id');
+        getOrganization(distId);
     });
     //  CLICK ON FORM ITEM
     $('.form-item').click(function () {

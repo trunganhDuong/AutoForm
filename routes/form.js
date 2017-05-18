@@ -129,6 +129,19 @@ router.get('/:id', function (req, res) {
   });
 });
 
+//  GET ORGID OF A FORM
+router.get('/org/id/:formId',function(req,res){
+  Form.findOne({_id:req.params.formId},function(err,form){
+    if(err) res.send(err);
+    else{
+      if(form){
+        res.send(form.orgId);
+        res.end();
+      }
+    }
+  })
+})
+
 //  UPDATE FORM
 router.put('/', urlencondedParser, function (req, res) {
   var buffer = new Buffer(req.body.content);

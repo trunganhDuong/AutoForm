@@ -1,14 +1,69 @@
 var currentFormId;
+var currentProfId;
+var currentFormContent;
+var detail = [];
 
-// DISPLAY FORM CONTENT
-var displayForm = function (text) {
-    $('.form-detail').html("");
-    $('.form-detail').html(text);
+// CONVERT PROFILE DETAIL
+var convertProfile = function (profDetail) {
+    $.each(profDetail,function(index,item){
+        getSname(item['fieldId'],item['value']);
+    });
 }
 
-// DISPLAY FILL BUTTON
-var displayFillButton = function () {
+
+//  GET SNAME
+var getSname = function (fieldId,value) {
+    $.ajax({
+        method: 'GET',
+        url: '/admin/field/json/' + fieldId,
+        success: function (field) {
+            var obj = {
+                sname: field.sName,
+                value: value
+            };
+            detail.push(obj);
+        }
+    });
+}
+
+//  GET AND FILL ORGNAME
+var fillOrg=function(){
+    $.ajax({
+        method:'GET',
+        url:'/admin/form/org/id/'+currentFormId,
+        success:function(orgId){
+            $.ajax({
+                method:'GET',
+                url:'/admin/organization/json/'+orgId,
+                success: function(org){
+                    //  FILL ORG NAME
+                    currentFormContent=currentFormContent.replace("<!--orgName-->",org.name);
+                    displayForm(currentFormContent);
+                }
+            });
+        }
+    });
+}
+
+//  FILE FORM
+var fill = function () {
+    detail.forEach(function (item) {
+        var old = "<!--" + item['sname'] + "-->";
+        currentFormContent = currentFormContent.replace(old, item['value']);
+    });
+}
+
+//  DISPLAY FORM CONTENT
+var displayForm = function (html) {
+    currentFormContent = html;
+    $('.form-detail').html("");
+    $('.form-detail').html(html);
+}
+
+//  DISPLAY FILL BUTTON
+var displayButtons = function () {
     $('.fill-button').css('visibility', 'visible');
+    $('.print-button').css('visibility', 'visible');
 }
 
 //  GET ALL DISTRICTS OF A CITY 
@@ -29,7 +84,7 @@ var getDistrict = function () {
     });
 };
 
-// GET ALL ORGANIZATION OF A DISTRICT
+//  GET ALL ORGANIZATION OF A DISTRICT
 var getOrganization = function (distId) {
     $('#organization').find('option').remove();
     $('#organization').append("<option disabled selected> --Chọn tổ chức-- </option>");
@@ -46,7 +101,18 @@ var getOrganization = function (distId) {
     });
 }
 
-// DOCUMENT READY
+//  GET PROFILE DETAIL
+var getProfDetail = function (callback) {
+    $.ajax({
+        method: 'GET',
+        url: '/profile/' + currentProfId,
+        success: function (prof) {
+            callback(prof);
+        }
+    });
+}
+
+//  DOCUMENT READY
 $(document).ready(function () {
     //  LOADER
     $body = $("body");
@@ -55,6 +121,8 @@ $(document).ready(function () {
         ajaxStart: function () { $body.addClass("loading"); },
         ajaxStop: function () { $body.removeClass("loading"); }
     });
+
+
     //  GET DISTRICT CITY WHEN DOUCUMENT IS READY
     getDistrict();
 
@@ -65,17 +133,16 @@ $(document).ready(function () {
 
     //  SELECT A FORM
     $('.form-item').click(function () {
+        currentFormId = $(this).find('a').data('id');
         $.ajax({
             method: 'GET',
-            url: '/admin/form/' + $(this).find('a').data('id'),
+            url: '/admin/form/' + currentFormId,
             success: function (form) {
                 displayForm(form);
-                displayFillButton();
+                displayButtons();
             }
         });
     });
-
-
 
     // GET DISTRICT WHEN SELECT CITY
     $('#city').on('change', function () {
@@ -87,5 +154,24 @@ $(document).ready(function () {
         var distId = $(this).find(':selected').data('id');
         getOrganization(distId);
     })
+
+    //  SELECT A PROFILE
+    $('#profile').on('change', function () {
+        currentProfId = $(this).find(':selected').data('id');
+        getProfDetail(function (prof) {
+            convertProfile(prof.detail);
+        });
+    });
+
+    //  FILL FORM
+    $('.fill-button').click(function () {
+        if (!currentProfId) {
+            alert('Chọn profile để điền');
+            return;
+        }
+        fill();
+        fillOrg();
+        
+    });
 
 });
