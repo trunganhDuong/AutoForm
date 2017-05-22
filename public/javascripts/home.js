@@ -39,6 +39,8 @@ var fillOrg=function(){
                     //  FILL ORG NAME
                     currentFormContent=currentFormContent.replace("<!--orgName-->",org.name);
                     displayForm(currentFormContent);
+                    $('.export-button').css('visibility','visible');
+                    $('.edit-button').css('visibility','visible');
                 }
             });
         }
@@ -125,7 +127,11 @@ $(document).ready(function () {
         ajaxStop: function () { $body.removeClass("loading"); }
     });
 
-
+    //  CHECK IF PROF ALREADY CHOSEN
+    if($('#profile').val()!=="-- Chọn profile --"){
+        currentProfId=$('#profile').find(':selected').data('id');
+    }
+    
     //  GET DISTRICT CITY WHEN DOUCUMENT IS READY
     getDistrict();
 
@@ -175,6 +181,43 @@ $(document).ready(function () {
         fill();
         fillOrg();
         
+        
+    });
+
+    //  DISPLAY EXPORT MODAL
+    $('.export-button').click(function(){
+        $('.print-modal').css('display','block');
+    });
+
+    //  CANCEL EXPORT FILE
+    $('.cancel-export-button').click(function(){
+        $('.print-modal').css('display','none');
+        $('#file-name').text()="";
+    });
+
+    //  EXPORT FILE
+    $('.print-modal').find('.export-button').click(function(){
+        if($('#file-name').val()===''){
+            alert('Nhập tên file');
+            return;
+        }
+        if($('#format').val()==='PDF'){//   GENERATE PDF FILE
+            html2canvas($('.form-detail'),{
+                onrendered: function(canvas){
+                    var img= canvas.toDataURL("image/jpg");
+                    var doc = new jsPDF('p','pt','a4');
+                    doc.addImage(img,'JPEG',20,20);
+                    doc.save($('#file-name').val());
+
+                   
+                }
+            })
+        }
+        else{
+            $('.form-detail').wordExport($('#file-name').val());
+        }
+
+         $('#file-name').text()="";
     });
 
 });
