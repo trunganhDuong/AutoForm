@@ -5,7 +5,7 @@ var User = require('../models/user.model');
 
 
 /* GET login page. */
-router.get('/', function (req, res, next) {
+router.get('/',isLoggedIn, function (req, res, next) {
   var msg=req.flash('loginMessage');
   res.render('index',{ message: msg});
 });
