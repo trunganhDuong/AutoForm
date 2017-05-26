@@ -75,7 +75,8 @@ $(document).ready(function () {
                 data: {
                     name: $('#name').val(),
                     phone: $('#phone').val(),
-                    distId: currentDistId
+                    distId: currentDistId,
+                    cityId:currentCityId
                 },
                 statusCode: {
                     204: function () {
@@ -92,10 +93,13 @@ $(document).ready(function () {
 
     //  SELECT CITY
     $('#city').on('change', function () {
+        currentCityId=$(this).find(':selected').data('id');
         getDists($(this).val());
     })
-    // SELECT DISTRICT
-    $('#district').on('change',function(){
-       currentDistId= $(this).find(':selected').data('id');
+
+    //  SELECT DISTRICT
+    $('#district').on('change', function () {
+        currentDistId=$(this).find(':selected').data('id');
     })
+
 });

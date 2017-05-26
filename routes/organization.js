@@ -48,53 +48,43 @@ router.post('/', urlencodedParser, function (req, res) {
         res.end();
       }
       else {
-        City.findOne({"districts._id":req.body.distId},function(err,city){
+        var newOrg=new Organization();
+        newOrg.name=req.body.name;
+        newOrg.phone=req.body.phone;
+        newOrg.districtId=req.body.distId;
+        newOrg.cityId=req.body.cityId;
+        newOrg.save(function(err){
           if(err) res.send(err);
           else{
-            if(city){
-              var newOrg= new Organization();
-              newOrg.name=req.body.name;
-              newOrg.phone.push(req.body.phone);
-              newOrg.districtId=city.districts.id(req.body.distId)._id;
-              newOrg.save(function(err){
-                if(err) res.send(err);
-                else{
-                  res.status(204);
-                  res.end();
-                }
-              })
-            }
+            res.status(204);
+            res.end();
           }
-        });
+        })
       }
     }
   });
 });
 
-//get org by id
+//  GET ORG BY ID
 router.get('/:id', function (req, res) {
-  Organization.findOne({ _id: req.params.id }, function (err, org) {
-    if (err) res.send(err);
-    else {
-      District.findOne({ _id: org.districtId }, function (err, dist) {
-        if (err) res.send(err);
-        else {
-          District.find({}, function (err, dists) {
-            if (err) res.send(err);
-            else {
-              res.render('orgDetail', {
-                org: org,
-                dist: dist,
-                dists: dists
-              });
-            }
-          });
-
-        }
-      });
+  Organization.findOne({_id:req.params.id},function(err,org){
+    if(err) res.send(err);
+    else{
+      if(org){
+        City.find({},function(err,cities){
+          if(err) res.send(err);
+          else{
+            res.render('orgDetail',{
+              org:org,
+              cities:cities,
+            });
+          }
+        });
+      }
     }
-  })
+  });
 })
+
 
 //  GET ORG JSON
 router.get('/json/:id',function(req,res){
@@ -107,7 +97,7 @@ router.get('/json/:id',function(req,res){
   });
 })
 
-// GET ORG BY DISTRICT NAME
+// GET ORG BY DISTRICT ID
 router.get('/district/:id', function (req, res) {
   City.findOne({"districts._id":req.params.id},function(err,city){
     if(err) res.send(err);
@@ -150,38 +140,42 @@ router.delete('/:id', function (req, res) {
   });
 });
 
-//update org
+//  UPDATE ORG
 router.put('/:id', urlencodedParser, function (req, res) {
-  Organization.findOne({ name: req.body.name }, function (err, org) {
-    if (err) res.send(err);
-    else {
-      District.findOne({ name: req.body.district }, function (err, dist) {
-        if (err) res.send(err);
-        else {
-          Organization.findOneAndUpdate(
-            {
-              _id: req.params.id
-            },
-            {
-              $set: {
-                name: req.body.name,
-                phone: req.body.phone,
-                districtId: dist._id
-              }
-            },
-            {
-              upsert: true
-            },
-            function (err) {
-              if (err) res.send(err);
-              else {
-                res.status(204);
-                res.end();
-              }
-            });
-        }
-      });
+  console.log(req.body);
+  Organization.findOne({name:req.body.name, _id:{$ne: req.params.id}},function(err,org){
+    if(err) res.send(err);
+    else{
+      if(org){
+        res.status(400);
+        res.end();
+      }
+      else{
+        Organization.findOneAndUpdate(
+          {
+            _id:req.params.id
+          },
+          {
+            $set:{
+              name:req.body.name,
+              phone:req.body.phone,
+              districtId:req.body.districtId,
+              cityId:req.body.cityId
+            }
+          },
+          {
+            upsert:true
+          },
+          function(err){
+            if(err) res.send(err);
+            else{
+              res.status(204);
+              res.end();
+            }
+          }
+        );
+      }
     }
-  });
+  })
 });
 module.exports = router;

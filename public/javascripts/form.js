@@ -1,7 +1,9 @@
-var currentId;
+var currentFormId;
 var currentFileContent;
 var htmlAppended;
 var textAppended;
+var selectedDistrict;
+var selectedOrg;
 
 //  GET CURRENT FILE CONTENT
 var getCurrentContent = function () {
@@ -80,6 +82,62 @@ var getOrganization = function (distId) {
     });
 }
 
+//  DISPLAY FORMS
+var displayForms = function (forms) {
+    $('.form-list-detail').find('.pure-menu-list').empty();
+    forms.forEach(function (form) {
+        //  STRING TO APPEND
+        var str = "";
+        str += '<li class="pure-menu-item form-item">';
+        str += '<a class="pure-menu-link" data-id="' + form._id + '">';
+        str += form.name;
+        str += '</a>';
+        str += '</li>';
+
+        var appended = $(str);
+        appended.click(function () {
+            $('.form-detail').html("");
+            currentFormId = $(this).find('a').data('id');
+            $.ajax({
+                method: "GET",
+                url: '/admin/form/' + currentFormId,
+                success: function (data) {
+                    currentFileContent = data;
+                    displayHTML(currentFileContent);// DISPLAY FORM CONTENT
+                    $('.reverse').show();
+                }
+            });
+        })
+        appended.appendTo($('.form-list-detail').find('.pure-menu-list'));
+
+    });
+}
+
+//  SEARCH
+var search = function () {
+    if (!selectedDistrict) {
+        alert('Chọn quận/huyện để tiếp tục');
+        return;
+    }
+    if (!selectedOrg) {
+        alert('Chọn tổ chức để tiếp tục');
+        return;
+    }
+
+    //  GET ALL FORM OF THIS ORG
+    $.ajax({
+        method: 'GET',
+        url: '/admin/form/org/' + selectedOrg,
+        success: function (forms) {
+            displayForms(forms);
+        }
+    });
+
+
+
+}
+
+
 //DOCUMENT READY
 $(document).ready(function () {
 
@@ -90,7 +148,7 @@ $(document).ready(function () {
         ajaxStart: function () { $body.addClass("loading"); },
         ajaxStop: function () { $body.removeClass("loading"); }
     });
-    
+
     //  CLICK ON SEARCH HEADER
     $('.search-header').click(function () {
         $('.search-content').slideToggle();
@@ -114,10 +172,6 @@ $(document).ready(function () {
             alert('Nhập tên biểu mẫu');
             return;
         }
-        if ($('#org').val() === '') {
-            alert('Chọn tổ chức/doanh nghiệp');
-            return;
-        }
         if ($('.file').text() === 'Choose a file') {
             alert('Chọn đường dẫn đến file');
             return;
@@ -127,7 +181,7 @@ $(document).ready(function () {
             method: "POST",
             data: {
                 name: $('#name').val(),
-                org: $('#org').val(),
+                org: $('#organization').val(),
                 file: $('.file').text()
             },
             statusCode: {
@@ -151,9 +205,15 @@ $(document).ready(function () {
 
     //  GET ORGANIZATION WHEN SELECT DISTRICT
     $('#district').on('change', function () {
-        var distId = $(this).find(':selected').data('id');
-        getOrganization(distId);
+        selectedDistrict = $(this).find(':selected').data('id');
+        getOrganization(selectedDistrict);
     });
+
+    //  SELECT ORGANIZATION 
+    $('#organization').on('change', function () {
+        selectedOrg = $(this).find(':selected').data('id');
+    });
+
     //  CLICK ON FORM ITEM
     $('.form-item').click(function () {
         $('.form-detail').html("");
@@ -214,23 +274,8 @@ $(document).ready(function () {
 
     //  CLICK ON SEARCH BUTTON 
     $('.search-button').click(function () {
-        var city = $('#city').val();
-        var district = $('#district').val();
-        var org = $('#organization').val();
-
-        if (org) {//   IF NO ORG IS SELECTED
-            if (district) { //   IF ONE DISTRICT IS SELECTED
-                // FIND ALL THE ORG IN SELECTED DISTRICT
-                $.ajax({
-                    method: 'GET',
-                    url: '/admin/organization/district/name/' + district,
-                    success: function(orgs){
-                        alert(orgs);
-                    }
-                });
-            }
-
-        }
+        //  SEARCH
+        search();
 
     });
 
@@ -257,5 +302,7 @@ $(document).ready(function () {
             });
         }
     });
+
+
 
 });

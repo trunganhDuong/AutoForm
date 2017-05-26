@@ -11,6 +11,7 @@ var OrganizationSchema=new Schema({
         default: Date.now
     },
     phone: Array,
+    cityId:Schema.Types.ObjectId,
     districtId:Schema.Types.ObjectId
 });
 

@@ -21,6 +21,10 @@ var form = require('./routes/form');
 var account = require('./routes/account');
 var location = require('./routes/location');
 var organization = require('./routes/organization');
+var logout = require('./routes/logOut');
+var history=require('./routes/history');
+
+
 var database = require('./config/database');
 var app = express();
 
@@ -60,6 +64,7 @@ require('./config/passport')(passport);
 
 // CATCH THE ROUTES
 app.use('/', index);
+app.use('/logout', logout);
 app.use('/signup', signup);
 app.use('/home', home)
 app.use('/profile', profile);
@@ -69,6 +74,7 @@ app.use('/admin/form', form);
 app.use('/admin/account', account);
 app.use('/admin/location', location);
 app.use('/admin/organization', organization);
+app.use('/history',history);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

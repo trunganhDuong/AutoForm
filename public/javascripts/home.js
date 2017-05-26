@@ -1,18 +1,19 @@
 var currentFormId;
 var currentProfId;
 var currentFormContent;
+var selectedDistrict;
+var selectedOrg
 var detail = [];
 
 // CONVERT PROFILE DETAIL
 var convertProfile = function (profDetail) {
-    $.each(profDetail,function(index,item){
-        getSname(item['fieldId'],item['value']);
+    $.each(profDetail, function (index, item) {
+        getSname(item['fieldId'], item['value']);
     });
 }
 
-
 //  GET SNAME
-var getSname = function (fieldId,value) {
+var getSname = function (fieldId, value) {
     $.ajax({
         method: 'GET',
         url: '/admin/field/json/' + fieldId,
@@ -27,20 +28,25 @@ var getSname = function (fieldId,value) {
 }
 
 //  GET AND FILL ORGNAME
-var fillOrg=function(){
+var fillOrg = function () {
     $.ajax({
-        method:'GET',
-        url:'/admin/form/org/id/'+currentFormId,
-        success:function(orgId){
+        method: 'GET',
+        url: '/admin/form/org/id/' + currentFormId,
+        success: function (orgId) {
             $.ajax({
-                method:'GET',
-                url:'/admin/organization/json/'+orgId,
-                success: function(org){
+                method: 'GET',
+                url: '/admin/organization/json/' + orgId,
+                success: function (org) {
                     //  FILL ORG NAME
-                    currentFormContent=currentFormContent.replace("<!--orgName-->",org.name);
+                    currentFormContent = currentFormContent.replace("<!--orgName-->", org.name);
                     displayForm(currentFormContent);
-                    $('.export-button').css('visibility','visible');
-                    $('.edit-button').css('visibility','visible');
+
+                    //  DISPLAY BUTTONS
+                    $('.export-button').css('visibility', 'visible');
+                    $('.edit-button').css('visibility', 'visible');
+
+                    //  SAVE HISTORY
+                    saveHistory();
                 }
             });
         }
@@ -51,9 +57,9 @@ var fillOrg=function(){
 var fill = function () {
     detail.forEach(function (item) {
         var old = "<!--" + item['sname'] + "-->";
-        var last=item['value'];
-        if(item.sname==='firstname' || item.sname==='lastname'|| item.sname==='surname')
-            last+=" ";
+        var last = item['value'];
+        if (item.sname === 'firstname' || item.sname === 'lastname' || item.sname === 'surname')
+            last += " ";
         currentFormContent = currentFormContent.replace(old, last);
     });
 }
@@ -92,7 +98,7 @@ var getDistrict = function () {
 //  GET ALL ORGANIZATION OF A DISTRICT
 var getOrganization = function (distId) {
     $('#organization').find('option').remove();
-    $('#organization').append("<option disabled selected> --Chọn tổ chức-- </option>");
+    $('#organization').append("<option disabled selected> -- Chọn tổ chức -- </option>");
     $.ajax({
         method: "GET",
         url: '/admin/organization/district/' + distId,
@@ -117,6 +123,88 @@ var getProfDetail = function (callback) {
     });
 }
 
+//  SAVE HISTORY
+var saveHistory = function () {
+    $.ajax({
+        method: 'POST',
+        url: '/history',
+        data: {
+            profId: currentProfId,
+            formId: currentFormId,
+        }
+    });
+}
+
+//  DISPLAY SEARCH RESULT
+var displayResult = function (list) {
+    list.forEach(function (item) {
+        var str = "";
+        var dtid = "data-id=" + item._id;
+        str += '<li class="pure-menu-item form-item">';
+        str += '<a class="pure-menu-link"' + dtid + '>';
+        str += item.name;
+        str += '</a>';
+        str += '</li>';
+
+        var appended = $(str);
+        appended.appendTo($('.form-list-detail').find('.pure-menu-list'));
+    });
+
+}
+
+//  DISPLAY FORMS
+var displayForms = function (forms) {
+    $('.form-list-detail').find('.pure-menu-list').empty();
+    forms.forEach(function (form) {
+        //  STRING TO APPEND
+        var str = "";
+        str += '<li class="pure-menu-item form-item">';
+        str += '<a class="pure-menu-link" data-id="' + form._id + '">';
+        str += form.name;
+        str += '</a>';
+        str += '</li>';
+
+        var appended = $(str);
+        appended.click(function () {
+            currentFormId = $(this).find('a').data('id');
+            $.ajax({
+                method: 'GET',
+                url: '/admin/form/' + currentFormId,
+                success: function (form) {
+                    displayForm(form);
+                    displayButtons();
+                }
+            });
+        })
+        appended.appendTo($('.form-list-detail').find('.pure-menu-list'));
+
+    });
+}
+
+//  SEARCH
+var search = function () {
+    if (!selectedDistrict) {
+        alert('Chọn quận/huyện để tiếp tục');
+        return;
+    }
+    if (!selectedOrg) {
+        alert('Chọn tổ chức để tiếp tục');
+        return;
+    }
+
+    //  GET ALL FORM OF THIS ORG
+    $.ajax({
+        method: 'GET',
+        url: '/admin/form/org/' + selectedOrg,
+        success: function (forms) {
+            displayForms(forms);
+        }
+    });
+
+
+
+}
+
 //  DOCUMENT READY
 $(document).ready(function () {
     //  LOADER
@@ -128,10 +216,10 @@ $(document).ready(function () {
     });
 
     //  CHECK IF PROF ALREADY CHOSEN
-    if($('#profile').val()!=="-- Chọn profile --"){
-        currentProfId=$('#profile').find(':selected').data('id');
+    if ($('#profile').val() !== "-- Chọn profile --") {
+        currentProfId = $('#profile').find(':selected').data('id');
     }
-    
+
     //  GET DISTRICT CITY WHEN DOUCUMENT IS READY
     getDistrict();
 
@@ -160,8 +248,13 @@ $(document).ready(function () {
 
     // GET ORGS WHEN SELECT DISTRICT
     $('#district').on('change', function () {
-        var distId = $(this).find(':selected').data('id');
-        getOrganization(distId);
+        selectedDistrict = $(this).find(':selected').data('id');
+        getOrganization(selectedDistrict);
+    })
+
+    //  SELECTED ORG
+    $('#organization').on('change', function () {
+        selectedOrg = $(this).find(':selected').data('id');
     })
 
     //  SELECT A PROFILE
@@ -180,44 +273,50 @@ $(document).ready(function () {
         }
         fill();
         fillOrg();
-        
-        
+
+
     });
 
     //  DISPLAY EXPORT MODAL
-    $('.export-button').click(function(){
-        $('.print-modal').css('display','block');
+    $('.export-button').click(function () {
+        $('.print-modal').css('display', 'block');
     });
 
     //  CANCEL EXPORT FILE
-    $('.cancel-export-button').click(function(){
-        $('.print-modal').css('display','none');
-        $('#file-name').text()="";
+    $('.cancel-export-button').click(function () {
+        $('.print-modal').css('display', 'none');
+        $('#file-name').text() = "";
     });
 
     //  EXPORT FILE
-    $('.print-modal').find('.export-button').click(function(){
-        if($('#file-name').val()===''){
+    $('.print-modal').find('.export-button').click(function () {
+        if ($('#file-name').val() === '') {
             alert('Nhập tên file');
             return;
         }
-        if($('#format').val()==='PDF'){//   GENERATE PDF FILE
-            html2canvas($('.form-detail'),{
-                onrendered: function(canvas){
-                    var img= canvas.toDataURL("image/jpg");
-                    var doc = new jsPDF('p','pt','a4');
-                    doc.addImage(img,'JPEG',20,20);
+        if ($('#format').val() === 'PDF') {//   GENERATE PDF FILE
+            html2canvas($('.form-detail'), {
+                onrendered: function (canvas) {
+                    var img = canvas.toDataURL("image/jpg");
+                    var doc = new jsPDF('p', 'pt', 'a4');
+                    doc.addImage(img, 'JPEG', 20, 20);
                     doc.save($('#file-name').val());
 
-                   
+
                 }
             })
         }
-        else{
+        else {
             $('.form-detail').wordExport($('#file-name').val());
         }
 
-         $('#file-name').text()="";
+        $('#file-name').text() = "";
+
+    });
+
+    //  CLICK ON SEARCH BUTTON
+    $('.search-button').click(function () {
+        search();
     });
 
 });

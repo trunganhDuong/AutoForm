@@ -57,7 +57,24 @@ router.get('/city/name/:name',function(req,res){
   });
 });
 
-
+//  UPDATE CITY NAME
+router.post('/city/name/:id',function(req,res){
+  City.findOneAndUpdate(
+    {_id:req.params.id},
+    {
+      $set:{name:req.body.name}
+    },
+    {
+      upsert:true
+    },
+    function(err){
+      if(err) res.send(err);
+      else{
+        res.status(204);
+        res.end();
+      }
+    })
+})
 
 
 

@@ -79,7 +79,7 @@
                                 </li>
                                 <li>
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                    <a href="#">Đăng xuất</a>
+                                    <a href="/logout">Đăng xuất</a>
                                 </li>
                             </ul>
                         </li>
@@ -122,17 +122,11 @@
                                         <label for="organization">Tổ chức</label>
                                         <select id="organization">
                                         </select>
-                                        <button type="button" class="pure-button pure-button-primary search-button">Tìm kiếm</button>
+                                        
                                     </div>
+
+                                    <button style="float:right;" type="button" class="pure-button pure-button-primary search-button">Tìm kiếm</button>
                                 </div>
-                                <!--<div class="pure-g">
-                                    <div class="pure-u-3-5">
-                                        <label for="organization">Tổ chức</label>
-                                        <select id="organization">
-                                        </select>
-                                        <button type="button" class="pure-button pure-button-primary search-button">Tìm kiếm</button>
-                                    </div>
-                                </div>-->
                             </fieldset>
                         </form>
                     </div>
@@ -179,16 +173,6 @@
                         <div class="pure-menu custom-restricted-width form-list-detail">
                             <span class="pure-menu-heading">Danh sách biểu mẫu</span>
                             <ul class="pure-menu-list">
-                                <%if(forms){%>
-                                    <% forms.forEach(function(form){%>
-                                        <li class="pure-menu-item form-item">
-                                            <a class="pure-menu-link" data-id="<%=form._id%>">
-                                                <%=form.name %>
-                                            </a>
-                                        </li>
-                                        <%}) %>
-                                            <%}%>
-
                             </ul>
                         </div>
                     </div>

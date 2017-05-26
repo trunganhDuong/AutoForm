@@ -97,7 +97,7 @@
                             <label for="city">Tỉnh/thành phố</label>
                             <select id="city">
                                 <% cities.forEach(function(item){ %>
-                                    <option><%=item.name%></option>
+                                    <option data-id=<%=item._id%>><%=item.name%></option>
                                 <% });%>
                             </select>
 

@@ -87,6 +87,7 @@ var getDistsIn = function (city) {
         success: function (city) {
             currentCityId = city._id;
             // CITY
+            $('#id').text(currentCityId);
             $('#city-name-info').val(city.name);
             $('#of-city').val(city.name);
             // DISTRICTS
@@ -103,6 +104,8 @@ $(document).ready(function () {
         ajaxStart: function () { $body.addClass("loading"); },
         ajaxStop: function () { $body.removeClass("loading"); }
     });
+
+
     //  ADD CITY
     $('.city-add-button').click(function () {
         if ($('#city-name').val() === "") {
@@ -148,6 +151,7 @@ $(document).ready(function () {
             statusCode: {
                 204: function () {
                     alert('Thêm thành công ');
+                    $('#district-name').val("");
                     getDists();
                 },
                 400: function () {
@@ -189,6 +193,24 @@ $(document).ready(function () {
 
     // SELECT CITY FROM THE DROP-DOWN
     $('#of-city').on('change', function () {
+        currentCityId=$(this).find(':selected').data('id');
         getDistsIn($(this).val());
     })
+
+    //  UPDATE CITY NAME
+    $('.update-button').click(function(){
+        $.ajax({
+            method:'POST',
+            url:'/admin/location/city/name/'+currentCityId,
+            data:{
+                name: $('#city-name-info').val()
+            },
+            statusCode:{
+                204:function(){
+                    alert('Cập nhật thành công');
+                    window.location.reload();
+                }
+            }
+        });
+    });
 });

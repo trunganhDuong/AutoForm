@@ -187,11 +187,11 @@ router.delete('/', function (req, res) {
 
 // GET ALL FORMS OF AN ORG
 router.get('/org/:id', function (req, res) {
-  Organization.find({ orgId: req.params.id }, function (err, orgs) {
+  Form.find({ orgId: req.params.id }, function (err, forms) {
     if (err) res.send(err);
     else {
-      if (orgs) {
-        res.json(orgs);
+      if (forms) {
+        res.json(forms);
         res.end();
       }
       else {
@@ -223,5 +223,7 @@ router.post('/orgs', function (req, res) {
       }
     });*/
 });
+
+
 
 module.exports = router;

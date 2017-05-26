@@ -36,7 +36,7 @@ router.get('/:id', function (req, res) {
 
 //  ADD NEW PROFILE
 router.post('/', function (req, res) {
-  Profile.findOne({ name: req.body.profName }, function (err, prof) {
+  Profile.findOne({userId:req.user._id, name: req.body.profName }, function (err, prof) {
     if (err) res.send(err);
     else {
       if (prof) {
