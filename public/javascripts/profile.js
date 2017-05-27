@@ -1,6 +1,7 @@
 var detail = [];
 var currentProfId;
 var orderToDisplay=[];
+var obj={}; 
 
 //  SORT THE ORDER ARRAY
 var sortArray=function(){
@@ -17,7 +18,7 @@ var sortArray=function(){
 }
 
 //  RE-DISPLAY THE CONTENT
-var redisplayContent=function(obj){
+var redisplayContent=function(){
     //  CLEAR PREVIOUS CONTENT
     clearContent();
 
@@ -27,9 +28,7 @@ var redisplayContent=function(obj){
     //  REDISPLAY
     orderToDisplay.forEach(function(item){
         var appended = $(genAppended(item.data('id'), item.data('sname'), item.find('a').text()),item.data('order'));
-        if(obj){
-            appended.find('input').val(obj[item.data('sname')]);
-        }
+        appended.find('input').val(obj[item.data('sname')]);
         appended.appendTo($('.content').find('.pure-form').find('fieldset'));
     });
 }
@@ -47,7 +46,7 @@ var clearContent = function () {
 
 //  DISPLAY THE PROPERTIES FROM SERVER
 var displayProperties = function (props) {
-    var obj={};
+    
     props.forEach(function (prop) {
         $.ajax({
             method: 'GET',
