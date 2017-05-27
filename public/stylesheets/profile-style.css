@@ -60,7 +60,7 @@
 
 .property-list{
     overflow: scroll;
-    max-height:500px;
+    min-height:500px;
 }
 
 /*==property-value==*/

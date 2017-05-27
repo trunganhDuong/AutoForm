@@ -59,7 +59,7 @@ var displayProperties = function (props) {
                 //  PUSH ELEMENT TO ARRAY TO REORDER
                 pushToArray($('#' + field.sName));
                 obj[field.sName]=prop.value;
-                redisplayContent(obj);
+                redisplayContent();
 
                 /*// APPEND NEW PROP
                 var str = genAppended(field._id, field.sName, field.name,field.order);
@@ -202,6 +202,12 @@ $(document).ready(function () {
         if ($(this).hasClass('disable')) {// IF THIS PROP IS ALREADY IN USE
             $('.content').find('#div-' + $(this).data('sname')).remove();
             $(this).removeClass('disable');
+
+            for(i=0;i<orderToDisplay.length;i++){
+                if(orderToDisplay[i].data('sname')===$(this).data('sname')){
+                    orderToDisplay.splice(i,1);
+                }
+            }
         }
         else {
             // APPEND TO THE CONTENT
@@ -225,6 +231,7 @@ $(document).ready(function () {
 
         //  CLEAR ORDER ARRAY
         orderToDisplay=[];
+        obj={};
 
         //  RESET PROPERTIES LIST
         resetPropList();
