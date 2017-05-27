@@ -128,7 +128,9 @@
                             <ul class="pure-menu-list property-list">
                                 <% if(fields){%>
                                     <%fields.forEach(function(field){%>
-                                        <li id="<%=field.sName%>" class="pure-menu-item prop-item" data-id="<%=field._id%>" data-sname="<%=field.sName%>">
+                                        <li  id="<%=field.sName%>" class="pure-menu-item prop-item" data-id="<%=field._id%>" 
+                                        data-sname="<%=field.sName%>" 
+                                        data-order="<%=field.order%>">
                                             <a class="pure-menu-link">
                                                 <%=field.name%>
                                             </a>

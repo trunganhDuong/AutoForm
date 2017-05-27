@@ -1,5 +1,38 @@
 var detail = [];
 var currentProfId;
+var orderToDisplay=[];
+
+//  SORT THE ORDER ARRAY
+var sortArray=function(){
+    for(i=0;i<orderToDisplay.length;i++){
+        for(j=i+1;j<orderToDisplay.length;j++){
+            if(orderToDisplay[i].data('order')>orderToDisplay[j].data('order')){
+                var temp;
+                temp=orderToDisplay[i];
+                orderToDisplay[i]=orderToDisplay[j];
+                orderToDisplay[j]=temp;
+            }
+        }
+    }
+}
+
+//  RE-DISPLAY THE CONTENT
+var redisplayContent=function(obj){
+    //  CLEAR PREVIOUS CONTENT
+    clearContent();
+
+    //  REORDER
+    sortArray();
+
+    //  REDISPLAY
+    orderToDisplay.forEach(function(item){
+        var appended = $(genAppended(item.data('id'), item.data('sname'), item.find('a').text()),item.data('order'));
+        if(obj){
+            appended.find('input').val(obj[item.data('sname')]);
+        }
+        appended.appendTo($('.content').find('.pure-form').find('fieldset'));
+    });
+}
 
 //  RESET PROPERTIES LIST
 var resetPropList = function () {
@@ -14,6 +47,7 @@ var clearContent = function () {
 
 //  DISPLAY THE PROPERTIES FROM SERVER
 var displayProperties = function (props) {
+    var obj={};
     props.forEach(function (prop) {
         $.ajax({
             method: 'GET',
@@ -23,20 +57,23 @@ var displayProperties = function (props) {
                 // DISBLE EXISTING PROP
                 $('#' + field.sName).addClass('disable');
 
-                // APPEND NEW PROP
-                var str = genAppended(field._id, field.sName, field.name);
+                //  PUSH ELEMENT TO ARRAY TO REORDER
+                pushToArray($('#' + field.sName));
+                obj[field.sName]=prop.value;
+                redisplayContent(obj);
+
+                /*// APPEND NEW PROP
+                var str = genAppended(field._id, field.sName, field.name,field.order);
                 var appended = $(str);
                 appended.find('input').val(prop.value);
-                appended.appendTo($('.content').find('.pure-form').find('fieldset'));
+                appended.appendTo($('.content').find('.pure-form').find('fieldset'));*/
             }
         });
     });
 }
 
-
-
 //  APPEND PROPERTIES TO CONTENT
-var genAppended = function (id, sname, text) {
+var genAppended = function (id, sname, text,order,value) {
     // STRING REPRESETING THE APPENDED ELEMENT
     var reg="";
     if(sname.includes('phone'))
@@ -49,7 +86,7 @@ var genAppended = function (id, sname, text) {
     str += '<label>';
     str += text;
     str += '</label>';
-    str += '<input onkeypress="displayButtons()" required '+reg+' data-id="' + id + '" id="' + sname + '">';
+    str += '<input onkeypress="displayButtons()" required '+reg+' data-id="' + id + '" id="' + sname + '" data-order="'+order+'">';
     str += '</input>';
     str += '</div>';
 
@@ -101,7 +138,21 @@ var displayButtons=function(){
     $('.cancel-button').css('visibility',"visible");
 }
 
-
+//  PUSH ITEM TO THE ORDER ARRAY
+var pushToArray=function(orderItem){
+    if(hasValue(orderItem)) 
+    {
+        return;
+    }
+    else orderToDisplay.push(orderItem);
+}
+var hasValue=function(value){
+    for(i=0;i<orderToDisplay.length;i++){
+        if(orderToDisplay[i].data('id')===value.data('id'))
+        return true;
+    }
+    return false;
+}
 $(document).ready(function () {
 
     //  LOADER
@@ -155,8 +206,11 @@ $(document).ready(function () {
         }
         else {
             // APPEND TO THE CONTENT
-            var appended = $(genAppended($(this).data('id'), $(this).data('sname'), $(this).find('a').text()));
-            appended.appendTo($('.content').find('.pure-form').find('fieldset'));
+            pushToArray($(this));
+            redisplayContent(null);
+
+            /*var appended = $(genAppended($(this).data('id'), $(this).data('sname'), $(this).find('a').text()));
+            appended.appendTo($('.content').find('.pure-form').find('fieldset'));*/
 
             // DISABLE THIS ELEMENT
             $(this).addClass("disable");
@@ -169,6 +223,10 @@ $(document).ready(function () {
     $('.prof-item').click(function () {
         var profName = $(this).find('a').text();
         currentProfId = $(this).find('a').data('id');
+
+        //  CLEAR ORDER ARRAY
+        orderToDisplay=[];
+
         //  RESET PROPERTIES LIST
         resetPropList();
 

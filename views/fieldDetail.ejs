@@ -46,13 +46,18 @@
                     alert('Mã trường không được để trống');
                     return;
                 }
+                if ($('#order').val() === "") {
+                    alert('Thứ tự không được để trống');
+                    return;
+                }
                 var cf = confirm('Bạn muốn cập nhật thông tin trường này?');
                 if (cf == true) {
                     $.ajax({
                         method: 'PUT',
                         data: {
                             name: $('#name').val(),
-                            sname: $('#sname').val()
+                            sname: $('#sname').val(),
+                            order:$('#order').val()
                         },
                         statusCode: {
                             204: function () {
@@ -181,6 +186,10 @@
                                 <input id="id" type="text" placeholder="ID" disabled value="<%= field._id %>">
                             </div>
 
+                            <div class="pure-control-group">
+                                <label for="order">Thứ tự</label>
+                                <input name="order" id="order" type="text" placeholder="Order" value="<%= field.order %>">
+                            </div>
 
                             <div class="pure-control-group">
                                 <label for="name">Tên trường</label>
@@ -188,9 +197,11 @@
                             </div>
 
                             <div class="pure-control-group">
-                                <label for="id">Tên trường</label>
+                                <label for="id">Mã trường</label>
                                 <input name="sname" id="sname" type="text" placeholder="Select name" value="<%= field.sName %>">
                             </div>
+
+                            
 
                             <div class="pure-control-group">
                                 <label for="creTime">Thời gian tạo</label>

@@ -13,44 +13,9 @@
 
     <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
     <script src="/javascripts/jquery.js" type="text/javascript"></script>
-
+    <script src="/javascripts/field.js" type="text/javascript"></script> 
     <script>
-        $(document).ready(function () {
-            //  LOADER
-            $body = $("body");
-
-            $(document).on({
-                ajaxStart: function () { $body.addClass("loading"); },
-                ajaxStop: function () { $body.removeClass("loading"); }
-            });
-            $('.add-button').click(function () {
-                if ($('#name').val() === "") {
-                    alert("Tên trường không được để trống");
-                } if ($('#sname').val() === "") {
-                    alert("Mã trường không được để trống");
-                }
-                else {
-                    $.ajax({
-                        method: "POST",
-                        data: {
-                            name: $('#name').val(),
-                            sname: $('#sname').val()
-                        },
-                        statusCode: {
-                            204: function () {
-                                alert('Thêm thành công ');
-                                window.location.reload();
-                            },
-                            400: function () {
-                                alert('Thông tin đã tồn tại');
-                            }
-                        }
-                    });
-                }
-
-
-            });
-        });
+        
     </script>
 </head>
 
@@ -130,6 +95,9 @@
                             <label for="name">Tên</label>
                             <input name="sname" id="sname" type="text" placeholder="Field ID">
 
+                            <label for="order">Thứ tự</label>
+                            <input name="sname" id="order" type="text" placeholder="Order">
+
                             <input type="button" class="pure-button pure-button-primary add-button" autofocus value="Thêm">
                         </fieldset>
                     </form>
@@ -160,7 +128,7 @@
                     <table class="pure-table pure-table-striped">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>Thứ tự</th>
                                 <th>Tên hiển thị</th>
                                 <th>Tên</th>
                                 <th>Thời gian</th>
@@ -168,11 +136,10 @@
                         </thead>
 
                         <tbody>
-                            <% var i=0 %>
                                 <% fields.forEach(function(item){ %>
                                     <tr>
                                         <td>
-                                            <%= ++i %>
+                                            <%= item.order %>
                                         </td>
 
                                         <td>
@@ -203,6 +170,7 @@
 
 
     </div>
+    <div class="loader-modal"><!-- Place at bottom of page --></div>
 </body>
 
 </html>

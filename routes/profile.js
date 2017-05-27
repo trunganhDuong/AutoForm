@@ -5,7 +5,7 @@ var Field = require('../models/field.model');
 
 /* GET profile page. */
 router.get('/', isLoggedIn, function (req, res, next) {
-  Field.find({}, function (err, fields) {
+  Field.find({},null,{sort:{order:1}}, function (err, fields) {
     if (err) res.send(err);
     else {
       Profile.find({ userId: req.user._id }, function (err, profs) {

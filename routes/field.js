@@ -9,7 +9,7 @@ var Field = require('../models/field.model')
 
 /* GET field management  page. */
 router.get('/', function (req, res, next) {
-  Field.find({}, function (err, fields) {
+  Field.find({},null,{sort:{order:1}},function (err, fields) {
     if (err) res.send(err);
     else {
       res.render('field', { fields: fields });
@@ -44,10 +44,10 @@ router.get('/json/:id',function(req,res){
 
 //  UPDATE FIELD
 router.put('/:id', urlencodedParser, function (req, res) {
-  Field.find({ name: req.body.name }, function (err, field) {
+  Field.findOne({ $or:[{name: req.body.name},{sname:req.body.sname}], _id:{$ne:req.params.id} }, function (err, field) {
     if (err) res.send(err);
     else {
-      if (field.length >= 2) {
+      if (field) {
         res.send(400);
         res.end();
       }
@@ -57,7 +57,8 @@ router.put('/:id', urlencodedParser, function (req, res) {
           {
             $set: {
               name: req.body.name,
-              sName: req.body.sname
+              sName: req.body.sname,
+              order:req.body.order
             }
           },
           {
@@ -91,6 +92,7 @@ router.post('/', urlencodedParser, function (req, res) {
         var newField = new Field();
         newField.name = req.body.name;
         newField.sName = req.body.sname;
+        newField.order = req.body.order;
         newField.save(function (err) {
           if (err) res.send(err);
           else {
