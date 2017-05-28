@@ -58,7 +58,7 @@ var fill = function () {
     detail.forEach(function (item) {
         var old = "<!--" + item['sname'] + "-->";
         var last = item['value'];
-        if (item.sname === 'firstname' || item.sname === 'lastname' || item.sname === 'surname')
+        if (item.sname === 'ho' || item.sname === 'ten_dem' || item.sname === 'ten')
             last += " ";
         currentFormContent = currentFormContent.replace(old, last);
     });

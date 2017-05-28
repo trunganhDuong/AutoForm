@@ -105,6 +105,7 @@ var displayForms = function (forms) {
                     currentFileContent = data;
                     displayHTML(currentFileContent);// DISPLAY FORM CONTENT
                     $('.reverse').show();
+                    displayButtons();
                 }
             });
         })
@@ -137,7 +138,10 @@ var search = function () {
 
 }
 
-
+var displayButtons=function(){
+    $('.save-button').css('visibility','visible');
+    $('.delete-button').css('visibility','visible');
+}
 //DOCUMENT READY
 $(document).ready(function () {
 
@@ -174,6 +178,10 @@ $(document).ready(function () {
         }
         if ($('.file').text() === 'Choose a file') {
             alert('Chọn đường dẫn đến file');
+            return;
+        }
+        if(!selectedOrg){
+            alert('Chọn tổ chức để thêm biểu mẫu');
             return;
         }
         //send request to server
@@ -216,6 +224,7 @@ $(document).ready(function () {
 
     //  CLICK ON FORM ITEM
     $('.form-item').click(function () {
+
         $('.form-detail').html("");
         var formId = $(this).data('form-id');
         currentId = formId;
@@ -225,12 +234,15 @@ $(document).ready(function () {
             success: function (data) {
                 currentFileContent = data;
                 displayHTML(data);// DISPLAY FORM CONTENT
-                $('.reverse').show();
+                /*$('.reverse').show();*/
+
+                displayButtons();
+
             }
         });
 
-        $('.save-button').show(); //SHOW BUTTONS
-        $('.delete-button').show();
+
+
     });
 
     //  CLICK ON SAVE BUTTON
@@ -286,7 +298,7 @@ $(document).ready(function () {
             $.ajax({
                 method: "DELETE",
                 data: {
-                    formId: currentId
+                    formId: currentFormId
                 },
                 statusCode: {
                     204: function () {
