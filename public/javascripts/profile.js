@@ -135,7 +135,18 @@ var sendDetail = function () {
 var displayButtons=function(){
     $('.save-button').css('visibility',"visible");
     $('.cancel-button').css('visibility',"visible");
+
+    saveValue();
 }
+
+//  SAVE VALUE  
+var saveValue=function(){
+    $('.content').find('.pure-form').find('fieldset').children('.pure-control-group').each(function () {
+        var input = $(this).find('input');
+        obj[input.attr('id')]=input.val();
+    });
+}
+
 
 //  PUSH ITEM TO THE ORDER ARRAY
 var pushToArray=function(orderItem){
