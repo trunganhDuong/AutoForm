@@ -118,7 +118,16 @@ router.put('/', function (req, res) {
 
 });
 
-
+//  GET ALL PROFILES EXCEPT
+router.get('/except/:id',function(req,res){
+  Profile.find({userId:req.user._id, _id:{$ne:req.params.id}},null,{sort:{name:1}},function(err,profs){
+    if(err) res.send(err);
+    else{
+      res.json(profs);
+      res.end();
+    }
+  });
+})
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
     return next();

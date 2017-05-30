@@ -1,24 +1,24 @@
 var detail = [];
 var currentProfId;
-var orderToDisplay=[];
-var obj={}; 
+var orderToDisplay = [];
+var obj = {};
 
 //  SORT THE ORDER ARRAY
-var sortArray=function(){
-    for(i=0;i<orderToDisplay.length;i++){
-        for(j=i+1;j<orderToDisplay.length;j++){
-            if(orderToDisplay[i].data('order')>orderToDisplay[j].data('order')){
+var sortArray = function () {
+    for (i = 0; i < orderToDisplay.length; i++) {
+        for (j = i + 1; j < orderToDisplay.length; j++) {
+            if (orderToDisplay[i].data('order') > orderToDisplay[j].data('order')) {
                 var temp;
-                temp=orderToDisplay[i];
-                orderToDisplay[i]=orderToDisplay[j];
-                orderToDisplay[j]=temp;
+                temp = orderToDisplay[i];
+                orderToDisplay[i] = orderToDisplay[j];
+                orderToDisplay[j] = temp;
             }
         }
     }
 }
 
 //  RE-DISPLAY THE CONTENT
-var redisplayContent=function(){
+var redisplayContent = function () {
     //  CLEAR PREVIOUS CONTENT
     clearContent();
 
@@ -26,8 +26,8 @@ var redisplayContent=function(){
     sortArray();
 
     //  REDISPLAY
-    orderToDisplay.forEach(function(item){
-        var appended = $(genAppended(item.data('id'), item.data('sname'), item.find('a').text()),item.data('order'));
+    orderToDisplay.forEach(function (item) {
+        var appended = $(genAppended(item.data('id'), item.data('sname'), item.find('a').text()), item.data('order'));
         appended.find('input').val(obj[item.data('sname')]);
         appended.appendTo($('.content').find('.pure-form').find('fieldset'));
     });
@@ -46,7 +46,7 @@ var clearContent = function () {
 
 //  DISPLAY THE PROPERTIES FROM SERVER
 var displayProperties = function (props) {
-    
+
     props.forEach(function (prop) {
         $.ajax({
             method: 'GET',
@@ -58,7 +58,7 @@ var displayProperties = function (props) {
 
                 //  PUSH ELEMENT TO ARRAY TO REORDER
                 pushToArray($('#' + field.sName));
-                obj[field.sName]=prop.value;
+                obj[field.sName] = prop.value;
                 redisplayContent();
 
                 /*// APPEND NEW PROP
@@ -72,20 +72,19 @@ var displayProperties = function (props) {
 }
 
 //  APPEND PROPERTIES TO CONTENT
-var genAppended = function (id, sname, text,order,value) {
+var genAppended = function (id, sname, text, order, value) {
     // STRING REPRESETING THE APPENDED ELEMENT
-    var reg="";
-    if(sname.includes('phone'))
-    {
-        reg='pattern="[0-9]{10,11}" title="Nhập đúng định dạng số điện thoại"';
+    var reg = "";
+    if (sname.includes('phone')) {
+        reg = 'pattern="[0-9]{10,11}" title="Nhập đúng định dạng số điện thoại"';
     }
-        
+
     var str = '';
     str += '<div id="div-' + sname + '" class="pure-control-group">';
     str += '<label>';
     str += text;
     str += '</label>';
-    str += '<input onkeypress="displayButtons()" required '+reg+' data-id="' + id + '" id="' + sname + '" data-order="'+order+'">';
+    str += '<input onkeypress="displayButtons()" required ' + reg + ' data-id="' + id + '" id="' + sname + '" data-order="' + order + '">';
     str += '</input>';
     str += '</div>';
 
@@ -132,34 +131,33 @@ var sendDetail = function () {
 }
 
 //  DISPLAY BUTTONS
-var displayButtons=function(){
-    $('.save-button').css('visibility',"visible");
-    $('.cancel-button').css('visibility',"visible");
+var displayButtons = function () {
+    $('.save-button').css('visibility', "visible");
+    $('.cancel-button').css('visibility', "visible");
 
     saveValue();
 }
 
 //  SAVE VALUE  
-var saveValue=function(){
+var saveValue = function () {
     $('.content').find('.pure-form').find('fieldset').children('.pure-control-group').each(function () {
         var input = $(this).find('input');
-        obj[input.attr('id')]=input.val();
+        obj[input.attr('id')] = input.val();
     });
 }
 
 
 //  PUSH ITEM TO THE ORDER ARRAY
-var pushToArray=function(orderItem){
-    if(hasValue(orderItem)) 
-    {
+var pushToArray = function (orderItem) {
+    if (hasValue(orderItem)) {
         return;
     }
     else orderToDisplay.push(orderItem);
 }
-var hasValue=function(value){
-    for(i=0;i<orderToDisplay.length;i++){
-        if(orderToDisplay[i].data('id')===value.data('id'))
-        return true;
+var hasValue = function (value) {
+    for (i = 0; i < orderToDisplay.length; i++) {
+        if (orderToDisplay[i].data('id') === value.data('id'))
+            return true;
     }
     return false;
 }
@@ -172,7 +170,7 @@ $(document).ready(function () {
         ajaxStart: function () { $body.addClass("loading"); },
         ajaxStop: function () { $body.removeClass("loading"); }
     });
-    
+
     // DISPLAY CURRENT PROFILE
     if (currentProfId) {
 
@@ -214,9 +212,9 @@ $(document).ready(function () {
             $('.content').find('#div-' + $(this).data('sname')).remove();
             $(this).removeClass('disable');
 
-            for(i=0;i<orderToDisplay.length;i++){
-                if(orderToDisplay[i].data('sname')===$(this).data('sname')){
-                    orderToDisplay.splice(i,1);
+            for (i = 0; i < orderToDisplay.length; i++) {
+                if (orderToDisplay[i].data('sname') === $(this).data('sname')) {
+                    orderToDisplay.splice(i, 1);
                 }
             }
         }
@@ -241,8 +239,12 @@ $(document).ready(function () {
         currentProfId = $(this).find('a').data('id');
 
         //  CLEAR ORDER ARRAY
-        orderToDisplay=[];
-        obj={};
+        orderToDisplay = [];
+        obj = {};
+
+        //  MARK AS SELECTED
+        $('.profile-list').find('ul').find('li').removeClass('selected');
+        $(this).addClass('selected');
 
         //  RESET PROPERTIES LIST
         resetPropList();
@@ -252,6 +254,7 @@ $(document).ready(function () {
 
         // MAKE DELETE BUTTON APPEARED
         $('.delete-button').css('visibility', 'visible');
+        $('#copy-from').css('visibility', 'visible');
 
         //  DISPLAY PROFILE NAME
         $('.pro-name').text(profName);
@@ -262,6 +265,25 @@ $(document).ready(function () {
             url: '/profile/' + currentProfId,
             success: function (prof) {
                 displayProperties(prof.detail);
+            }
+        });
+
+        //  DISPLAY OTHER PROFILES
+        $.ajax({
+            method: 'GET',
+            url: '/profile/except/' + currentProfId,
+            success: function (profs) {
+                $('#copy-from').find('option').remove();
+                $('<option disabled selected>Copy từ</option>').appendTo($('#copy-from'));
+                profs.forEach(function (prof) {
+                    var str = '';
+                    str += '<option data-id="' + prof._id + '">';
+                    str += prof.name;
+                    str += '</option>';
+
+                    var appended = $(str);
+                    appended.appendTo($('#copy-from'));
+                });
             }
         });
 
@@ -298,9 +320,32 @@ $(document).ready(function () {
     });
 
     //  CHANGE PROFILE NAME
-    $('.info').on('keypress',function(){
+    $('.info').on('keypress', function () {
         displayButtons();
     });
 
+    // COPY 
+    $('#copy-from').on('change', function () {
+        //  CLEAR ORDER ARRAY
+        orderToDisplay = [];
+        obj = {};
 
+        //  RESET PROPERTIES LIST
+        resetPropList();
+
+        //  CLEAT CONTENT
+        clearContent();
+
+        //  GET PROFILE FROM SERVER
+        $.ajax({
+            method: 'GET',
+            url: '/profile/' + $(this).find(':selected').data('id'),
+            success: function (prof) {
+                displayProperties(prof.detail);
+            }
+        });
+
+        displayButtons();
+
+    })
 });
