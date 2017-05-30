@@ -2,26 +2,26 @@
 <html>
 
 <head>
-    <title>Trang chủ</title>
+    <title>Lưu trữ</title>
     <meta name="application-name" content="AutoForm">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <link rel="stylesheet" href="/stylesheets/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/global-style.css">
     <link rel="stylesheet" href="/stylesheets/style/pure-min.css">
-    <link rel="stylesheet" href="/stylesheets/home-style.css">
+    <link rel="stylesheet" href="/stylesheets/store.css">
 
     <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
     <script src="/javascripts/jquery.js" type="text/javascript"></script>
     <script src="/javascripts/FileSaver.js" type="text/javascript"></script>
     <script src="/javascripts/jquery.wordexport.js" type="text/javascript"></script>
-    <script src="/javascripts/home.js" type="text/javascript"></script>
+    <script src="/javascripts/store.js" type="text/javascript"></script>
     <script src="/javascripts/ejs_production.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
     <script src="/javascripts/html2canvas.js" type="text/javascript"></script>
     <!--<script src="/javascripts/jspdf.js" type="text/javascript"></script>-->
-    
-    
+
+
 </head>
 
 <body>
@@ -89,99 +89,44 @@
 
             <!-- CONTENT -->
             <div class="main">
-
-                <!-- SEARCH -->
-                <div class="search">
-                    <div class="search-header">
-                        <a href="#">Tìm kiếm
-                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-
-                    </div>
-
-                    <div class="search-content">
-                        <form class="pure-form pure-form-aligned search-form">
+                <div class="store-list">
+                    <div class="criteria">
+                        <form class="pure-form">
                             <fieldset>
-                                <div class="pure-g">
-                                    <div class="pure-u-1-3">
-                                        <label for="city">Tỉnh/Thành phố</label>
-                                        <select id="city">
-                                            <% cities.forEach(function(item){
-                                                var selected=(item.name=="Hà Nội")?"selected":""%>
-                                                <option <%=selected%>><%=item.name %></option>
-                                            <%}) %>
-                                        </select>
-                                    </div>
-                                    <div class="pure-u-1-3">
-                                        <label for="district">Quận/Huyện</label>
-                                        <select id="district">
-                                        </select>
-                                    </div>
-
-                                    <div class="pure-u-1-3">
-                                        <label for="organization">Tổ chức</label>
-                                        <select id="organization">
-                                        </select>
-                                        
-                                    </div>
-
-                                    <button style="float:right;" type="button" class="pure-button pure-button-primary search-button">Tìm kiếm</button>
-                                </div>
+                                <select id="profile">
+                                    <option selected disabled>-- Chọn biểu mẫu --</option>
+                                    <%profs.forEach(function(item){ %>
+                                        <option data-id="<%=item._id%>"><%=item.name%></option>
+                                    <%}) %>
+                                </select>
                             </fieldset>
                         </form>
                     </div>
-                </div>
 
-                <div class="forms">
+                    <div class="list">
+                        <table class="pure-table pure-table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Ngày tạo</th>
+                                </tr>
+                            </thead>
 
-                    <!-- FORM CONTENT -->
-                    <div class="form-content">
-
-                        <!-- INFO -->
-                        <div class="form-info">
-                            <div class="profile pure-form">
-                                <select id="profile">
-                                    <option disabled selected>-- Chọn profile --</option>
-                                    <%if(profs){%>
-                                        <%profs.forEach(function(prof){%>
-                                            <option data-id="<%=prof._id%>">
-                                                <%=prof.name%>
-                                            </option>
-                                        <%})%>
-                                    <%}%>
-
-                                </select>
-                            </div>
-                            <!-- BUTTONS -->
-                            <div class="features">
-                                <a href='/profile' class="pure-button edit-button">Sửa thông tin</a>
-                                
-                                <button class="pure-button export-button">Xuất file</button>
-                                <button class="pure-button pure-button-primary fill-button">Điền biểu mẫu</button>
-                                
-
-                            </div>
-                        </div>
-
-                        <!-- DISPLAY FORM -->
-                        <div class="form-detail" contenteditable="true">
-
-                        </div>
-                    </div>
-
-                    <!-- LIST OF FORMS -->
-                    <div class="form-list">
-                        <div class="pure-menu custom-restricted-width form-list-detail">
-                            <span class="pure-menu-heading">Danh sách biểu mẫu</span>
-                            <ul class="pure-menu-list">
-                            </ul>
-                        </div>
+                            <tbody>
+                            </tbody>
+                            
+                        </table>
                     </div>
                 </div>
 
+                <div class="store-detail">
+                    <div class="features">
+                        <button class="pure-button pure-button-primary export-button">Xuất file</button>
+                    </div>
 
-
-
+                    <div class="detail">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -202,7 +147,7 @@
                 <form class="pure-form pure-form-stacked">
                     <fieldset>
                         <label>Tên file</label>
-                        <input type="text"  id="file-name" placeholder="File name"></input>
+                        <input type="text" id="file-name" placeholder="File name"></input>
 
                         <label>Định dạng file</label>
                         <select id="format">
@@ -214,14 +159,17 @@
             </div>
 
             <div class="modal-footer">
-                
-                
+
+
                 <button class="pure-button cancel-export-button">Hủy</button>
                 <button class="pure-button pure-button-primary export-button">Xuất file</button>
                 <button class="pure-button store-button">Lưu trữ</button>
-                
+
             </div>
         </div>
+    </div>
+    <div class="loader-modal">
+        <!-- Place at bottom of page -->
     </div>
 </body>
 

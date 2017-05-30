@@ -8,7 +8,7 @@ router.get('/', isLoggedIn, function (req, res, next) {
   Field.find({},null,{sort:{order:1}}, function (err, fields) {
     if (err) res.send(err);
     else {
-      Profile.find({ userId: req.user._id }, function (err, profs) {
+      Profile.find({ userId: req.user._id },null,{sort:{name:1}} ,function (err, profs) {
         if (err) res.send(err);
         else {
           res.render('profile', {

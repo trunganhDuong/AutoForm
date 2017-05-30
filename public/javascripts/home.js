@@ -45,6 +45,7 @@ var fillOrg = function () {
                     $('.export-button').css('visibility', 'visible');
                     $('.edit-button').css('visibility', 'visible');
 
+
                     //  SAVE HISTORY
                     saveHistory();
                 }
@@ -75,6 +76,7 @@ var displayForm = function (html) {
 var displayButtons = function () {
     $('.fill-button').css('visibility', 'visible');
     $('.print-button').css('visibility', 'visible');
+
 }
 
 //  GET ALL DISTRICTS OF A CITY 
@@ -125,14 +127,7 @@ var getProfDetail = function (callback) {
 
 //  SAVE HISTORY
 var saveHistory = function () {
-    $.ajax({
-        method: 'POST',
-        url: '/history',
-        data: {
-            profId: currentProfId,
-            formId: currentFormId,
-        }
-    });
+
 }
 
 //  DISPLAY SEARCH RESULT
@@ -318,5 +313,44 @@ $(document).ready(function () {
     $('.search-button').click(function () {
         search();
     });
+
+    //  STORE FILE
+    $('.store-button').click(function () {
+        if ($('#file-name').val() === '') {
+            alert('Nhập tên file');
+            return;
+        }
+        if ($('#format').val() === 'PDF') {//   GENERATE PDF FILE
+            html2canvas($('.form-detail'), {
+                onrendered: function (canvas) {
+                    var img = canvas.toDataURL("image/jpg");
+                    var doc = new jsPDF('p', 'pt', 'a4');
+                    doc.addImage(img, 'JPEG', 20, 20);
+
+                    var string = doc.output('blob');
+
+                    $.ajax({
+                        method: 'POST',
+                        url: '/store',
+                        data: {
+                            name: $('#file-name').val(),
+                            formId: currentFormId,
+                            profId: currentProfId,
+                            content:$('.form-detail').html()
+                        },
+                        success: function () {
+                            alert('Lưu trữ thành công');
+                        }
+                    });
+                }
+            })
+
+        }
+        else {
+            $('.form-detail').wordExport($('#file-name').val());
+        }
+
+        $('#file-name').text() = "";
+    })
 
 });

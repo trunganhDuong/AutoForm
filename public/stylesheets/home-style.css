@@ -92,7 +92,7 @@
 
 .profile {
     float: left;
-    width: 40%;
+    width: 25%;
     height: 40px;
     line-height: 40px;
     margin: 1em 0 1em 1em;
@@ -118,7 +118,8 @@
 /*  BUTTONS: ; */
 .fill-button,
 .export-button,
-.edit-button{
+.edit-button
+{
     visibility: hidden;
 }
 
@@ -204,6 +205,9 @@
     height: 15%;
     line-height: 15%;
 }
-.modal-footer .export-button{
+.modal-footer 
+.export-button,
+.store-button{
     float:right;
+    padding-left:1em;
 }

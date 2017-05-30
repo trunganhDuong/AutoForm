@@ -1,0 +1,127 @@
+.main {
+    padding: 0.3em 1em;
+    background-color: #f8f8f8;
+    overflow: auto;
+    min-height: 500px;
+}
+
+/*=====STORE LIST======*/
+.store-list{
+    float:left;
+    width:35%;
+    background:white;
+    border:2px solid #e8e8e8;
+    border-radius: 5px;
+    margin:0.5em;
+    padding:1em;
+}
+.store-item{
+    cursor: pointer;
+}
+
+/*=====STORE DETAIL======*/
+.store-detail{
+    float:right;
+    width: 58%;
+    background:white;
+    border:2px solid #e8e8e8;
+    border-radius: 5px;
+    margin:0.5em;
+}
+.features{
+    padding: 1em;
+    border-bottom: 2px solid #e8e8e8;
+    overflow: auto;
+}
+.detail{
+    min-height: 500px;
+    color: black;
+}
+
+.export-button{
+    float:right;
+    visibility: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.print-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: 40%; /* Could be more or less, depending on screen size */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top: -300px; opacity: 0} 
+    to {top: 0; opacity: 1}
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.modal-header{
+    background-color:#f8f8f8;
+    border-bottom:1px solid #e8e8e8;
+    padding: 1em;
+    height: 15%;
+    line-height: 15%;
+}
+.modal-body{
+   padding: 1em; 
+}
+
+.modal-footer{
+    padding: 1em;
+    height: 15%;
+    line-height: 15%;
+}
+.modal-footer 
+.export-button,
+.store-button{
+    float:right;
+    padding-left:1em;
+}

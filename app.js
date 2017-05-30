@@ -22,8 +22,7 @@ var account = require('./routes/account');
 var location = require('./routes/location');
 var organization = require('./routes/organization');
 var logout = require('./routes/logOut');
-var history=require('./routes/history');
-
+var store=require('./routes/store');
 
 var database = require('./config/database');
 var app = express();
@@ -67,6 +66,7 @@ app.use('/', index);
 app.use('/logout', logout);
 app.use('/signup', signup);
 app.use('/home', home)
+app.use('/store', store);
 app.use('/profile', profile);
 app.use('/admin', admin);
 app.use('/admin/field', field);
@@ -74,7 +74,6 @@ app.use('/admin/form', form);
 app.use('/admin/account', account);
 app.use('/admin/location', location);
 app.use('/admin/organization', organization);
-app.use('/history',history);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
