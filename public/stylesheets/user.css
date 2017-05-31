@@ -3,7 +3,6 @@
     min-height: 520px;
     max-height: 520px;
     background-color: #f8f8f8;
-    position:relative;
 }
 
 .detail{
@@ -12,19 +11,21 @@
     border: 2px solid #e8e8e8;
     border-radius:5px;
     position: absolute; 
-    top:20%;
-    left:25%;
+    top:30%;
+    left:30%;
     padding: 1em;
 }
 
-.detail .pure-form{
+.form{
     width:100%;     
     margin: 0 auto;
-    text-align: center;
+}
+#email,#password{
+    width:300px;   
 }
 .change{
-    float:right;
-    margin-right:3em;
+    display: block;
+    margin: 0 auto;
 }
 
 /*===== MODAL =====*/

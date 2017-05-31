@@ -212,35 +212,35 @@
 
                                                                                                         <div class="pure-control-group">
                                                                                                             <label for="id">ID</label>
-                                                                                                            <input id="id" type="text" placeholder="ID" disabled value="<%= id %>">
+                                                                                                            <input id="id" type="text" placeholder="ID" readonly value="<%= id %>">
                                                                                                         </div>
 
                                                                                                         <div class="pure-control-group">
                                                                                                             <label for="email">Email Address</label>
-                                                                                                            <input id="email" type="email" name="email" disabled placeholder="Email Address" value="<%= email %>">
+                                                                                                            <input id="email" type="email" name="email" readonly placeholder="Email Address" value="<%= email %>">
                                                                                                         </div>
 
 
                                                                                                         <div class="pure-control-group">
                                                                                                             <label for="type">Kiểu</label>
-                                                                                                            <input name="type" id="type" type="text" disabled placeholder="Type" value="<%= type %>">
+                                                                                                            <input name="type" id="type" type="text" readonly placeholder="Type" value="<%= type %>">
                                                                                                         </div>
                                                                                                         <%if(user.facebook.email){%>
                                                                                                             <div class="pure-control-group">
                                                                                                                 <label for="name">Tên facebook</label>
-                                                                                                                <input name="name" id="name" type="text" disabled placeholder="Facebook name" value="<%= user.facebook.name %>">
+                                                                                                                <input name="name" id="name" type="text" readonly placeholder="Facebook name" value="<%= user.facebook.name %>">
                                                                                                             </div>
                                                                                                             <%} %>
                                                                                                                 <%if(user.google.email){%>
                                                                                                                     <div class="pure-control-group">
                                                                                                                         <label for="name">Tên google</label>
-                                                                                                                        <input name="name" id="name" type="text" disabled placeholder="Facebook name" value="<%= user.google.name %>">
+                                                                                                                        <input name="name" id="name" type="text" readonly placeholder="Facebook name" value="<%= user.google.name %>">
                                                                                                                     </div>
                                                                                                                     <%} %>
 
                                                                                                                         <div class="pure-control-group">
                                                                                                                             <label for="creTime">Thời gian tạo</label>
-                                                                                                                            <input name="creTime" id="creTime" type="text" disabled placeholder="Creation time" value="<%= user.local.creTime %>">
+                                                                                                                            <input name="creTime" id="creTime" type="text" readonly placeholder="Creation time" value="<%= user.local.creTime %>">
                                                                                                                         </div>
 
 
