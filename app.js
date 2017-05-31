@@ -23,6 +23,7 @@ var location = require('./routes/location');
 var organization = require('./routes/organization');
 var logout = require('./routes/logOut');
 var store=require('./routes/store');
+var user=require('./routes/user');
 
 var database = require('./config/database');
 var app = express();
@@ -68,6 +69,7 @@ app.use('/signup', signup);
 app.use('/home', home)
 app.use('/store', store);
 app.use('/profile', profile);
+app.use('/user', user);
 app.use('/admin', admin);
 app.use('/admin/field', field);
 app.use('/admin/form', form);
