@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="application-name" content="Auto filling form">
+    <meta name="author" content="Duong Trung Anh">
+    <meta name="google-signin-client_id" content="670658962094-8ntp4gca2pcu93u4dg426ncbfiarchd5.apps.googleusercontent.com">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quên mật khẩu</title>
+
+    <link rel="stylesheet" href="/stylesheets/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/global-style.css">
+    <link rel="stylesheet" href="/stylesheets/style/pure-min.css">
+    <link rel="stylesheet" href="/stylesheets/index.css" type="text/css">
+    <script src="/javascripts/jquery.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
+    <script src="/javascripts/index.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#search').click(function () {
+                $.ajax({
+                    method: 'POST',
+                    data: {
+                        email: $('#email').val()
+                    }
+                });
+            });
+        });
+    </script>
+
+</head>
+
+
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="page-name">
+                <h2>Hệ thống tự động điền biểu mẫu</h2>
+            </div>
+        </div>
+
+        <div class="main">
+            <p>Mật khẩu đã được gửi đến email <%=email%></p>
+            <p>Vui lòng kiểm tra hộp thư </p>
+        </div>
+
+    </div>
+    <div class="loader-modal">
+        <!-- Place at bottom of page -->
+    </div>
+</body>
+
+</html>

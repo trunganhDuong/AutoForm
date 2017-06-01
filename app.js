@@ -12,6 +12,7 @@ var configAuth = require('./config/auth');
 var session = require('express-session');
 
 var index = require('./routes/index');
+var forget=require('./routes/forget');
 var signup = require('./routes/signup');
 var home = require('./routes/home');
 var profile = require('./routes/profile')
@@ -65,6 +66,7 @@ require('./config/passport')(passport);
 
 // CATCH THE ROUTES
 app.use('/', index);
+app.use('/forget', forget);
 app.use('/logout', logout);
 app.use('/signup', signup);
 app.use('/home', home)
