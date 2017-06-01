@@ -9,7 +9,7 @@ var flash = require('connect-flash');
 
 
 /* GET account management page. */
-router.get('/', function (req, res, next) {
+router.get('/',isLoggedIn, function (req, res, next) {
   User.find(function (err, users) {
     if (err) res.send(err);
     else {
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
   })
 });
 
-router.get('/:id', function (req, res) {
+router.get('/:id', isLoggedIn,function (req, res) {
   User.findOne({ _id: req.params.id }, function (err, user) {
     if (err) res.send(err);
     else {
@@ -114,5 +114,16 @@ router.put('/:id', urlencodedParser, function (req, res) {
   });
 
 })
+//  CHECK AUTHENTICATION
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log(req.user);
+    return next();
+  }
 
+  else {
+    req.flash('loginMessage', 'Bạn chưa đăng nhập');
+    res.redirect('/admin/index');
+  }
+}
 module.exports = router;

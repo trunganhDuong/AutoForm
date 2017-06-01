@@ -9,7 +9,7 @@ var jsonParser = bodyParser.json();
 
 var allCities;
 /* GET location page. */
-router.get('/', function (req, res, next) {
+router.get('/', isLoggedIn,function (req, res, next) {
   City.find({}, function (err, cities) {
     if (err) res.send(err);
     else {
@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
 });
 
 //  GET CITY BY ID
-router.get('/city/:id', function (req, res) {
+router.get('/city/:id',isLoggedIn, function (req, res) {
   City.findOne({ _id: req.params.id }, function (err, city) {
     if (err) res.send(err);
     else {
@@ -176,4 +176,16 @@ router.delete('/district/:cityId/:distId',function(req,res){
   );
 });
 
+//  CHECK AUTHENTICATION
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log(req.user);
+    return next();
+  }
+
+  else {
+    req.flash('loginMessage', 'Bạn chưa đăng nhập');
+    res.redirect('/admin/index');
+  }
+}
 module.exports = router;

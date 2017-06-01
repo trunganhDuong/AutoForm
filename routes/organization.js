@@ -10,7 +10,7 @@ var District = require('../models/district.model');
 var City=require('../models/city.model');
 
 /* GET organization page. */
-router.get('/', function (req, res, next) {
+router.get('/',isLoggedIn, function (req, res, next) {
   Organization.find({}, function (err, orgs) {
     if (err) res.send(err);
     else {
@@ -178,4 +178,17 @@ router.put('/:id', urlencodedParser, function (req, res) {
     }
   })
 });
+
+//  CHECK AUTHENTICATION
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log(req.user);
+    return next();
+  }
+
+  else {
+    req.flash('loginMessage', 'Bạn chưa đăng nhập');
+    res.redirect('/admin/index');
+  }
+}
 module.exports = router;

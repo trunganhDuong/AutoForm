@@ -16,6 +16,7 @@ var signup = require('./routes/signup');
 var home = require('./routes/home');
 var profile = require('./routes/profile')
 var admin = require('./routes/admin')
+var indexAdmin=require('./routes/indexAdmin');
 var field = require('./routes/field');
 var form = require('./routes/form');
 var account = require('./routes/account');
@@ -71,6 +72,7 @@ app.use('/store', store);
 app.use('/profile', profile);
 app.use('/user', user);
 app.use('/admin', admin);
+app.use('/admin/index', indexAdmin);
 app.use('/admin/field', field);
 app.use('/admin/form', form);
 app.use('/admin/account', account);

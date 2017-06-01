@@ -4,6 +4,8 @@ var City = require('../models/city.model');
 var Organization = require('../models/organization.model');
 var Form = require('../models/form.model');
 var Profile = require('../models/profile.model');
+
+
 /* GET home page. */
 router.get('/', isLoggedIn, function (req, res, next) {
   City.find({}, function (err, cities) {

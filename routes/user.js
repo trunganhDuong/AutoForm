@@ -16,7 +16,7 @@ router.get('/', isLoggedIn, function (req, res, next) {
 });
 
 //  CHANGE PASSWORD
-router.put('/', function (req, res) {
+router.put('/',isLoggedIn, function (req, res) {
   User.findOne({ _id: req.user._id }, function (err, user) {
     if (err) res.send(err);
     else {
@@ -66,4 +66,5 @@ function isLoggedIn(req, res, next) {
     res.redirect('/');
   }
 }
+
 module.exports = router;

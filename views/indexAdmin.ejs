@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="application-name" content="Auto filling form">
+    <meta name="author" content="Duong Trung Anh">
+    <meta name="google-signin-client_id" content="670658962094-8ntp4gca2pcu93u4dg426ncbfiarchd5.apps.googleusercontent.com">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng nhập</title>
+
+    <link rel="stylesheet" href="/stylesheets/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/stylesheets/global-style.css">
+    <link rel="stylesheet" href="/stylesheets/style/pure-min.css">
+    <link rel="stylesheet" href="/stylesheets/index.css" type="text/css">
+    <script src="/javascripts/jquery.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery.color.js" type="text/javascript"></script>
+    <script src="/javascripts/index.js"></script>
+
+</head>
+
+
+
+<body>
+
+
+    <div class="container">
+        <div class="header">
+            <div class="page-name">
+                <h2>Hệ thống tự động điền biểu mẫu</h2>
+            </div>
+        </div>
+
+        <div class="main">
+
+            <div class="log-in">
+                <% if (message) { %>
+                    <div class="alert-danger">
+                        <%= message %>
+                    </div>
+                    <% } %>
+                        <form style="text-align:center;" method="POST" action="/admin/index" class="pure-form pure-form-aligned">
+                            <fieldset>
+                                <div class="pure-control-group">
+                                    <label for="email">Email Address</label>
+                                    <input  name="email" id="email" type="email" placeholder="Email Address">
+                                </div>
+
+                                <div class="pure-control-group">
+                                    <label for="password">Password</label>
+                                    <input  name="password" id="password" type="password" placeholder="Password">
+                                </div>
+
+                                    <button type="submit" class="pure-button pure-button-primary login-button">Đăng nhập</button>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                        <!--<div class="pure-controls other-login">
+                            <style scoped>
+                                .button-success,
+                                .button-error,
+                                .button-warning,
+                                .button-secondary {
+                                    color: white;
+                                    border-radius: 4px;
+                                    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                                }
+                                
+                                .button-success {
+                                    background: rgb(28, 184, 65);
+                                    /* this is a green */
+                                }
+                                
+                                .button-error {
+                                    background: rgb(202, 60, 60);
+                                    /* this is a maroon */
+                                }
+                                
+                                .button-warning {
+                                    background: rgb(223, 117, 20);
+                                    /* this is an orange */
+                                }
+                                
+                                .button-secondary {
+                                    background: rgb(66, 184, 221);
+                                    /* this is a light blue */
+                                }
+                            </style>
+                            Chưa có tài khoản? <a style="color: #23527c; text-decoration:underline;" href="/signup">Đăng ký</a>                            &nbsp; hoặc
+                            <br>
+                            <br>
+                            <a href="/auth/facebook" class="pure-button button-secondary fb-button"><span class="fa fa-facebook"></span> Facebook</a>
+                            <a href="/auth/google" class="pure-button button-error g-button"><span class="fa fa-google-plus"></span> Google</a>
+                        </div>-->
+            </div>
+        </div>
+
+    </div>
+    <div class="loader-modal"><!-- Place at bottom of page --></div>
+</body>
+
+</html>

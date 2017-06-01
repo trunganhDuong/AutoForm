@@ -8,7 +8,7 @@ var flash = require('connect-flash');
 var Field = require('../models/field.model')
 
 /* GET field management  page. */
-router.get('/', function (req, res, next) {
+router.get('/',isLoggedIn, function (req, res, next) {
   Field.find({},null,{sort:{order:1}},function (err, fields) {
     if (err) res.send(err);
     else {
@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
 });
 
 //  GET FIELD BY ID
-router.get('/:id', function (req, res) {
+router.get('/:id',isLoggedIn, function (req, res) {
   Field.findOne({ _id: req.params.id }, function (err, field) {
     if (err) res.send(err);
     else {
@@ -129,4 +129,17 @@ router.get('/sname/:sname',function(req,res){
     }
   });
 });
+
+//  CHECK AUTHENTICATION
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log(req.user);
+    return next();
+  }
+
+  else {
+    req.flash('loginMessage', 'Bạn chưa đăng nhập');
+    res.redirect('/admin/index');
+  }
+}
 module.exports = router;

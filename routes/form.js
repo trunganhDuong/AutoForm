@@ -13,7 +13,7 @@ var City = require('../models/city.model');
 var District = require('../models/district.model');
 
 /* GET form management page. */
-router.get('/', function (req, res, next) {
+router.get('/', isLoggedIn,function (req, res, next) {
   Organization.find({}, function (err, orgs) {
     if (err) res.send(err);
     else {
@@ -119,7 +119,7 @@ router.post('/', urlencondedParser, function (req, res) {
 });
 
 // GET PARTICULAR FORM BY ID
-router.get('/:id', function (req, res) {
+router.get('/:id', isLoggedIn,function (req, res) {
   Form.findOne({ _id: req.params.id }, function (err, form) {
     if (err) res.send(err);
     else {
@@ -130,7 +130,7 @@ router.get('/:id', function (req, res) {
 });
 
 //  GET ORGID OF A FORM
-router.get('/org/id/:formId',function(req,res){
+router.get('/org/id/:formId',isLoggedIn,function(req,res){
   Form.findOne({_id:req.params.formId},function(err,form){
     if(err) res.send(err);
     else{
@@ -186,7 +186,7 @@ router.delete('/', function (req, res) {
 });
 
 // GET ALL FORMS OF AN ORG
-router.get('/org/:id', function (req, res) {
+router.get('/org/:id',isLoggedIn, function (req, res) {
   Form.find({ orgId: req.params.id }, function (err, forms) {
     if (err) res.send(err);
     else {
@@ -225,5 +225,16 @@ router.post('/orgs', function (req, res) {
 });
 
 
+//  CHECK AUTHENTICATION
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log(req.user);
+    return next();
+  }
 
+  else {
+    req.flash('loginMessage', 'Bạn chưa đăng nhập');
+    res.redirect('/admin/index');
+  }
+}
 module.exports = router;
