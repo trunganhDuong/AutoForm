@@ -63,7 +63,7 @@ router.get('/profile/:id',function(req,res){
 
 
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated())
+  if (req.isAuthenticated()&& !req.user.admin.email)
     return next();
   else {
     req.flash('loginMessage', 'Bạn chưa đăng nhập');

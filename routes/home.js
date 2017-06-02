@@ -45,7 +45,7 @@ router.get('/', isLoggedIn, function (req, res, next) {
 
 //  CHECK AUTHENTICATION
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated()&& !req.user.admin.email) {
     console.log(req.user);
     return next();
   }

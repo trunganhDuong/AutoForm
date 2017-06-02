@@ -132,7 +132,7 @@ router.get('/sname/:sname',function(req,res){
 
 //  CHECK AUTHENTICATION
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated()&& req.user.admin.password) {
     console.log(req.user);
     return next();
   }
