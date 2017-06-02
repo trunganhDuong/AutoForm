@@ -10,7 +10,7 @@ var jsonParser = bodyParser.json();
 var allCities;
 /* GET location page. */
 router.get('/', isLoggedIn,function (req, res, next) {
-  City.find({}, function (err, cities) {
+  City.find({},null,{sort:{name:1}}, function (err, cities) {
     if (err) res.send(err);
     else {
       allCities = cities;

@@ -2,6 +2,7 @@ var detail = [];
 var currentProfId;
 var orderToDisplay = [];
 var obj = {};
+var notSaved=false;
 
 //  SORT THE ORDER ARRAY
 var sortArray = function () {
@@ -132,6 +133,7 @@ var sendDetail = function () {
 
 //  DISPLAY BUTTONS
 var displayButtons = function () {
+    notSaved=true;
     $('.save-button').css('visibility', "visible");
     $('.cancel-button').css('visibility', "visible");
 
@@ -154,6 +156,18 @@ var pushToArray = function (orderItem) {
     }
     else orderToDisplay.push(orderItem);
 }
+
+//  SAVE BEFORE EXIT
+var saveBeforeExit = function () {
+    if (notSaved) {
+        var cf = confirm('Lưu dữ liệu trước khi chuyển hướng?');
+        if (cf === true) {
+            $('.save-button').trigger('click');
+        }
+    }
+
+}
+
 var hasValue = function (value) {
     for (i = 0; i < orderToDisplay.length; i++) {
         if (orderToDisplay[i].data('id') === value.data('id'))
@@ -207,6 +221,8 @@ $(document).ready(function () {
             alert('Chọn một profile để cập nhật trường dữ liệu');
             return;
         }
+        //  MARK AS NOT SAVED
+        notSaved = true;
 
         if ($(this).hasClass('disable')) {// IF THIS PROP IS ALREADY IN USE
             $('.content').find('#div-' + $(this).data('sname')).remove();
@@ -238,6 +254,8 @@ $(document).ready(function () {
         var profName = $(this).find('a').text();
         currentProfId = $(this).find('a').data('id');
 
+        // RESET NOTSAVED
+        notSaved=false;
         //  CLEAR ORDER ARRAY
         orderToDisplay = [];
         obj = {};
@@ -292,8 +310,12 @@ $(document).ready(function () {
 
     //  SAVE PROFILE
     $('.save-button').click(function () {
+        //  MARK AS  SAVED
+        notSaved = false;
+
         gatherProps();
     });
+
     //  CANCEL ALL CHANGES
     $('.cancel-button').click(function () {
 
@@ -321,11 +343,17 @@ $(document).ready(function () {
 
     //  CHANGE PROFILE NAME
     $('.info').on('keypress', function () {
+        //  MARK AS NOT SAVED
+        notSaved = true;
+
         displayButtons();
     });
 
     // COPY 
     $('#copy-from').on('change', function () {
+        //  MARK AS NOT SAVED
+        notSaved = true;
+
         //  CLEAR ORDER ARRAY
         orderToDisplay = [];
         obj = {};
@@ -347,5 +375,14 @@ $(document).ready(function () {
 
         displayButtons();
 
+    })
+
+    //  SAVE BEFORE EXIT
+    $('.menu').find('.pure-menu-link').click(function () {
+
+        saveBeforeExit();
+    })
+    $('.nav').find('a').click(function () {
+        saveBeforeExit();
     })
 });

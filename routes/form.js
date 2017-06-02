@@ -13,14 +13,14 @@ var City = require('../models/city.model');
 var District = require('../models/district.model');
 
 /* GET form management page. */
-router.get('/', isLoggedIn,function (req, res, next) {
-  Organization.find({}, function (err, orgs) {
+router.get('/',isLoggedIn,function (req, res, next) {
+  Organization.find({},null,{sort:{name:1}}, function (err, orgs) {
     if (err) res.send(err);
     else {
       Form.find({}, function (err, forms) {
         if (err) res.send(err);
         else {
-          City.find({}, function (err, cities) {
+          City.find({},null,{sort:{name:1}}, function (err, cities) {
             if (err) res.send(err);
             else {
               res.render('form', {
