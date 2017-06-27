@@ -112,6 +112,7 @@ var displayForms = function (forms) {
         })
         appended.appendTo($('.form-list-detail').find('.pure-menu-list'));
 
+        $('.form-detail').html('');
     });
 }
 
