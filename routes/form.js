@@ -101,7 +101,7 @@ router.post('/',isLoggedIn, urlencondedParser, function (req, res) {
             var newForm = new Form();
             newForm.name = req.body.name;
             newForm.orgId = org._id,
-              newForm.content = data;
+            newForm.content = data;
 
             newForm.save(function (err) {
               if (err) res.send(err);

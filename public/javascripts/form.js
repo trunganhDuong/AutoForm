@@ -269,7 +269,7 @@ $(document).ready(function () {
             $.ajax({
                 method: "PUT",
                 data: {
-                    formId: currentId, //FORMID WHICH IS SELECTED
+                    formId: currentFormId, //FORMID WHICH IS SELECTED
                     content: currentFileContent
                 },
                 statusCode: {
