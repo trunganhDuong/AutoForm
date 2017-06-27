@@ -161,6 +161,7 @@ var displayForms = function (forms) {
 
         var appended = $(str);
         appended.click(function () {
+            $('.form-detail').html("");
             currentFormId = $(this).find('a').data('id');
             $.ajax({
                 method: 'GET',
@@ -172,7 +173,6 @@ var displayForms = function (forms) {
             });
         })
         appended.appendTo($('.form-list-detail').find('.pure-menu-list'));
-
     });
 }
 
@@ -336,7 +336,7 @@ $(document).ready(function () {
                             name: $('#file-name').val(),
                             formId: currentFormId,
                             profId: currentProfId,
-                            content:$('.form-detail').html()
+                            content: $('.form-detail').html()
                         },
                         success: function () {
                             alert('Lưu trữ thành công');

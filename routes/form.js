@@ -39,7 +39,7 @@ router.get('/',isLoggedIn,function (req, res, next) {
 });
 
 // POST NEW FORM
-router.post('/', urlencondedParser, function (req, res) {
+router.post('/',isLoggedIn, urlencondedParser, function (req, res) {
   //Check existence
   /*Form.findOne({name:req.body.name},function(err,form){
     if(err) res.send(err);
@@ -119,7 +119,7 @@ router.post('/', urlencondedParser, function (req, res) {
 });
 
 // GET PARTICULAR FORM BY ID
-router.get('/:id', isLoggedIn,function (req, res) {
+router.get('/:id',function (req, res) {
   Form.findOne({ _id: req.params.id }, function (err, form) {
     if (err) res.send(err);
     else {
@@ -130,7 +130,7 @@ router.get('/:id', isLoggedIn,function (req, res) {
 });
 
 //  GET ORGID OF A FORM
-router.get('/org/id/:formId',isLoggedIn,function(req,res){
+router.get('/org/id/:formId',function(req,res){
   Form.findOne({_id:req.params.formId},function(err,form){
     if(err) res.send(err);
     else{
@@ -143,7 +143,7 @@ router.get('/org/id/:formId',isLoggedIn,function(req,res){
 })
 
 //  UPDATE FORM
-router.put('/', urlencondedParser, function (req, res) {
+router.put('/',isLoggedIn, urlencondedParser, function (req, res) {
   var buffer = new Buffer(req.body.content);
   Form.findOneAndUpdate(
     {
@@ -171,7 +171,7 @@ router.put('/', urlencondedParser, function (req, res) {
 })
 
 //  DELETE FORM
-router.delete('/', function (req, res) {
+router.delete('/',isLoggedIn, function (req, res) {
   Form.findOneAndRemove({ _id: req.body.formId }, function (err) {
     if (err) {
       res.send(err);
@@ -186,11 +186,12 @@ router.delete('/', function (req, res) {
 });
 
 // GET ALL FORMS OF AN ORG
-router.get('/org/:id',isLoggedIn, function (req, res) {
+router.get('/org/:id', function (req, res) {
   Form.find({ orgId: req.params.id }, function (err, forms) {
     if (err) res.send(err);
     else {
       if (forms) {
+        console.log('abcd');
         res.json(forms);
         res.end();
       }
@@ -203,7 +204,7 @@ router.get('/org/:id',isLoggedIn, function (req, res) {
 })
 
 // GET ALL FORMS OF SELECTED ORGS
-router.post('/orgs', function (req, res) { 
+router.post('/orgs',isLoggedIn, function (req, res) { 
   console.log(req.body.orgs);
   /*Form.find(
     {

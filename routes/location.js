@@ -58,7 +58,7 @@ router.get('/city/name/:name',function(req,res){
 });
 
 //  UPDATE CITY NAME
-router.post('/city/name/:id',function(req,res){
+router.post('/city/name/:id',isLoggedIn,function(req,res){
   City.findOneAndUpdate(
     {_id:req.params.id},
     {
@@ -79,7 +79,7 @@ router.post('/city/name/:id',function(req,res){
 
 
 //  ADD CITY/DISTRICT
-router.post('/', function (req, res) {
+router.post('/',isLoggedIn, function (req, res) {
   var body = req.body;
 
   if (body.for === 'district') {
@@ -121,7 +121,7 @@ router.post('/', function (req, res) {
 });
 
 //  DELETE A CITY
-router.delete('/:id', function (req, res) {
+router.delete('/:id', isLoggedIn,function (req, res) {
   City.findOneAndRemove({ _id: req.params.id }, function (err) {
     if (err) res.send(err);
     else {
@@ -132,7 +132,7 @@ router.delete('/:id', function (req, res) {
 });
 
 //   UPDATE DISTRICT
-router.put('/district', function (req, res) {
+router.put('/district',isLoggedIn, function (req, res) {
   City.findOne({"districts.name":req.body.distName},function(err,dist){
     if(err) res.send(err);
     else{
@@ -160,7 +160,7 @@ router.put('/district', function (req, res) {
 });
 
 //  DELETE DIST
-router.delete('/district/:cityId/:distId',function(req,res){
+router.delete('/district/:cityId/:distId',isLoggedIn,function(req,res){
   City.findOneAndUpdate(
     {_id: req.params.cityId},
     {

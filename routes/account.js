@@ -20,7 +20,7 @@ router.get('/',isLoggedIn, function (req, res, next) {
   })
 });
 
-router.get('/:id', isLoggedIn,function (req, res) {
+router.get('/:id',function (req, res) {
   User.findOne({ _id: req.params.id }, function (err, user) {
     if (err) res.send(err);
     else {
@@ -32,7 +32,7 @@ router.get('/:id', isLoggedIn,function (req, res) {
   })
 })
 
-router.post('/', urlencodedParser, function (req, res) {
+router.post('/', isLoggedIn,urlencodedParser, function (req, res) {
   User.findOne(
     {
       "local.email": req.body.email
@@ -63,7 +63,7 @@ router.post('/', urlencodedParser, function (req, res) {
 })
 
 
-router.delete('/:id', function (req, res) {
+router.delete('/:id',isLoggedIn, function (req, res) {
   User.findOneAndRemove({ _id: req.params.id }, function (err, user) {
     if (err) res.send(err);
     else {
@@ -74,7 +74,7 @@ router.delete('/:id', function (req, res) {
   })
 })
 
-router.put('/:id', urlencodedParser, function (req, res) {
+router.put('/:id',isLoggedIn, urlencodedParser, function (req, res) {
   User.find({
     $or: [{ email: req.body.email }, { username: req.body.username }]
   }, function (err, user) {

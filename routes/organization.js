@@ -39,7 +39,7 @@ router.get('/orgs',function(req,res){
 })
 
 //  POST NEW ORG
-router.post('/', urlencodedParser, function (req, res) {
+router.post('/',isLoggedIn, urlencodedParser, function (req, res) {
   Organization.findOne({ name: req.body.name }, function (err, org) {
     if (err) res.send(err);
     else {
@@ -116,6 +116,7 @@ router.get('/district/:id', function (req, res) {
   });
 });
 
+
 // GET ORG BY NAME
 router.get('/name/:name', function (req, res) {
   Organization.findOne({ name: req.params.name }, function (err, org) {
@@ -130,7 +131,7 @@ router.get('/name/:name', function (req, res) {
 });
 
 //delete org
-router.delete('/:id', function (req, res) {
+router.delete('/:id',isLoggedIn, function (req, res) {
   Organization.findByIdAndRemove({ _id: req.params.id }, function (err) {
     if (err) res.send(err);
     else {
@@ -141,7 +142,7 @@ router.delete('/:id', function (req, res) {
 });
 
 //  UPDATE ORG
-router.put('/:id', urlencodedParser, function (req, res) {
+router.put('/:id',isLoggedIn, urlencodedParser, function (req, res) {
   console.log(req.body);
   Organization.findOne({name:req.body.name, _id:{$ne: req.params.id}},function(err,org){
     if(err) res.send(err);

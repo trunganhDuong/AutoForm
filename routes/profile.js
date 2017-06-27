@@ -35,7 +35,7 @@ router.get('/:id', function (req, res) {
 });
 
 //  ADD NEW PROFILE
-router.post('/', function (req, res) {
+router.post('/',isLoggedIn, function (req, res) {
   Profile.findOne({userId:req.user._id, name: req.body.profName }, function (err, prof) {
     if (err) res.send(err);
     else {
@@ -60,7 +60,7 @@ router.post('/', function (req, res) {
 });
 
 //  DELETE PROFILE
-router.delete('/:id', function (req, res) {
+router.delete('/:id',isLoggedIn, function (req, res) {
   Profile.findByIdAndRemove(req.params.id, function (err) {
     if (err) {
       res.send(err);
@@ -75,7 +75,7 @@ router.delete('/:id', function (req, res) {
 });
 
 //  UPDATE PROFILE
-router.put('/', function (req, res) {
+router.put('/',isLoggedIn, function (req, res) {
   // CLEAR PREVIOUS DATA
   Profile.findOneAndUpdate(
     {

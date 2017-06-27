@@ -43,7 +43,7 @@ router.get('/json/:id',function(req,res){
 })
 
 //  UPDATE FIELD
-router.put('/:id', urlencodedParser, function (req, res) {
+router.put('/:id',isLoggedIn, urlencodedParser, function (req, res) {
   Field.findOne({ $or:[{name: req.body.name},{sname:req.body.sname}], _id:{$ne:req.params.id} }, function (err, field) {
     if (err) res.send(err);
     else {
@@ -78,7 +78,7 @@ router.put('/:id', urlencodedParser, function (req, res) {
 });
 
 //  ADD NEW FIELD
-router.post('/', urlencodedParser, function (req, res) {
+router.post('/',isLoggedIn, urlencodedParser, function (req, res) {
   Field.findOne({
     $or: [{ name: req.body.name }, { sName: req.body.sname }]
   }, function (err, field) {
@@ -106,7 +106,7 @@ router.post('/', urlencodedParser, function (req, res) {
 })
 
 // DELETE FIELD
-router.delete('/:id', function (req, res) {
+router.delete('/:id', isLoggedIn,function (req, res) {
   Field.findOneAndRemove({ _id: req.params.id }, function (err, field) {
     if (err) res.send(err);
     else {

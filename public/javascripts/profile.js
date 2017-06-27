@@ -115,7 +115,7 @@ var sendDetail = function () {
         method: 'PUT',
         data: {
             profId: currentProfId,
-            profName: $('.info').text(),
+            profName: $.trim($('.info').text()),
             detail: JSON.stringify(detail)
         },
         statusCode: {
@@ -201,7 +201,7 @@ $(document).ready(function () {
             method: "POST",
             url: '/profile',
             data: {
-                profName: $('#profile-name').val()
+                profName: $.trim(name)
             },
             statusCode: {
                 204: function () {
@@ -379,7 +379,6 @@ $(document).ready(function () {
 
     //  SAVE BEFORE EXIT
     $('.menu').find('.pure-menu-link').click(function () {
-
         saveBeforeExit();
     })
     $('.nav').find('a').click(function () {
