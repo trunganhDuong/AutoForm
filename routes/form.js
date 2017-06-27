@@ -123,8 +123,12 @@ router.get('/:id',function (req, res) {
   Form.findOne({ _id: req.params.id }, function (err, form) {
     if (err) res.send(err);
     else {
-      res.send(form.content.toString());
-      res.end();
+      if(form)
+      {
+        res.send(form.content.toString());
+        res.end();
+      }
+      
     }
   });
 });
