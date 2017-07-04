@@ -228,7 +228,7 @@ $(document).ready(function () {
             $('.content').find('#div-' + $(this).data('sname')).remove();
             $(this).removeClass('disable');
 
-            for (i = 0; i < orderToDisplay.length; i++) {
+            for (i = 0; i < orderToDisplay.length; i++) { //    REMOVE EXISTING ITEM    
                 if (orderToDisplay[i].data('sname') === $(this).data('sname')) {
                     orderToDisplay.splice(i, 1);
                 }
