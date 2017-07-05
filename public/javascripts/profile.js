@@ -255,6 +255,8 @@ $(document).ready(function () {
 
     //  SELECT A PROFILE
     $('.prof-item').click(function () {
+        saveBeforeExit();
+        
         var profName = $(this).find('a').text();
         currentProfId = $(this).find('a').data('id');
 
@@ -280,7 +282,7 @@ $(document).ready(function () {
 
         //  HIDE BUTTON
         undisplayButtons();
-        
+
         //  DISPLAY PROFILE NAME
         $('.pro-name').text(profName);
 
