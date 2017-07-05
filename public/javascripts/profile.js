@@ -139,6 +139,10 @@ var displayButtons = function () {
 
     saveValue();
 }
+var undisplayButtons=function(){
+    $('.save-button').css('visibility', "hidden");
+    $('.cancel-button').css('visibility', "hidden");
+}
 
 //  SAVE VALUE  
 var saveValue = function () {
@@ -274,6 +278,9 @@ $(document).ready(function () {
         $('.delete-button').css('visibility', 'visible');
         $('#copy-from').css('visibility', 'visible');
 
+        //  HIDE BUTTON
+        undisplayButtons();
+        
         //  DISPLAY PROFILE NAME
         $('.pro-name').text(profName);
 
