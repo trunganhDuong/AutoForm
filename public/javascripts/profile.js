@@ -85,7 +85,7 @@ var genAppended = function (id, sname, text, order, value) {
     str += '<label>';
     str += text;
     str += '</label>';
-    str += '<input onkeypress="displayButtons()" required ' + reg + ' data-id="' + id + '" id="' + sname + '" data-order="' + order + '">';
+    str += '<input onkeyup="displayButtons()" required ' + reg + ' data-id="' + id + '" id="' + sname + '" data-order="' + order + '">';
     str += '</input>';
     str += '</div>';
 
