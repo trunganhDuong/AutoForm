@@ -232,6 +232,7 @@ $(document).ready(function () {
             $('.content').find('#div-' + $(this).data('sname')).remove();
             $(this).removeClass('disable');
 
+            obj[$(this).attr('id')]="";
             for (i = 0; i < orderToDisplay.length; i++) { //    REMOVE EXISTING ITEM    
                 if (orderToDisplay[i].data('sname') === $(this).data('sname')) {
                     orderToDisplay.splice(i, 1);
@@ -256,7 +257,7 @@ $(document).ready(function () {
     //  SELECT A PROFILE
     $('.prof-item').click(function () {
         saveBeforeExit();
-        
+
         var profName = $(this).find('a').text();
         currentProfId = $(this).find('a').data('id');
 
