@@ -146,8 +146,8 @@ var undisplayButtons=function(){
 
 //  SAVE VALUE  
 var saveValue = function () {
-    $('.content').find('.pure-form').find('fieldset').children('.pure-control-group').each(function () {
-        var input = $(this).find('input');
+    $('.content').find('.pure-form').find('fieldset').children('.pure-control-group').each(function (group) {
+        var input = group.find('input');
         obj[input.attr('id')] = input.val();
     });
 }
