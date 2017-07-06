@@ -1,0 +1,352 @@
+<html>
+
+<head>
+    <style>
+        @import "compass/css3";
+        input[type="radio"] {
+            display: none;
+        }
+        
+        input[type="radio"] + label span {
+            display: inline-block;
+            width: 0.6em;
+            height: 0.6em;
+            margin: 0 5px 0 0;
+            vertical-align: middle;
+            cursor: pointer;
+            -moz-border-radius: 0%;
+            border-radius: 0%;
+        }
+        
+        input[type="radio"] + label span {
+            background-color: white;
+            border: 0.5px solid black;
+        }
+        
+        input[type="radio"]:checked + label span:before {
+            content: '✓';
+            font-size: 17px;
+            line-height: 0.6em;
+        }
+        
+        input[type="radio"] + label span,
+        input[type="radio"]:checked + label span {
+            -webkit-transition: background-color 0.4s linear;
+            -o-transition: background-color 0.4s linear;
+            -moz-transition: background-color 0.4s linear;
+            transition: background-color 0.4s linear;
+        }
+        
+        .f-body {
+            border: 1px solid black;
+            font-family: Times New Roman;
+            font-size: 14px;
+        }
+        
+        .m-header {
+            background-color: #5780af;
+            padding: 0.3em;
+            border-bottom: 1px solid black;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .r-header {
+            border-bottom: 1px solid black;
+            font-weight: bold;
+            padding: 0.3em;
+        }
+        
+        .cus-info {
+            padding: 0.5em;
+            overflow: auto;
+            border-bottom: 1px solid black;
+        }
+        
+        .part1 {
+            float: left;
+            width: 60%;
+        }
+        
+        .part2 {
+            float: right;
+            width: 40%;
+        }
+        
+        .america_law {
+            padding: 0.5em;
+            overflow: auto;
+            border-bottom: 1px solid black;
+        }
+        
+        .card-type {
+            overflow: auto;
+        }
+        
+        .f-right {
+            float: right;
+            width: 50%;
+        }
+        
+        .f-left {
+            float: left;
+            width: 50%;
+        }
+        
+        .p-acc,
+        .e-bank,
+        .online {
+            padding: 0.5em;
+        }
+        
+        .f-header {
+            font-weight: bold;
+            padding: 0.5em;
+            overflow: auto;
+            font-family: Times New Roman;
+            font-size: 14px;
+        }
+        
+        .f-h-name {
+            float: right;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .f-h-logo {
+            float: left;
+            width: 10%;
+            height:20%;
+        }
+        
+        .f-h-logo img {
+            max-width: 100%;
+            max-height: 100%
+        }
+    </style>
+</head>
+
+<body>
+    <div class="f-container">
+        <div class="f-header">
+            <div class="f-h-logo">
+                <img src="http://cms.kienthuc.net.vn/static/images/contents/nguyendoa/20130619/logo-bidv.jpg">
+            </div>
+            <div class="f-h-name">
+                ĐỀ NGHỊ KIÊM HỢP ĐỒNG
+                <br> ĐĂNG KÝ THÔNG TIN KHÁCH HÀNG VÀ DỊCH VỤ TÀI KHOẢN
+                <br> Kính gửi: Ngân hàng TMCP Đầu tư và Phát triển Việt Nam. Chi nhánh Bắc Hà Nội
+                <br>
+
+                <div style="text-align:right; border:1px solid black; display:inline-block;padding:0.3em; border-radious:5ém">Số HĐ: _ _ _ _ _ _ _ _ _ _ _ _ _</div>
+            </div>
+        </div>
+        <div class="f-body">
+            <div class="m-header">
+                THÔNG TIN VỀ KHÁCH HÀNG
+                <br> (Thông tin dấu (*) là bắt buộc đối với khách hàng đã có hồ sơ thông tin tại ngân hàng)
+            </div>
+            <div class="cus-info">
+
+                <div class="cus-detail">
+                    <div class="part1">
+                        Họ và tên (*)&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--ho-->
+                        <!--ten_dem-->
+                        <!--ten-->
+                        <br> Ngày sinh (*)&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--ngay_sinh-->/
+                        <!--thang_sinh-->/
+                        <!--nam_sinh-->
+                        <br> Quốc tịch&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--quoc_tich-->
+                        <br> Giới tính &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="sex" type="radio" id="male">
+                        <label for="male"><span></span>Nam</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="sex" id="female">
+                        <label for="female"><span></span>Nữ</label>
+                        <br> Số CMND/Căn cước công dân(*)&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--so_cm-->
+                        <br>Ngày cấp(*)
+                        <!--ngay_cm-->/
+                        <!--thang_cm-->/&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--nam_cm-->Nơi cấp (*)
+                        <!--noi_cm-->
+                        <br> Thị thực nhập cảnh&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br> Địa chỉ cư trú tại nước ngoài&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br> Địa chỉ cư trú tại Việt Nam (*)&nbsp;&nbsp;&nbsp;&nbsp; Số
+                        <!--tt_so_nha-->, đường
+                        <!--tt_duong-->,
+                        <!--tt_phuong_xa-->,
+                        <!--tt_thi_tran-->,
+                        <!--tt_thanh_pho-->
+                        <br> Địa chỉ liên hệ&nbsp;&nbsp;&nbsp;&nbsp; Số
+                        <!--tamtru_so_nha-->, đường
+                        <!--tamtru_duong-->,
+                        <!--tamtru_phuong_xa-->,
+                        <!--tamtru_thi_tran-->,
+                        <!--tamtru_thanh_pho-->
+                        <br> Email &nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--email-->
+                        <br> Điện thoại di động(*) &nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--dien_thoai_chinh-->
+                        <br> Điện thoại cố định &nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--dien_thoai_cd-->
+                        <br> Nội dung khác &nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        <br>
+                    </div>
+
+                    <div class="part2">
+                        Người cư trú&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="res" id="yes" type="radio">
+                        <label for="yes"><span></span>Có</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="res" id="no" type="radio">
+                        <label for="no"><span></span>Không</label>
+                        <br> Mã số thuế&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--ma_so_thue-->
+                        <br>
+
+                        <span class="bold">Nghề nghiệp</span>
+                        <br>
+                        <input name="job" type="radio" id="student">
+                        <label for="student"><span></span>Đang đi học</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="job" type="radio" id="retire">
+                        <label for="retire"><span></span>Hưu trí</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        <input name="job" type="radio" id="none">
+                        <label for="none"><span></span>Không đi làm</label> &nbsp;&nbsp;&nbsp;
+                        <input name="job" type="radio" id="work">
+                        <label for="work"><span></span>Đang đi làm</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        <input name="job" type="radio" id="own">
+                        <label for="own"><span></span>Tự doanh</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="job" type="radio" id="not">
+                        <label for="not"><span></span>Khác</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--nghe_nghiep-->
+                        <br>
+
+                        <span class="bold">Ngành nghề </span>
+                        <br>
+                        <input name="industry" type="radio" id="construct">
+                        <label for="construct"><span></span>Xây dựng</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="industry" type="radio" id="finance">
+                        <label for="finance"><span></span>Tài chính/Ngân hàng</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        <input name="industry" type="radio" id="real_estate">
+                        <label for="real_estate"><span></span>Bất động sản</label> &nbsp;&nbsp;&nbsp;
+                        <input name="industry" type="radio" id="clothing">
+                        <label for="clothing"><span></span>May mặc</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        <input name="industry" type="radio" id="tele">
+                        <label for="tele"><span></span>Viễn thông</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="industry" type="radio" id="none">
+                        <label for="none"><span></span>Khác</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--nganh_nghe-->
+                        <br> Tên cơ quan/trường học &nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--coquan_truonghoc-->
+                        <br>
+
+                        <span class="bold">Chức vụ </span>
+                        <br>
+                        <input name="occupation" type="radio" id="ceo">
+                        <label for="ceo"><span></span>Giám đốc/Phó giám đốc</label>
+                        <br>
+                        <input name="occupation" type="radio" id="leader">
+                        <label for="leader"><span></span>Trường/Phó phòng</label>
+                        <br>
+                        <input name="occupation" type="radio" id="staff">
+                        <label for="staff"><span></span>Nhân viên</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="occupation" type="radio" id="other">
+                        <label for="other"><span></span>Khác</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--chuc_vu-->
+                        <br>
+
+                    </div>
+                </div>
+            </div>
+            <div class="r-header">
+                KÊ KHAI THUẾ THEO LUẬT MỸ
+            </div>
+            <div class="america_law">
+
+
+                <input name="law" type="radio" id="law1">
+                <label for="law1"><span></span>Đối tượng chịu thuế thu nhập của Mỹ (Cần có mẫu đơn W9) </label>
+                <br>
+                <input name="law" type="radio" id="law2">
+                <label for="law2"><span></span>Không phải đối tượng chịu thuế thu nhập của Mỹ nhưng có 1 trong những dấu hiệu Mỹ (Cần có mẫu đơn W8-BEN)**
+                </label>
+                <br>
+                <input name="law" type="radio" id="law3">
+                <label for="law3"><span></span>Không phải hai đối tượng trên </label>
+                <br>
+                <br> (**) Những dấu hiệu Mỹ theo quy định của FATCA bao gồm: Có thẻ xanh tại Mỹ, nơi sinh tại Mỹ, địa chỉ thường trú tại Mỹ, số điện thoại Mỹ, đỉa chỉ nhờ nhâṇ thư hoăc̣ lưu thư ở Mỹ, yêu cầu thanh toán điṇh kỳ đến môṭ tài khoản taị Mỹ, ủy quyền cho cá nhân có địa chỉ tại Mỹ .
+
+            </div>
+            <div class="m-header">
+                TÔI ĐỀ NGHỊ BIDV CUNG CẤP CÁC DỊCH VỤ SAU ĐÂY
+            </div>
+            <div class="card-type">
+                <div class="f-left">
+                    <div class="r-header">
+                        TÀI KHOẢN CÁ NHÂN
+                    </div>
+                    <div class="p-acc">
+                        Tiền gửi thanh toán
+                        <br>
+                        <input name="type" type="radio" id="normal">
+                        <label for="normal"><span></span>Thông thường</label>
+                        <br>
+                        <input name="type" type="radio" id="stock">
+                        <label for="stock"><span></span>Kinh doanh chứng khoán</label>
+                        <br>
+                        <input name="type" type="radio" id="other">
+                        <label for="other"><span></span>Khác</label>
+                        <br> Loại tiền (VND,USD)
+                        <br>
+                    </div>
+                </div>
+                <div class="f-right">
+                    <div class="r-header">
+                        DỊCH VỤ NGÂN HÀNG ĐIỆN TỬ - GÓI CƠ BẢN
+                    </div>
+                    <div class="e-bank">
+                        <input name="eb" type="radio" id="this">
+                        <label for="this"><span></span>Cho TK mở tại đề nghị này</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="eb" type="radio" id="not_this">
+                        <label for="not_this"><span></span>Cho TK số</label>
+                        <br>
+                    </div>
+                    <div class="online">
+                        <input type="radio" id="eo">
+                        <label for="eo"><span></span>BIDV Online</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" id="em">
+                        <label for="em"><span></span>BIDV Mobile</label>
+                        <br> &nbsp;&nbsp;&nbsp;&nbsp; SĐT nhận OTP
+                        <!--dien_thoai_chinh-->&nbsp;&nbsp;&nbsp;&nbsp;MK mặc định
+                        <br> &nbsp;&nbsp;&nbsp;&nbsp;(OTP: Mã xác thực giao dịch gửi về cho khách hàng qua điện thoại)
+                        <br> &nbsp;&nbsp;&nbsp;&nbsp;Số TK thanh toán trực tiếp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Số thẻ ATM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" id="get_acc">
+                        <label for="get_acc"><span></span>Đăng ký nhận user/mật khẩu qua email</label>
+                        <br>
+                        <input type="radio" id="sms">
+                        <label for="sms"><span></span>Thanh toán qua SMS</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" id="bank_plus">
+                        <label for="bank_plus"><span></span>BIDV Bankplus(ĐT thuê bao Viettel)</label>
+                        <br>
+                        <input type="radio" id="othersms">
+                        <label for="othersms"><span></span>Gửi/nhận tin nhắn Ngân hàng (BSMS) SĐT khác:</label>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="f-footer">
+        </div>
+    </div>
+</body>
+
+</html>
