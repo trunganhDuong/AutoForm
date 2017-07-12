@@ -10,7 +10,7 @@ var flash = require('connect-flash');
 
 /* GET account management page. */
 router.get('/',isLoggedIn, function (req, res, next) {
-  User.find(function (err, users) {
+  User.find({},null,{sort:{creTime:1}},function (err, users) {
     if (err) res.send(err);
     else {
       res.render('account', { users: users });
