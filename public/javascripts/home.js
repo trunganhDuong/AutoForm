@@ -153,10 +153,11 @@ var displayForms = function (forms) {
     forms.forEach(function (form) {
         //  STRING TO APPEND
         var str = "";
-        str += '<li class="pure-menu-item form-item">';
-        str += '<a class="pure-menu-link" data-id="' + form._id + '">';
+        str += '<li class="pure-menu-item form-item tooltip ">';
+        str += '<a class="pure-menu-link " data-id="' + form._id + '">';
         str += form.name;
         str += '</a>';
+        str +=' <span class="tooltiptext">'+form.name+'</span>';
         str += '</li>';
 
         var appended = $(str);

@@ -99,7 +99,7 @@
 	z-index: -1;
 }
 .form-list {
-    width: 32.5%;
+    width: 24%;
     border: 2px solid #e8e8e8;
     margin: 1em;
     margin-left: 0;
@@ -112,8 +112,14 @@
 .form-list-detail .pure-menu-list{
     padding: 1em 0 1em 0;
 }
-.form-list-detail .pure-menu-list:hover{
+.form-list-detail .pure-menu-list li:hover{
     cursor: pointer;
+}
+.form-list-detail .pure-menu-list li a{
+    width: 200px;
+    display:inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pure-menu-heading {
@@ -121,7 +127,7 @@
 }
 
 .form-content {
-    width: 63%;
+    width: 72%;
     border: 2px solid #e8e8e8;
     border-radius: 5px;
     float: right;

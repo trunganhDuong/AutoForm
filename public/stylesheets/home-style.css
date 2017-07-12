@@ -62,12 +62,17 @@
     border-radius: 5px;
     background-color: white;
 }
-.form-list-detail{
+
+.form-list-detail .pure-menu-item .pure-menu-link{
+    width: 200px;
+    display:inline-block;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 .form-list-detail li:hover{
     cursor: pointer;
 }
+
 
 
 .pure-menu-heading {
