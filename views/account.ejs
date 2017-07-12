@@ -208,12 +208,15 @@
                                             <%if(item.local.email){%>
                                                 <%= "Local"%>
                                                     <%} %>
-                                                        <%if(item.facebook.email){ %>
-                                                            <%= "Facebook" %>
-                                                                <%} %>
-                                                                    <%if(item.google.email){%>
-                                                                        <%= "Google" %>
-                                                                            <%} %>
+                                            <%if(item.facebook.email){ %>
+                                                <%= "Facebook" %>
+                                                    <%} %>
+                                            <%if(item.google.email){%>
+                                                <%= "Google" %>
+                                                    <%} %>
+                                            <%if(item.admin.email){%>
+                                                <%= "Admin" %>
+                                                    <%} %>
                                         </td>
                                     </tr>
                                     <% });%>
