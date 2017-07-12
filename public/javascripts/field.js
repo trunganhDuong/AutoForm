@@ -16,8 +16,8 @@ $(document).ready(function () {
             $.ajax({
                 method: "POST",
                 data: {
-                    name: $('#name').val(),
-                    sname: $('#sname').val(),
+                    name: $.trim($('#name').val()),
+                    sname: $.trim($('#sname').val()),
                     order:$('#order').val()
                 },
                 statusCode: {
