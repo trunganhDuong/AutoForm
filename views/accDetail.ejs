@@ -191,24 +191,27 @@
                                 <!-- EMAIL -->
                                 <%if(user.local.email){%>
                                     <% var email= user.local.email %>
-                                        <%} %>
-                                            <%if(user.facebook.email){ %>
-                                                <%var email= user.facebook.email %>
-                                                    <%} %>
-                                                        <%if(user.google.email){%>
-                                                            <%var email= user.google.email %>
-                                                                <%} %>
+                                <%} %>
+                                <%if(user.facebook.email){ %>
+                                    <%var email= user.facebook.email %>
+                                <%} %>
+                                <%if(user.google.email){%>
+                                    <%var email= user.google.email %>
+                                <%} %>
 
-                                                                    <!-- TYPE -->
-                                                                    <%if(user.local.email){%>
-                                                                        <% var type= "Local"%>
-                                                                            <%} %>
-                                                                                <%if(user.facebook.email){ %>
-                                                                                    <%var type= "Facebook" %>
-                                                                                        <%} %>
-                                                                                            <%if(user.google.email){%>
-                                                                                                <%var type= "Google" %>
-                                                                                                    <%} %>
+                                <!-- TYPE -->
+                                <%if(user.local.email){%>
+                                    <% var type= "Local"%>
+                                <%} %>
+                                <%if(user.facebook.email){ %>
+                                    <%var type= "Facebook" %>
+                                <%} %>
+                                <%if(user.google.email){%>
+                                    <%var type= "Google" %>
+                                <%} %>
+                                <%if(user.admin.email){%>
+                                    <%var type= "Admin" %>
+                                <%} %>
 
                                                                                                         <div class="pure-control-group">
                                                                                                             <label for="id">ID</label>
